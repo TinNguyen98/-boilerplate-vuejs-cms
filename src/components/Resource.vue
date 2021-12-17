@@ -7,15 +7,7 @@
 </template>
 
 <script>
-import last from 'lodash-es/last'
-
 export default {
-  name: 'Resource',
-
-  computed: {
-    title () {
-      return last(this.$route.meta.breadcrumbs).title
-    }
-  }
+  name: 'Resource'
 }
 </script>

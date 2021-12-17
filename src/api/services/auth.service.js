@@ -1,19 +1,19 @@
 import { ApiService } from '../index'
 
 export const AuthService = {
-  async login(data) {
+  async login (data) {
     return ApiService.post('/auth/login', data)
   },
 
-  async refreshToken() {
+  async refreshToken () {
     return ApiService.post('/auth/refresh')
   },
 
-  async logout() {
+  async logout () {
     return ApiService.post('/auth/logout')
   },
 
-  async me() {
+  async me () {
     return ApiService.get('/auth/me')
-  },
+  }
 }

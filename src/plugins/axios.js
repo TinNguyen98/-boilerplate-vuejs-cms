@@ -7,17 +7,16 @@ import { COOKIES_KEY } from '@/enum/cookie.enum'
 
 const instance = axios.create({
   baseURL: process.env.API_URL,
-  // In case that in need token
   headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      'X-Frame-Options': 'SAMEORIGIN'
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-Frame-Options': 'SAMEORIGIN'
   },
   timeout: 30000 // request timeout
 })
 
-// request interceptor
+// Request interceptor
 instance.interceptors.request.use(
   (config) => {
     if (Cookie.get(COOKIES_KEY.token)) {
@@ -27,7 +26,7 @@ instance.interceptors.request.use(
   }
 )
 
-// response interceptor
+// Response interceptor
 instance.interceptors.response.use(response => response,
   async (error) => {
     // Catch err CORS with case type script inside (input, textarea)

@@ -6,7 +6,7 @@ const actions = {
   /**
    * Login
    */
-  async login({commit}, data) {
+  async login ({ commit }, data) {
     try {
       return await AuthService.login(data).then(resp => {
         return resp.data.data
@@ -19,7 +19,7 @@ const actions = {
   /**
    * Refresh token
    */
-  async refreshToken({commit}) {
+  async refreshToken ({ commit }) {
     try {
       return await AuthService.refreshToken().then(resp => {
         return resp.data.data
@@ -30,9 +30,9 @@ const actions = {
   },
 
   /**
-   * logout
+   * Logout
    */
-  async logout() {
+  async logout () {
     try {
       return await AuthService.logout().then(_ => {
         store.commit(types.LOG_OUT)
@@ -45,7 +45,7 @@ const actions = {
   /**
    * Get profile
    */
-  async me() {
+  async me () {
     try {
       return await AuthService.me().then(resp => {
         return resp.data.data
@@ -53,7 +53,7 @@ const actions = {
     } catch (e) {
       throw (e)
     }
-  },
+  }
 }
 
 export default {
