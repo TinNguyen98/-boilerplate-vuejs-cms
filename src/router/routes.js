@@ -17,6 +17,6 @@ export const routes = [
     meta: {},
     beforeEnter: ResolveGuard([AuthGuard])
   },
-  ...LoginRoute,
+  LoginRoute,
   ...ErrorsRoutes
 ]

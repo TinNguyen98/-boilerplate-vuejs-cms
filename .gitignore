@@ -82,4 +82,4 @@ sw.*
 *.swp
 
 # Environment files
-#/config/
+/config/

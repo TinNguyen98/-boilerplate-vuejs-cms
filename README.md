@@ -1,6 +1,6 @@
-# boilerplate-vuejs-cms
+# Boilerplate VueJS CMS
 
-> Boilerplate Vuejs CMS
+> VueJS version 2.5.2
 
 ## Build Setup
 

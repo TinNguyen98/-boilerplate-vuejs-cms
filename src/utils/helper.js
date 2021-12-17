@@ -113,6 +113,11 @@ export const scrollToErrorPlace = (form) => {
   }, 100)
 }
 
+export const goBack = async () => {
+  window.history.length > 1
+    ? await router.go(-1) : await router.push('/')
+}
+
 export const beforeLeavePage = ($event) => {
   $event.returnValue = 'beforeunload'
   return $event.returnValue
@@ -128,5 +133,6 @@ export default {
   encodeFieldEditor,
   decodeFieldEditor,
   scrollToErrorPlace,
+  goBack,
   beforeLeavePage
 }

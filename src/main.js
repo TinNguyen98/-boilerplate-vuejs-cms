@@ -25,6 +25,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  i18n: i18n, // language
+  i18n, // language
   render: h => h(App)
 }).$mount('#app')

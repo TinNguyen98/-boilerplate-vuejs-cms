@@ -6,16 +6,31 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
+  name: 'Application',
+
   components: {
     'auth': () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
     'default': () => import(/* webpackChunkName: "default" */ '@/layouts/Default.vue')
   },
 
   computed: {
-    layout () {
-      return this.$store.state.layout || 'default'
-    }
+    ...mapGetters({ layout: 'layout' })
+  },
+
+  head: {
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Boilerplate VueJS CMS'
+      }
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/static/logo.png' }
+    ]
   }
 }
 </script>

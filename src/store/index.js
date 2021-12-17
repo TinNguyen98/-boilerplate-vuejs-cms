@@ -21,7 +21,7 @@ const store = new Vuex.Store({
       loadingOverlay: false,
       profile: null,
       role: null,
-      layout: null,
+      layout: 'default',
       token: Cookie.get(COOKIES_KEY.token)
     }
   },
@@ -44,8 +44,8 @@ const store = new Vuex.Store({
         loading.style.display = 'none'
       }
     },
-    [types.SET_LAYOUT] (state, payload) {
-      state.layout = payload
+    [types.SET_LAYOUT] (state, { layout }) {
+      state.layout = layout
     },
     [types.SET_ROLE] (state, payload) {
       state.role = payload

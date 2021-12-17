@@ -3,7 +3,7 @@ import * as types from '@/store/mutation-types'
 
 export const AuthGuard = async (to, from, next) => {
   if (!store.getters.hasToken) {
-    next({ name: 'auth.login' })
+    return next({ name: 'auth.login' })
   }
   try {
     // Refresh token
