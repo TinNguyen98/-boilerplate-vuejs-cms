@@ -1,7 +1,7 @@
 <template>
-  <main id="server_error">
+  <div id="server_error">
     <h2 v-text="content" />
-  </main>
+  </div>
 </template>
 
 <script>

@@ -1,8 +1,8 @@
 import { AuthGuard, ResolveGuard } from '@/router/guards'
 
 /* Route module */
-import LoginRoute from './routes/login'
-import ErrorsRoutes from './routes/errors'
+import LoginRoute from './modules/login'
+import ErrorsRoutes from './modules/errors'
 
 export function page (path) {
   return () => import(/* webpackChunkName: "[request]" */ `@/pages/${path}`)

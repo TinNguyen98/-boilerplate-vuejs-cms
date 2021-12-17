@@ -1,9 +1,9 @@
 <template>
-  <div id="resource">
+  <main id="resource">
     <transition name="page" mode="out-in">
       <router-view/>
     </transition>
-  </div>
+  </main>
 </template>
 
 <script>

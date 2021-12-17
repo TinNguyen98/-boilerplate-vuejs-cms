@@ -1,7 +1,7 @@
 <template>
-  <main id="not_authenticated">
+  <div id="not_authenticated">
     <h2 v-text="content" />
-  </main>
+  </div>
 </template>
 
 <script>

@@ -21,7 +21,7 @@ const store = new Vuex.Store({
       loadingOverlay: false,
       profile: null,
       role: null,
-      layout: 'default',
+      layout: null,
       token: Cookie.get(COOKIES_KEY.token)
     }
   },

@@ -1,7 +1,7 @@
 <template>
-  <main id="not_found">
+  <div id="not_found">
     <h2 v-text="content" />
-  </main>
+  </div>
 </template>
 
 <script>

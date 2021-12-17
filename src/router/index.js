@@ -25,7 +25,7 @@ const router = new Router({
  */
 const beforeEach = async (to, from, next) => {
   const currentRoute = head(to.matched)
-  store.commit(types.SET_LAYOUT, { layout: currentRoute.meta.layout })
+  store.commit(types.SET_LAYOUT, { layout: currentRoute.meta.layout || 'default' })
   router.app.$Progress.start()
   next()
 }
