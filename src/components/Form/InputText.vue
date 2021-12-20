@@ -11,7 +11,6 @@
       class="label"
     >
       {{ label }}
-
       <span
         v-if="rules.includes('required')"
         class="required"
@@ -26,7 +25,6 @@
         :type="type"
         :disabled="disabled"
         :value="value"
-        :size="size"
         :class="classInput"
         :placeholder="placeholder"
         @input="handleType($event)"
@@ -39,9 +37,10 @@
                 :type="prefixIcon" />
       </a-input>
       <!-- Message Error -->
-      <span v-if="errors[0]" class="errors">{{ errors[0] }}</span>
+      <span v-if="errors[0]"
+            class="errors"
+            v-html="errors[0]" />
     </div>
-
   </ValidationProvider>
 </template>
 
@@ -61,8 +60,6 @@ export default {
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
-    // All types: large, default, small
-    size: { type: String, default: 'default' },
     disabled: { type: Boolean, default: false },
     type: { type: String, default: 'text' },
     prefixIcon: { type: String, default: '' },
@@ -85,7 +82,9 @@ export default {
     },
 
     handleFocus ($event) {
-      !this.autofill ? $event.target.removeAttribute('readonly') : null
+      if (!this.autofill) {
+        $event.target.removeAttribute('readonly')
+      }
     }
   }
 }

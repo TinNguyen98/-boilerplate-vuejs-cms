@@ -1,7 +1,7 @@
 <template>
   <ValidationProvider
     tag="div"
-    v-slot="{ errors, required }">
+    v-slot="{ errors }">
   </ValidationProvider>
 </template>
 

@@ -4,7 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-// import Plugins
+// Import Plugins
 import './plugins'
 import './plugins/progress-bar'
 import './plugins/lazyload'
@@ -12,13 +12,12 @@ import './plugins/validation'
 import './plugins/antdesign'
 import i18n from './plugins/i18n'
 
-// import filter
+// Import Filter
 import './utils/filters'
 
-// import directive
+// Import Directive
 import './utils/directive'
 
-// Import trust dock
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
