@@ -21,16 +21,20 @@
     <div :class="{'has_error': errors[0]}">
       <!-- Field -->
       <a-date-picker
-        :value="value"
+        :value="modelDate"
         :placeholder="placeholder"
-        :format="format"
+        :format="formatBasedOnMode"
+        :mode="mode"
+        :open="openDatePicker"
         :inputReadOnly="readonly"
         :locale="localeOptions[locale]"
         :disabled="disabled"
         :disabled-date="disabledToCurrentDate || disabledDateConditions
                         ? (disabledToCurrentDate ? disabledCurrentDate : disabledBasedOnCondition)
                         : null"
-        @change="handleChange" />
+        @change="handleChange"
+        @openChange="handleOpenChange"
+        @panelChange="handlePanelChange" />
       <!-- Message Error -->
       <span v-if="errors[0]"
             class="errors"
@@ -60,7 +64,8 @@ export default {
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
-    format: { type: String, default: 'YYYY-MM-DD' },
+    format: { type: String, default: '' },
+    mode: { type: String, default: 'date' },
     locale: { type: String, default: 'en' },
     disabled: { type: Boolean, default: false },
     // Addition condition for date
@@ -70,12 +75,37 @@ export default {
     readonly: { type: Boolean, default: false }
   },
 
+  computed: {
+    modelDate: {
+      get () {
+        return this.$props.value
+      },
+      set (value) {
+        this.$emit('change', value)
+      }
+    },
+
+    formatBasedOnMode () {
+      if (this.format) return this.format
+
+      switch (this.mode) {
+        case 'year':
+          return 'YYYY'
+        case 'month':
+          return 'YYYY-MM'
+        default:
+          return 'YYYY-MM-DD'
+      }
+    }
+  },
+
   data () {
     return {
       localeOptions: {
         en,
         ja
-      }
+      },
+      openDatePicker: false
     }
   },
 
@@ -95,7 +125,7 @@ export default {
       let date = this.disabledDateConditions
       // Replace character now to date
       if (this.disabledDateConditions.includes('now')) {
-        date = this.disabledDateConditions.replaceAll('now', moment().format(this.format))
+        date = this.disabledDateConditions.replaceAll('now', moment().format(this.formatBasedOnMode))
       }
 
       const date_from = date.split('|')[0]
@@ -119,10 +149,18 @@ export default {
     },
 
     handleChange (value) {
-      this.$emit('change', value)
+      this.$emit('change', moment(value).format(this.formatBasedOnMode))
+    },
+
+    handleOpenChange (open) {
+      this.openDatePicker = open
+    },
+
+    handlePanelChange (value) {
+      if (this.mode === 'date') return
+      this.openDatePicker = false
+      this.modelDate = moment(value).format(this.formatBasedOnMode)
     }
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

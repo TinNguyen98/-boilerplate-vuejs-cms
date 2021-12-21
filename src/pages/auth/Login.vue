@@ -33,7 +33,6 @@
     />
 
     <pre>{{ form }}</pre>
-    <pre>{{ date }}</pre>
   </div>
 </template>
 
