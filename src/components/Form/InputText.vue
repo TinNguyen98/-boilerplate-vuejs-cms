@@ -21,7 +21,6 @@
     <div :class="{'has_error': errors[0]}">
       <!-- Field -->
       <a-input
-        :ref="vid + 'Input'"
         :type="type"
         :disabled="disabled"
         :value="value"
@@ -89,5 +88,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

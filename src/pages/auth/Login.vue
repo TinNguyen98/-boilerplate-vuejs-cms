@@ -32,7 +32,34 @@
       placeholder="Please select date"
     />
 
-    <pre>{{ form }}</pre>
+    <input-textarea
+      v-model="textarea"
+      vid="textarea"
+      field="textarea_field"
+      placeholder="Type textarea"
+    />
+
+    <input-radio
+      v-model="radio"
+      vid="radio"
+      field="radio_field"
+      name-label="Male"
+    />
+
+    <input-radio
+      v-model="radioGroup"
+      :options="options"
+      vid="radio_group"
+      field="radio_group_field"
+      mode-group
+    />
+
+    <input-checkbox
+      v-model="checkbox"
+      vid="checkbox"
+      field="checkbox_field"
+      name-label="Check me!!!"
+    />
   </div>
 </template>
 
@@ -40,6 +67,9 @@
 import InputText from '@/components/Form/InputText'
 import InputSelect from '@/components/Form/InputSelect'
 import InputDatePicker from '@/components/Form/InputDatePicker'
+import InputTextarea from '@/components/Form/InputTextarea'
+import InputRadio from '@/components/Form/InputRadio'
+import InputCheckbox from '@/components/Form/InputCheckbox'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -48,7 +78,10 @@ export default {
   components: {
     InputText,
     InputSelect,
-    InputDatePicker
+    InputDatePicker,
+    InputTextarea,
+    InputRadio,
+    InputCheckbox
   },
 
   data () {
@@ -59,6 +92,10 @@ export default {
       },
       selected: '',
       date: '',
+      textarea: '',
+      radio: false,
+      radioGroup: '1',
+      checkbox: false,
       options: [
         {
           id: '1',

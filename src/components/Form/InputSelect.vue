@@ -35,7 +35,8 @@
                     conditionsOption.param === option.name.toLowerCase()))"
             :key="index"
             :disabled="disabledOption === +(option.id) || disabledOption === option.name"
-            :value="option.id">
+            :value="option.id"
+          >
             {{ option.name }}
           </a-select-option>
         </template>
