@@ -19,7 +19,7 @@
     </label>
 
     <div :class="{'has_error': errors[0]}">
-      <template v-if="modeGroup">
+      <template v-if="modeGroup && (options.length || Object.keys(options).length)">
         <a-radio-group
           :value="value"
           :class="classInput"

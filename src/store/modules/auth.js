@@ -1,6 +1,7 @@
 import store from '../index'
 import * as types from '../mutation-types'
 import { AuthService } from '@/api/services/auth.service'
+import { ACCOUNT } from '@/enum/account.enum'
 
 const actions = {
   /**
@@ -8,9 +9,19 @@ const actions = {
    */
   async login ({ commit }, data) {
     try {
-      return await AuthService.login(data).then(resp => {
-        return resp.data.data
-      })
+      // LOGIN DUMMY
+      const accountInfo = ACCOUNT.find(user =>
+        user.email === data.email && user.password === data.password)
+      if (!accountInfo) return false
+
+      store.commit(types.SET_TOKEN, { token: accountInfo.access_token })
+      store.commit(types.SET_ROLE, accountInfo.role)
+      store.commit(types.SET_PROFILE, { profile: accountInfo })
+      // return await AuthService.login(data).then(resp => {
+      //   return resp.data.data
+      // })
+
+      return true
     } catch (e) {
       throw (e)
     }
@@ -34,9 +45,11 @@ const actions = {
    */
   async logout () {
     try {
-      return await AuthService.logout().then(_ => {
-        store.commit(types.LOG_OUT)
-      })
+      store.commit(types.LOG_OUT)
+
+      // return await AuthService.logout().then(_ => {
+      //   store.commit(types.LOG_OUT)
+      // })
     } catch (e) {
       throw (e)
     }

@@ -1,122 +1,110 @@
 <template>
-  <div v-if="layout === 'auth'" class="login">
-    <input-text
-      v-model="form.user_name"
-      vid="user_name"
-      field="user_name"
-      placeholder="User name"
-      prefix-icon="user"
-    />
+  <div v-if="layout === 'auth'"
+       class="login">
+    <ValidationObserver
+      ref="observer"
+      tag="form"
+      class="login_container"
+      @submit.prevent="handleSubmit">
+      <input-text
+        v-model="form.email"
+        vid="email"
+        label="Email"
+        field="email"
+        placeholder="Email"
+        prefix-icon="user"
+        rules="required|email"
+        class-container="mb-2"
+      />
 
-    <input-text
-      v-model="form.password"
-      vid="password"
-      type="password"
-      field="password"
-      placeholder="Password"
-      prefix-icon="lock"
-    />
+      <input-text
+        v-model="form.password"
+        vid="password"
+        type="password"
+        label="Password"
+        field="password"
+        placeholder="Password"
+        prefix-icon="lock"
+        rules="required"
+        class-container="mb-4"
+      />
 
-    <input-select
-      v-model="selected"
-      :options="options"
-      vid="select"
-      field="select_type"
-      placeholder="Please select"
-    />
-
-    <input-date-picker
-      v-model="date"
-      vid="select"
-      field="select_type"
-      placeholder="Please select date"
-    />
-
-    <input-textarea
-      v-model="textarea"
-      vid="textarea"
-      field="textarea_field"
-      placeholder="Type textarea"
-    />
-
-    <input-radio
-      v-model="radio"
-      vid="radio"
-      field="radio_field"
-      name-label="Male"
-    />
-
-    <input-radio
-      v-model="radioGroup"
-      :options="options"
-      vid="radio_group"
-      field="radio_group_field"
-      mode-group
-    />
-
-    <input-checkbox
-      v-model="checkbox"
-      vid="checkbox"
-      field="checkbox_field"
-      name-label="Check me!!!"
-    />
+      <a-button
+        type="primary"
+        html-type="submit"
+        :loading="isSubmit"
+        block
+      >
+        Sign in
+      </a-button>
+    </ValidationObserver>
   </div>
 </template>
 
 <script>
+import store from '@/store'
+import FormMixin from '@/mixins/form.mixin'
 import InputText from '@/components/Form/InputText'
-import InputSelect from '@/components/Form/InputSelect'
-import InputDatePicker from '@/components/Form/InputDatePicker'
-import InputTextarea from '@/components/Form/InputTextarea'
-import InputRadio from '@/components/Form/InputRadio'
-import InputCheckbox from '@/components/Form/InputCheckbox'
 import { mapGetters } from 'vuex'
+import { scrollToErrorPlace } from '@/utils/helper'
 
 export default {
   name: 'Login',
 
   components: {
-    InputText,
-    InputSelect,
-    InputDatePicker,
-    InputTextarea,
-    InputRadio,
-    InputCheckbox
+    InputText
   },
+
+  mixins: [FormMixin],
 
   data () {
     return {
       form: {
-        user_name: '',
+        email: '',
         password: ''
       },
-      selected: '',
-      date: '',
-      textarea: '',
-      radio: false,
-      radioGroup: '1',
-      checkbox: false,
-      options: [
-        {
-          id: '1',
-          name: 'Item 1'
-        },
-        {
-          id: '2',
-          name: 'Item 2'
-        },
-        {
-          id: '3',
-          name: 'Item 3'
-        }
-      ]
+      isSubmit: false
     }
   },
 
   computed: {
     ...mapGetters({ layout: 'layout' })
+  },
+
+  methods: {
+    async handleSubmit () {
+      const isValid = await this.$refs.observer.validate()
+
+      if (isValid) {
+        this.isSubmit = true
+
+        const response = await store.dispatch('auth/login', this.form)
+        if (response) {
+          this.onSuccess(200, this.$t('login_success'))
+          await this.$router.push({ name: 'dashboard' })
+          this.isSubmit = false
+        } else {
+          this.onError(404, this.$t('login_fail'))
+          this.isSubmit = false
+        }
+      } else {
+        scrollToErrorPlace(this.$refs.observer)
+      }
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/assets/scss/helpers/_mixins.scss';
+
+.login {
+  &_container {
+    width: 100%;
+    margin: 0 auto !important;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+    max-width: 30rem;
+  }
+}
+</style>

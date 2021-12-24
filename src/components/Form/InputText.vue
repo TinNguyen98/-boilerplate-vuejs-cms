@@ -4,6 +4,7 @@
     :name="field"
     :vid="vid"
     :rules="rules + '|not_emoji'"
+    :class="classContainer"
     v-slot="{ errors }">
     <!-- Label -->
     <label
@@ -62,6 +63,7 @@ export default {
     disabled: { type: Boolean, default: false },
     type: { type: String, default: 'text' },
     prefixIcon: { type: String, default: '' },
+    classContainer: { type: String, default: '' },
     classInput: { type: String, default: '' },
     readonly: { type: Boolean, default: false },
     autofill: { type: Boolean, default: true },

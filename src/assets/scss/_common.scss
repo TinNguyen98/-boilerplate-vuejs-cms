@@ -3,6 +3,7 @@
 body {
   font-family: $font-family-sans-serif;
   color: $default-color;
+  background-color: $purple-light;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -80,4 +81,20 @@ p {
   }
 }
 
+// ---- Setting error ----
+.label .required {
+  color: $red-error;
+}
 
+.has_error input,
+.has_error select {
+  border-color: #c20c33 !important;
+  background-color: #ffd9e1 !important;
+}
+
+.has_error .errors {
+  display: block;
+  color: $red-error;
+  padding: 5px 0 0;
+  font-size: 0.8rem;
+}

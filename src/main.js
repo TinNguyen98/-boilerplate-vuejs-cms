@@ -6,7 +6,6 @@ import store from './store'
 
 // Import Plugins
 import './plugins'
-import './plugins/progress-bar'
 import './plugins/lazyload'
 import './plugins/validation'
 import './plugins/antdesign'

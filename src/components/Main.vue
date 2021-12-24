@@ -1,5 +1,6 @@
 <template>
-  <main id="main">
+  <main id="main"
+        :style="{'min-height': 'calc(100vh - ' + mainHeight + 'px)'}">
     <transition name="page" mode="out-in">
       <router-view v-if="true"/>
     </transition>
@@ -8,6 +9,20 @@
 
 <script>
 export default {
-  name: 'Main'
+  name: 'Main',
+
+  data () {
+    return {
+      mainHeight: 0
+    }
+  },
+
+  mounted () {
+    const headerHeight = document.querySelector('header').clientHeight
+    const footerHeight = document.querySelector('footer').clientHeight
+    this.mainHeight = headerHeight + footerHeight
+  }
 }
 </script>
+
+<style lang="scss" scoped></style>
