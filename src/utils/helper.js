@@ -118,6 +118,10 @@ export const goBack = async () => {
     ? await router.go(-1) : await router.push('/')
 }
 
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 export const beforeLeavePage = ($event) => {
   $event.returnValue = 'beforeunload'
   return $event.returnValue
@@ -134,5 +138,6 @@ export default {
   decodeFieldEditor,
   scrollToErrorPlace,
   goBack,
+  capitalizeFirstLetter,
   beforeLeavePage
 }

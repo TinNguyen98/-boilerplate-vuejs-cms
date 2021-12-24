@@ -11,10 +11,11 @@
         vid="email"
         label="Email"
         field="email"
-        placeholder="Email"
+        :placeholder="$t('login_email_placeholder')"
         prefix-icon="user"
-        rules="required|email"
+        rules="required|email|max:100"
         class-container="mb-2"
+        :autofill="false"
       />
 
       <input-text
@@ -23,19 +24,21 @@
         type="password"
         label="Password"
         field="password"
-        placeholder="Password"
+        :placeholder="$t('login_password_placeholder')"
         prefix-icon="lock"
-        rules="required"
+        rules="required|max:100"
         class-container="mb-4"
+        show-password
       />
 
       <a-button
         type="primary"
         html-type="submit"
         :loading="isSubmit"
+        :disabled="!(form.email && form.password)"
         block
       >
-        Sign in
+        {{ $t('sign_in') }}
       </a-button>
     </ValidationObserver>
   </div>

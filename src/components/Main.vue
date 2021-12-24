@@ -18,6 +18,8 @@ export default {
   },
 
   mounted () {
+    if (this.$route.meta['layout'] === 'auth') return
+
     const headerHeight = document.querySelector('header').clientHeight
     const footerHeight = document.querySelector('footer').clientHeight
     this.mainHeight = headerHeight + footerHeight

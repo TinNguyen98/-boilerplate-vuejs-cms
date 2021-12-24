@@ -4,6 +4,7 @@
     :name="field"
     :vid="vid"
     :rules="rules"
+    :class="classContainer"
     v-slot="{ errors }">
     <!-- Label -->
     <label
@@ -64,6 +65,7 @@ export default {
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
+    classContainer: { type: String, default: '' },
     format: { type: String, default: '' },
     mode: { type: String, default: 'date' },
     locale: { type: String, default: 'en' },
