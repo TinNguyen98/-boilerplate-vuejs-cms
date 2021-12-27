@@ -19,7 +19,7 @@
       />
     </label>
 
-    <div :class="{'has_error': errors[0]}">
+    <div :class="{ 'has_error': errors[0] }">
       <!-- Field -->
       <a-select
         :value="value ? value : undefined"

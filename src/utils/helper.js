@@ -31,7 +31,10 @@ export const formatDate = (date, format = '') => {
 
 export const checkImageSizeByMb = (file, limitSize = 5) => {
   const sizeMb = +((file.size / (1024 * 1024)).toFixed(2))
-  if (sizeMb > limitSize) { alert(i18n.t('limit_size')); return true }
+  if (sizeMb > +(limitSize)) {
+    alert(i18n.t('limit_size', { size: limitSize }))
+    return true
+  }
   return false
 }
 
@@ -56,10 +59,8 @@ export const encodeFieldEditor = (data) => {
   return data ? window.btoa(encodeURI(data)) : ''
 }
 
-export const decodeFieldEditor = (data, type = '') => {
+export const decodeFieldEditor = (data) => {
   if (!data) return ''
-  // Because the project that take field title didn't use editor
-  if (type === 'project') return data
   // Cuz old record only encodeURI so have to distinguish base64 vs base64url
   // Reference link: https://stackoverflow.com/questions/55389211/string-based-data-encoding-base64-vs-base64url
   let formatText = data

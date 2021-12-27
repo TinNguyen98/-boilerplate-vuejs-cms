@@ -62,6 +62,13 @@ extend('required_editor', {
   }
 })
 
+extend('max_editor', {
+  validate (value, params) {
+    // REGEX: remove all tag html
+    return value.replaceAll(/<[^>]*>/g, '').trim().length <= +(params[0])
+  }
+})
+
 extend('contain_lower_latin', {
   validate (value) {
     return value.match(/[a-z]/g) !== null

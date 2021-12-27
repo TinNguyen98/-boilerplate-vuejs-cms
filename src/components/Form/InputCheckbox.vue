@@ -18,7 +18,7 @@
       />
     </label>
 
-    <div :class="{'has_error': errors[0]}">
+    <div :class="{ 'has_error': errors[0] }">
       <a-checkbox
         :disabled="disabled"
         :value="value"

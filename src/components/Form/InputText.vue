@@ -19,7 +19,7 @@
       />
     </label>
 
-    <div :class="{'has_error': errors[0]}">
+    <div :class="{ 'has_error': errors[0] }">
       <!-- Field -->
       <template v-if="!showPassword">
         <a-input

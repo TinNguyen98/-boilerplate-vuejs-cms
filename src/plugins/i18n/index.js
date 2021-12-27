@@ -31,7 +31,8 @@ const dictionary = {
     contain_special_char: 'パスワードは英大文字・英小文字・数字・記号から4 種混ぜ合わせて10 以上16文字以内を入力してください。',
     valid_url: 'URLの形式が正しくありません',
     limit_startend_date: '応募期間は10年以内にご入力ください',
-    real_startend_date: '終了日には、開始日より後の日付を指定してください'
+    real_startend_date: '終了日には、開始日より後の日付を指定してください',
+    max_editor: '{length}文字以内で入力してください'
   }
 }
 
