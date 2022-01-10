@@ -28,10 +28,10 @@
           :value="value"
           :class="classInput"
           :placeholder="placeholder"
+          :readOnly="!autofill || readonly"
           @input="handleType($event)"
           @focus="handleFocus"
           @keypress="type === 'number' ? preventE($event) : ''"
-          :readOnly="!autofill || readonly"
         >
           <a-icon v-if="prefixIcon"
                   slot="prefix"
