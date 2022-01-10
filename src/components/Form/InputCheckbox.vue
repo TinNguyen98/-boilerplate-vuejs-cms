@@ -23,9 +23,9 @@
         :disabled="disabled"
         :value="value"
         :class="classInput"
+        :readOnly="!autofill || readonly"
         @change="handleChange"
         @focus="handleFocus"
-        :readOnly="!autofill || readonly"
       >
         {{ nameLabel }}
       </a-checkbox>

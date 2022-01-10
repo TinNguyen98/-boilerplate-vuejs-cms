@@ -99,8 +99,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/helpers/_mixins.scss';
-
 .login {
   &_container {
     width: 100%;

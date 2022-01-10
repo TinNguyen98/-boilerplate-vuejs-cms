@@ -25,9 +25,9 @@
         :value="value"
         :class="classInput"
         :placeholder="placeholder"
+        :readOnly="!autofill || readonly"
         @input="handleType($event)"
         @focus="handleFocus"
-        :readOnly="!autofill || readonly"
       />
       <!-- Message Error -->
       <span v-if="errors[0]"

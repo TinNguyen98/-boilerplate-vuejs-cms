@@ -8,14 +8,6 @@ Vue.filter('filterFormatDate', function (value, format = '') {
   return formatDate(date, format)
 })
 
-Vue.filter('truncate', (text, suffix, num) => {
-  if (text !== undefined && text.length > num) {
-    return text.substring(0, num) + suffix
-  } else {
-    return text
-  }
-})
-
 /**
  * Convert base64 back to structure HTML
  */

@@ -5,6 +5,7 @@ export default [
   {
     path: '/server-error',
     name: 'server_error',
+    meta: {},
     component: page('error/ServerError.vue')
   },
 
@@ -12,6 +13,7 @@ export default [
   {
     path: '/not-authenticated',
     name: 'not_authenticated',
+    meta: {},
     component: page('error/NotAuthenticated.vue')
   },
 
@@ -19,6 +21,7 @@ export default [
   {
     path: '*',
     name: 'not_found',
+    meta: {},
     component: page('error/NotFound.vue')
   }
 ]
