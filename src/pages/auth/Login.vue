@@ -1,10 +1,10 @@
 <template>
   <div v-if="layout === 'auth'"
-       class="login">
+       class="login d-flex justify-content-center align-items-center">
     <ValidationObserver
       ref="observer"
       tag="form"
-      class="login_container"
+      class="login_container pl-sm-4 pr-sm-4"
       @submit.prevent="handleSubmit">
       <input-text
         v-model="form.email"
@@ -15,7 +15,6 @@
         prefix-icon="user"
         rules="required|email|max:100"
         class-container="mb-2"
-        :autofill="false"
       />
 
       <input-text
@@ -99,12 +98,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/helpers/_variables.scss';
+
 .login {
+  min-height: 100vh;
   &_container {
     width: 100%;
-    margin: 0 auto !important;
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
     max-width: 30rem;
   }
 }

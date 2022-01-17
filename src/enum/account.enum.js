@@ -1,23 +1,23 @@
 export const ACCOUNT = [
   {
-    email: 'ntrungtn@gmail.com',
+    email: 'admin@gmail.com',
     password: '123',
-    access_token: 'ntrungtnsgwgwgwgwegwegewgewgwegewgwgw',
-    nickname: 'ntrungtn',
-    role: 1
-  },
-  {
-    email: 'ntrungtn2@gmail.com',
-    password: '1234',
-    access_token: 'ntrungtn2sgwgwgwgwegwegewgewgwegewgwgw',
-    nickname: 'ntrungtn_2',
+    access_token: 'admin_123456789',
+    nickname: 'admin',
     role: 0
   },
   {
-    email: 'ntrungtn3@gmail.com',
-    password: '12345',
-    access_token: 'ntrungtn3sgwgwgwgwegwegewgewgwegewgwgw',
-    nickname: 'ntrungtn_3',
+    email: 'staff2@gmail.com',
+    password: '123',
+    access_token: 'staff_123456789',
+    nickname: 'staff',
     role: 1
+  },
+  {
+    email: 'admin2@gmail.com',
+    password: '123',
+    access_token: 'admin2_123456789',
+    nickname: 'admin_2',
+    role: 0
   }
 ]
