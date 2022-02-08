@@ -2,7 +2,7 @@
   "name": "boilerplate-vuejs-cms",
   "version": "1.0.0",
   "description": "Boilerplate VueJS CMS",
-  "private": true,
+  "private": false,
   "author": "ntrungtn@gmail.com",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

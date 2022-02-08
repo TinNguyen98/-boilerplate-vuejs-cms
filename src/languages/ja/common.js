@@ -1,4 +1,12 @@
 export default {
+  back: '戻る',
+  register: '登 録',
+  cancel: 'キャンセル',
+  completion: '完了',
+  fail: '不合格',
+  search: '検索',
+  edit: '編集',
+  delete: '削除',
   not_found: '404 Not Found',
   not_authenticated: '403 Not Authenticated',
   server_error: '500 Server Error',

@@ -1,12 +1,11 @@
 export default {
   login: 'ログイン',
-  email: 'Email',
-  password: 'Password',
-  login_email_placeholder: 'メールアドレス',
-  login_password_placeholder: 'パスワード',
-  login_success: 'Login Success',
-  login_fail: 'Login Fail',
-  logout_success: 'Logout Success',
-  sign_in: 'Sign in',
-  log_out: 'Log out japanese'
+  login_id: '代理店コード',
+  password: 'パスワード',
+  login_id_placeholder: '入力してください',
+  login_password_placeholder: '入力してください',
+  login_success: 'ログインの成功',
+  login_fail: 'ログインに失敗しました。',
+  logout_success: 'ログアウトの成功',
+  log_out: 'ログアウト'
 }

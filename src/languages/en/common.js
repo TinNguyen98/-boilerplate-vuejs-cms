@@ -1,4 +1,12 @@
 export default {
+  back: 'Back',
+  register: 'Register',
+  cancel: 'Cancel',
+  completion: 'Completion',
+  fail: 'Fail',
+  search: 'Search',
+  edit: 'Edit',
+  delete: 'delete',
   not_found: '404 Not Found',
   not_authenticated: '403 Not Authenticated',
   server_error: '500 Server Error',

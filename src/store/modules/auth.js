@@ -11,7 +11,7 @@ const actions = {
     try {
       // LOGIN DUMMY
       const accountInfo = ACCOUNT.find(user =>
-        user.email === data.email && user.password === data.password)
+        user.email === data.login_id && user.password === data.password)
       if (!accountInfo) return false
 
       store.commit(types.SET_TOKEN, { token: accountInfo.access_token })

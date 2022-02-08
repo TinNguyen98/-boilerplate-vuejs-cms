@@ -6,12 +6,15 @@
       tag="form"
       class="login_container pl-sm-4 pr-sm-4"
       @submit.prevent="handleSubmit">
+
+      <h2 class="text-center mb-2" v-text=" 'Boilerplate VueJS CMS' "/>
+
       <input-text
-        v-model="form.email"
-        vid="email"
-        label="Email"
-        field="email"
-        :placeholder="$t('login_email_placeholder')"
+        v-model="form.login_id"
+        vid="login_id"
+        :label="$t('login_id')"
+        field="login_id"
+        :placeholder="$t('login_id_placeholder')"
         prefix-icon="user"
         rules="required|email|max:100"
         class-container="mb-2"
@@ -21,7 +24,7 @@
         v-model="form.password"
         vid="password"
         type="password"
-        label="Password"
+        :label="$t('password')"
         field="password"
         :placeholder="$t('login_password_placeholder')"
         prefix-icon="lock"
@@ -34,10 +37,10 @@
         type="primary"
         html-type="submit"
         :loading="isSubmit"
-        :disabled="!(form.email && form.password)"
+        :disabled="!(form.login_id && form.password)"
         block
       >
-        {{ $t('sign_in') }}
+        {{ $t('login') }}
       </a-button>
     </ValidationObserver>
   </div>
@@ -62,7 +65,7 @@ export default {
   data () {
     return {
       form: {
-        email: '',
+        login_id: '',
         password: ''
       },
       isSubmit: false
@@ -105,6 +108,8 @@ export default {
   &_container {
     width: 100%;
     max-width: 30rem;
+    padding: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
   }
 }
 </style>

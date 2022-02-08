@@ -1,5 +1,18 @@
 // ---- Margin ----
 .m-0{ margin:0!important }
+.m-1{ margin:.25rem!important }
+.m-2{ margin:.5rem!important }
+.m-3{ margin:1rem!important }
+.m-4{ margin:1.5rem!important }
+.m-5{ margin:3rem!important }
+@media (max-width:768px) {
+  .m-sm-0{ margin:0!important }
+  .m-sm-1{ margin:.25rem!important }
+  .m-sm-2{ margin:.5rem!important }
+  .m-sm-3{ margin:1rem!important }
+  .m-sm-4{ margin:1.5rem!important }
+  .m-sm-5{ margin:3rem!important }
+}
 // ---- Margin top ----
 .mt-0{ margin-top:0!important }
 .mt-1{ margin-top:.25rem!important }
@@ -223,4 +236,4 @@
   vertical-align:middle
 }
 // ---- Cursor ----
-.cursor-pointer{cursor:pointer!important}
+.cursor-pointer{ cursor:pointer!important }
