@@ -1,4 +1,4 @@
-# Aeon My Closet CMS
+# Boilerplate VueJS CMS
 
 ## Technologies
 Project is created with:
