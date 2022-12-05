@@ -1,28 +1,24 @@
 // Import Core
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './shared/store'
 
 // Import Plugins
-import './plugins'
-import './plugins/lazyload'
 import './plugins/validation'
 import './plugins/antdesign'
 import i18n from './plugins/i18n'
+import './plugins'
 
-// Import Filter
-import './utils/filters'
-
-// Import Directive
-import './utils/directive'
+// Import Filter || Directive
+import './shared/directives'
+import './shared/filters'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
   router,
   store,
-  i18n, // language
-  render: h => h(App)
+  i18n, // setting languages
+  render: h => h(App),
 }).$mount('#app')

@@ -1,0 +1,33 @@
+@import '../helpers/_mixins.scss';
+@import '../helpers/_variables.scss';
+
+.main-container {
+ & > *:not(:last-child) {
+   margin-bottom: 9px;
+ }
+}
+
+.searchbar, .list-table {
+  padding: 15px 33px 13px 15px;
+  background: $white;
+  margin-bottom: 9px;
+}
+
+.list-table {
+  max-height: calc(100vh - 341px); // 341 is the sum (height, margin) of all elements other than itself
+  overflow: auto;
+}
+
+.searchbar {
+  @include flex();
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px 30px;
+
+  & > * {
+    width: 300px;
+    &:not(:last-child) {
+      margin-right: 50px;
+    }
+  }
+}

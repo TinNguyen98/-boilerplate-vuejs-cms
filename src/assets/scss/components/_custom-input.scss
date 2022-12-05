@@ -1,0 +1,68 @@
+@import '../helpers/_variables.scss';
+
+.custom__input {
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .label {
+    font-size: 14px;
+    font-weight: bold;
+    color: $four-color;
+    opacity: 0.89;
+    margin-bottom: 0;
+  }
+
+  .ant-input {
+    font-size: 16px;
+    line-height: 16px;
+    height: 44px;
+    color: #1F1816;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #B7B7B7;
+    border-radius: 0;
+    &:focus,
+    &:active {
+      outline: none;
+      box-shadow: none;
+    }
+    &::placeholder {
+      color: #CFCFCF;
+    }
+    &:-webkit-autofill::first-line,
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      font-family: $font-family-sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+}
+
+.login-custom__input.ant-input,
+.login-custom__input.ant-input-password .ant-input {
+  height: 50px;
+  font-size: 14px;
+  color: $text-color;
+  padding: 15px 25px 16px 20px;
+  border-radius: 4px;
+
+  &::placeholder {
+    color: #78778B;
+  }
+}
+
+.block-field {
+  label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 400;
+  }
+  .ant-calendar-picker,
+  .ant-select {
+    width: 100%;
+  }
+}

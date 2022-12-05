@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <main-components/>
-  </div>
+  <main-components/>
 </template>
 
 <script>
-import MainComponents from '@/components/Main'
+import MainComponents from '@/shared/components/Main'
 
 export default {
-  name: 'Auth',
+  name: 'AuthLayout',
 
   components: {
     MainComponents

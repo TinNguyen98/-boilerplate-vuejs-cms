@@ -1,8 +1,8 @@
-import store from '@/store'
+import store from '@/shared/store'
 
 export const LoginGuard = (to, from, next) => {
-  if (store.getters.profile || store.state.token) {
-    return next({ name: 'dashboard' })
+  if (store.state.auth.bearerToken) {
+    return next({ name: 'home' })
   }
   next()
 }

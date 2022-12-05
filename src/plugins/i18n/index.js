@@ -1,24 +1,19 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import validationMessagesEnglish from 'vee-validate/dist/locale/en'
-import validationMessagesJapanese from 'vee-validate/dist/locale/ja'
+import validationMessagesVietnamese from 'vee-validate/dist/locale/vi'
 
 // import languages
 import english from '@/languages/en'
-import japanese from '@/languages/ja'
+import vietnamese from '@/languages/vi'
 import { LOCALE } from '@/enum/locale.enum'
 
 Vue.use(VueI18n)
 
 const dictionary = {
-  en: {
-    valid_email: 'The {_field_} is wrong format',
-    required_email: 'The {_field_} is required',
-    required_password: 'The {_field_} is required'
-  },
-  ja: {
-    required: '{_field_}を入力してください', // override 'required' rule.
-    required_choose: '{_field_}を選択してください', // override 'required' rule.
+  vi: {
+    required: '{_field_} là bắt buộc', // override 'required' rule.
+    required_choose: '{_field_} là bắt buộc chọn', // override 'required' rule.
     required_only_enter: '{_field_}を入力ください',
     required_only_choose: '{_field_}を選択ください',
     required_editor: '{_field_}を入力してください',
@@ -37,26 +32,26 @@ const dictionary = {
 }
 
 const messages = {
+  vietnamese: {
+    ...vietnamese,
+    validation: {
+      ...validationMessagesVietnamese.messages,
+      ...dictionary.vi
+    }
+  },
   english: {
     ...english,
     validation: {
       ...validationMessagesEnglish.messages,
       ...dictionary.en
     }
-  },
-  japanese: {
-    ...japanese,
-    validation: {
-      ...validationMessagesJapanese.messages,
-      ...dictionary.ja
-    }
   }
 }
 
 const i18n = new VueI18n({
-  locale: LOCALE.ja, // set locale
-  messages,
-  fallbackLocale: LOCALE.ja
+  locale: LOCALE.vi, // set locale
+  fallbackLocale: LOCALE.en,
+  messages
 })
 
 export default i18n

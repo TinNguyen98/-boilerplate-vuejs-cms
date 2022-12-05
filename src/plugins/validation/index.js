@@ -3,7 +3,7 @@ import * as rules from 'vee-validate/dist/rules'
 import i18n from '@/plugins/i18n'
 import moment from 'moment'
 import { ValidationProvider, ValidationObserver, extend, configure } from 'vee-validate'
-import { formatDate } from '@/utils/helper'
+import { formatDate } from '@/shared/helpers'
 
 // with typescript
 for (let [rule, validation] of Object.entries(rules)) {

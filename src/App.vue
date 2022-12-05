@@ -8,7 +8,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Application',
+  name: 'ApplicationLayout',
 
   components: {
     'auth': () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
@@ -17,25 +17,13 @@ export default {
 
   computed: {
     ...mapGetters({ layout: 'layout' })
-  },
-
-  head: {
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Boilerplate VueJS CMS'
-      }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/static/logo.png' }
-    ]
   }
 }
 </script>
 
 <style lang="scss" scoped>
 #app {
-  min-height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
 }
 </style>

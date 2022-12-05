@@ -1,0 +1,27 @@
+<template>
+  <div class="loading-mode">
+    <a-spin size="large" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'LoadingComponent'
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/scss/helpers/_variables.scss';
+
+.loading-mode {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1020;
+  background-color: $main-color;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

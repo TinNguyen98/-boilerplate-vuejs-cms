@@ -1,23 +1,18 @@
 <template>
-  <div id="server_error">
-    <h2 v-text="content" />
-  </div>
+  <a-result status="500"
+            title="500"
+            :sub-title="$t('server_error')">
+    <template #extra>
+      <router-link tag="button"
+                   :to="{ name: 'home' }"
+                   class="ant-btn ant-btn-primary"
+                   v-text="$t('back')"/>
+    </template>
+  </a-result>
 </template>
 
 <script>
 export default {
-  name: 'ServerError',
-
-  data () {
-    return {
-      content: this.$t('server_error')
-    }
-  }
+  name: 'ServerError'
 }
 </script>
-
-<style lang="scss" scoped>
-#server_error {
-
-}
-</style>

@@ -1,23 +1,18 @@
 <template>
-  <div id="not_found">
-    <h2 v-text="content" />
-  </div>
+  <a-result status="404"
+            title="404"
+            :sub-title="$t('not_found')">
+    <template #extra>
+      <router-link tag="button"
+                   :to="{ name: 'home' }"
+                   class="ant-btn ant-btn-primary"
+                   v-text="$t('back')"/>
+    </template>
+  </a-result>
 </template>
 
 <script>
 export default {
-  name: 'NotFound',
-
-  data () {
-    return {
-      content: this.$t('not_found')
-    }
-  }
+  name: 'NotFound'
 }
 </script>
-
-<style lang="scss" scoped>
-#not_found {
-
-}
-</style>

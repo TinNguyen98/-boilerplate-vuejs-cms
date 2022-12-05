@@ -1,21 +1,34 @@
-# Boilerplate VueJS CMS
+# Aeon My Closet CMS
 
-> VueJS version 2.5.2
+## Technologies
+Project is created with:
+* VueJS version: 2.6.14
+* Ant design Vue version: 1.6.2
+* Lodash es version: 4.17.15
+* Moment version: 2.28.0
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install | yarn
-
-# serve with hot reload at localhost:8080
-npm run dev | yarn dev
-
-# build for production with minification
-npm run build | yarn build
-
-# build for production and view the bundle analyzer report
-npm run build --report | yarn build --report
+## Setup
+```
+yarn | npm install
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Compiles and hot-reloads for development
+```
+yarn serve | npm run serve
+```
+
+### Compiles and minifies for production
+```
+yarn build | npm run build
+```
+
+### Lints and fixes files
+```
+yarn lint | npm run lint
+```
+### Create a global .env file from .env.example
+
+## License
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

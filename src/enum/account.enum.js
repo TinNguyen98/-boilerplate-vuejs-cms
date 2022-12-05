@@ -1,23 +1,8 @@
 export const ACCOUNT = [
   {
-    email: 'admin@gmail.com',
+    login_id: 'admin',
     password: '123',
-    access_token: 'admin_123456789',
-    nickname: 'admin',
-    role: 0
-  },
-  {
-    email: 'staff2@gmail.com',
-    password: '123',
-    access_token: 'staff_123456789',
-    nickname: 'staff',
-    role: 1
-  },
-  {
-    email: 'admin2@gmail.com',
-    password: '123',
-    access_token: 'admin2_123456789',
-    nickname: 'admin_2',
-    role: 0
+    bearer_token: 'dummy_eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NmFhNWJkZi04OTkyLTQ2NDgtYTAzMS0xMzhjYTM4OGRmZmEiLCJqdGkiOiI3NTg3Y2IzY2I0YTMxZjcyYjgwNDNhZTNkZDZjMmRmYzVhNjUzM2Y4NGY0YWI0YmI5NTY2YjM2OGY3MjQyOTFlNTA5ZWU0MTkxY2VhOTdiOSIsImlhdCI6MTY2OTgwMTk2MC41NDAwNzgsIm5iZiI6MTY2OTgwMTk2MC41NDAwODMsImV4cCI6MTY3MjM5Mzk2MC41MzAzMDUsInN1YiI6Ijg2ZGM1YTZiLTk1MzAtNDU2Mi1hM2M1LTY4YTU3YTYwNGEyNyIsInNjb3BlcyI6W119.',
+    expires_at: '2023-01-30T09:52:40.000000Z'
   }
 ]

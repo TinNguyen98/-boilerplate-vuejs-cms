@@ -1,0 +1,27 @@
+.custom-table {
+  .ant-table-thead .ant-table-column-title,
+  .ant-table-tbody tr td:first-child {
+    font-weight: 600;
+  }
+
+  .ant-table-thead > tr > th {
+    padding: 14px 8px;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 10.5px 8px;
+  }
+
+  .col-image {
+    width: 80px;
+    height: auto;
+  }
+
+  //.ant-table-tbody {
+  //  .ant-table-row {
+  //    td {
+  //      vertical-align: baseline;
+  //    }
+  //  }
+  //}
+}
