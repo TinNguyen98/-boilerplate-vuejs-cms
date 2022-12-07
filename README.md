@@ -12,21 +12,41 @@ Project is created with:
 yarn | npm install
 ```
 
+## Create a global <code>.env.{development|staging|production}</code> file from .env.example
+<code>.env.development</code>
+```
+BASE_URL=./
+VUE_APP_API_URL=https://localhost:8080/dev
+```
+
+<code>.env.staging</code>
+```
+BASE_URL=./
+VUE_APP_API_URL=https://localhost:8080/stag
+```
+
+<code>.env.production</code>
+```
+BASE_URL=./
+VUE_APP_API_URL=https://localhost:8080/prod
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve | npm run serve
 ```
 
-### Compiles and minifies for production
+### Compiles and build each of environments
 ```
-yarn build | npm run build
+yarn build:development | npm run build:development
+yarn build:staging | npm run build:staging
+yarn build:production | npm run build:production
 ```
 
 ### Lints and fixes files
 ```
 yarn lint | npm run lint
 ```
-### Create a global .env file from .env.example
 
 ## License
 
