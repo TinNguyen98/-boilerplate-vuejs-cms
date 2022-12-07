@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="detail.name"/>
+    <page-title-component :title="$route.meta['event_detail'].name"/>
 
     <!-- Block: Main content -->
-    <event-form-component edit-mode/>
+    <event-form-component update-mode/>
   </div>
 </template>
 
@@ -25,32 +25,18 @@ export default {
     EventFormComponent
   },
 
-  data () {
-    return {
-      detail: {}
-    }
-  },
-
   beforeRouteEnter (to, from, next) {
+    const result = EVENT_DATA.find(i => i.id === to.params.id)
+    if (!result) {
+      return next({ name: 'not_found' })
+    }
+    to.meta['event_detail'] = result
     next()
     // return store.dispatch('event/getDetail').then(() => next())
   },
 
-  created () {
-    // Clone list from vuex
-    // this.listData = JSON.parse(JSON.stringify(this.list))
-    const result = EVENT_DATA.find(i => i.id === this.$route.params.id)
-    if (!result) {
-      return this.$router.push({ name: 'not_found' }, () => {})
-    }
-    this.detail = result
-  },
-
   methods: {
-    ...mapActions('event', [
-      'getDetail',
-      'updateEvent'
-    ]),
+    ...mapActions('event', ['getDetail'])
   }
 }
 </script>

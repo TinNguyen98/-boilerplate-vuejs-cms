@@ -1,13 +1,9 @@
 @import '../helpers/_mixins.scss';
 @import '../helpers/_variables.scss';
 
-.main-container {
- & > *:not(:last-child) {
-   margin-bottom: 9px;
- }
-}
-
-.searchbar, .list-table {
+.searchbar,
+.list-table,
+.main-form_container {
   padding: 15px 33px 13px 15px;
   background: $white;
   margin-bottom: 9px;
@@ -28,6 +24,51 @@
     width: 300px;
     &:not(:last-child) {
       margin-right: 50px;
+    }
+  }
+}
+
+.main-form {
+  &_row {
+    @media #{$info-ipad-pro} {
+      justify-content: space-between;
+    }
+
+   &:not(:last-child) {
+     margin-bottom: 42px;
+     @media #{$info-ipad-pro} {
+       margin-bottom: 10px;
+     }
+   }
+  }
+
+  &_field {
+    flex-basis: calc((100% - 289px) / 3);
+    min-width: 200px;
+    @media #{$info-ipad-pro} {
+      flex-basis: calc((100% / 2) - 20px);
+    }
+    @media #{$info-ipad} {
+      flex-basis: 100%;
+    }
+
+    &:not(:last-child) {
+      margin-right: 90px;
+      @media #{$info-ipad-pro} {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &_controller {
+    @include flex();
+    justify-content: center;
+    align-items: center;
+    padding: 8.5px;
+    background: $white;
+
+    > *:not(:last-child) {
+      margin-right: 16px;
     }
   }
 }

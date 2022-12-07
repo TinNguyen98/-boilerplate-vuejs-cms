@@ -2,6 +2,7 @@ import Vue from 'vue'
 import * as moment from 'moment-timezone'
 import {
   formatDate,
+  capitalizeFirstLetter,
   stripHtmlExceptTags
 } from '@/shared/helpers'
 
@@ -15,6 +16,10 @@ Vue.filter('filterEmptyField', function (value, character = '/') {
   if (!value) return ''
   const arrField = value.split(character)
   return arrField.filter(v => !['null', 'undefined'].includes(v.toString().trim())).join(character)
+})
+
+Vue.filter('filterCapitalizeFirstLetter', function (text) {
+  return capitalizeFirstLetter(text)
 })
 
 Vue.filter('filterStripHtmlExceptTags', function (value, exceptTags) {

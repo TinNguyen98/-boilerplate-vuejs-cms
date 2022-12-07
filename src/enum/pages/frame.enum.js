@@ -13,4 +13,17 @@ export const STATUS = [
   }
 ]
 
+export const FRAME_TYPE = [
+  {
+    id: 0,
+    name: 'Effect-movie',
+    value: 'effect-movie'
+  },
+  {
+    id: 1,
+    name: 'Background',
+    value: 'background'
+  }
+]
+
 export const FORMAT_DATE = 'YYYY-MM-DD'

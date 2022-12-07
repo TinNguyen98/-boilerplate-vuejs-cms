@@ -4,15 +4,17 @@
     :name="field"
     :vid="vid"
     :rules="rules"
+    :class="classContainer"
     v-slot="{ errors }">
     <!-- Label -->
     <label
       v-if="label"
       class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
       <span
-        v-if="rules.includes('required')"
+        v-if="rules.includes('required') && !hiddenAsterisk"
         class="required"
         v-text="'*'"
       />
@@ -59,6 +61,8 @@ export default {
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
+    hiddenAsterisk: { type: Boolean, default: false },
+    classContainer: { type: String, default: '' },
     format: { type: String, default: 'YYYY-MM-DD' },
     locale: { type: String, default: 'vi' },
     disabled: { type: Boolean, default: false },

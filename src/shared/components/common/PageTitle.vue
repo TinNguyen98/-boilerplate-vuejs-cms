@@ -25,6 +25,7 @@ export default {
 .page-title {
   padding: 12px 10px 12px 38px;
   background-color: $white;
+  margin-bottom: 9px;
 
   &_content {
     font-family: 'Roboto', sans-serif;

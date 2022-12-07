@@ -1,5 +1,5 @@
 // Others
-import { stripHtmlExceptTags } from '@/shared/helpers'
+import { handleInputProtection } from '@/shared/helpers'
 
 export default {
   data () {
@@ -10,11 +10,7 @@ export default {
 
   methods: {
     search () {
-      const filterProtected = { ...this.filter }
-      for (const property in filterProtected) {
-        if (typeof filterProtected[property] !== 'string') break
-        filterProtected[property] = stripHtmlExceptTags(filterProtected[property])
-      }
+      const filterProtected = handleInputProtection(this.filter)
 
       this.$emit('filter-changed', filterProtected)
     },

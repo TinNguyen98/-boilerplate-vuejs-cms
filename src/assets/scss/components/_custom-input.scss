@@ -1,3 +1,4 @@
+@import '../helpers/_mixins.scss';
 @import '../helpers/_variables.scss';
 
 .custom__input {
@@ -58,11 +59,104 @@
 .block-field {
   label {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 7px;
     font-weight: 400;
   }
   .ant-calendar-picker,
   .ant-select {
     width: 100%;
+  }
+
+  .checkbox-animated {
+    position: relative;
+    display: inline-block;
+    &_checkbox {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.ant-upload.ant-upload-select {
+  width: 100%;
+  .ant-btn {
+    @include flex();
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: $text-weak-black-color;
+  }
+}
+
+.ant-select .ant-select-selection--multiple .ant-select-selection__choice__remove {
+  bottom: 0 !important;
+}
+
+.checkbox-animated {
+  transition: all 0.4s ease-in-out;
+  &_checkbox {
+    &:hover, &:focus-visible {
+      outline: none;
+    }
+
+    .ant-checkbox-input[type="checkbox"] {
+      position: relative;
+      appearance: none;
+      width: 88px;
+      height: 22px;
+      background-color: #BFBFBF;
+      border-radius: 16px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      opacity: 1;
+      cursor: pointer;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 20%;
+        height: 81.81%;
+        top: 50%;
+        left: 2px;
+        transform: translateY(-50%);
+        background: $white;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        transition: 0.4s;
+      }
+    }
+
+    &.checked {
+      .ant-checkbox-input[type="checkbox"] {
+        background-color: $button-action-blue;
+        &::after {
+          left: calc((100% - 20%) - 2px); // (100% - roller's width) - 2px
+        }
+      }
+    }
+
+    .ant-checkbox-inner {
+      position: absolute;
+      top: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  &_desc {
+    position: absolute;
+    top: 40%;
+    left: 27%;
+    transform: translateY(-50%);
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: $white;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1;
+    transition: all 0.4s ease-in-out;
+
+    &.turn-on {
+      left: 10%;
+    }
   }
 }

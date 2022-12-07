@@ -115,6 +115,16 @@ export const stripHtmlExceptTags = (text, exceptTags = []) => {
   })
 }
 
+export const handleInputProtection = (form) => {
+  const cloneForm = { ...form }
+
+  for (const property in cloneForm) {
+    if (typeof cloneForm[property] !== 'string') break
+    cloneForm[property] = stripHtmlExceptTags(cloneForm[property])
+  }
+  return cloneForm
+}
+
 export const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
@@ -127,5 +137,6 @@ export default {
   detectShiftEnter,
   scrollToErrorPlace,
   stripHtmlExceptTags,
+  handleInputProtection,
   capitalizeFirstLetter
 }

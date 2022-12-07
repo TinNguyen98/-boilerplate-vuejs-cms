@@ -10,7 +10,19 @@ export default {
   search_by_keyword: 'Tìm kiếm theo từ khóa',
   date_of_occurrence: 'Thời gian diễn ra',
   event: 'Sự kiện',
-  start_at: 'Thời gian bắt đầu',
+  event_name: 'Tên sự kiện',
+  event_name_placeholder: 'Nhập tên sự kiện',
+  start_time: 'Thời gian bắt đầu',
+  start_time_placeholder: 'yy-mm-dd',
+  background_music: 'Nhạc nền',
+  background_music_placeholder: 'Tải nhạc nền',
   updated_at: 'Thời gian cập nhật',
-  manipulation: 'Thao tác'
+  effect_movie_frame: 'Effect-movie Frame',
+  background_frame: 'Background Frame',
+  manipulation: 'Thao tác',
+  priority_event: 'Ưu tiên sự kiện',
+  open_priority: 'Mở ưu tiên',
+  close_priority: 'Tắt ưu tiên',
+  priority_event_content: 'Bạn có chắc chắn muốn Ưu tiên sự kiện này?',
+  priority_event_desc: 'Khi chọn Ưu tiên sự kiện, sự kiện hiện tại sẽ dừng lại, bạn có chắc chắn muốn xác nhận không?'
 }

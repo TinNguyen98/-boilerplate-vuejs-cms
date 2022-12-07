@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="detail.name"/>
+    <page-title-component :title="$route.meta['frame_detail'].name"/>
 
     <!-- Block: Main content -->
-    <frame-form-component edit-mode/>
+    <frame-form-component update-mode/>
   </div>
 </template>
 
@@ -25,32 +25,18 @@ export default {
     FrameFormComponent
   },
 
-  data () {
-    return {
-      detail: {}
-    }
-  },
-
   beforeRouteEnter (to, from, next) {
+    const result = FRAME_DATA.find(i => i.id === to.params.id)
+    if (!result) {
+      return next({ name: 'not_found' })
+    }
+    to.meta['frame_detail'] = result
     next()
     // return store.dispatch('frame/getDetail').then(() => next())
   },
 
-  created () {
-    // Clone list from vuex
-    // this.listData = JSON.parse(JSON.stringify(this.list))
-    const result = FRAME_DATA.find(i => i.id === this.$route.params.id)
-    if (!result) {
-      return this.$router.push({ name: 'not_found' }, () => {})
-    }
-    this.detail = result
-  },
-
   methods: {
-    ...mapActions('frame', [
-      'getDetail',
-      'updateFrame'
-    ]),
+    ...mapActions('frame', ['getDetail'])
   }
 }
 </script>

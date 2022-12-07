@@ -1,6 +1,6 @@
 <template>
   <div>
-    Collection Form {{ 'mode ' + (editMode ? 'EDIT' : 'CREATE') }}
+    Collection Form {{ 'mode ' + (updateMode ? 'EDIT' : 'CREATE') }}
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: 'CollectionFormComponent',
 
   props: {
-    editMode: { type: Boolean, default: false }
+    updateMode: { type: Boolean, default: false }
   }
 }
 </script>

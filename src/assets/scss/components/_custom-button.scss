@@ -1,7 +1,7 @@
 @import '../helpers/_variables.scss';
 
 .edit-button,
-.delete-button  {
+.delete-button {
   padding: 2px 8px;
   border-radius: 2px;
   font-weight: 700;
@@ -21,4 +21,20 @@
   &:has(:not(button:disabled)) {
     background-color: $button-action-red;
   }
+}
+
+.save-button,
+.cancel-button {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  width: 124.71px;
+  padding: 4px;
+  height: auto;
+  color: $white;
+  background-color: $button-action-blue;
+}
+
+.cancel-button {
+  color: $text-color;
+  background-color: $button-action-grey-2;
 }

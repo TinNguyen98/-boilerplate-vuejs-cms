@@ -53,7 +53,7 @@
                     v-text="$t('edit')"/>
 
           <a-popconfirm :title="$t('delete_content')"
-                        :ok-text="$t('popcomfirm_delete_btn')"
+                        :ok-text="$t('popcomfirm_accept_btn')"
                         :cancel-text="$t('popcomfirm_cancel_btn')"
                         placement="topLeft"
                         :disabled="record.status === 'applying'"

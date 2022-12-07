@@ -73,7 +73,7 @@ import InputText from '@/shared/components/form/InputText'
 import InputCheckbox from '@/shared/components/form/InputCheckbox'
 // Others
 import FormMixin from '@/shared/mixins/form.mixin'
-import { scrollToErrorPlace, stripHtmlExceptTags } from '@/shared/helpers'
+import { scrollToErrorPlace, handleInputProtection } from '@/shared/helpers'
 
 export default {
   name: 'LoginPage',
@@ -101,7 +101,6 @@ export default {
   },
 
   methods: {
-    // Actions
     ...mapActions('auth', ['userLogin']),
 
     openAlertForgotPassword () {
@@ -123,11 +122,8 @@ export default {
 
     handleSubmit () {
       this.isSubmit = true
-      const formProtected = { ...this.form }
+      const formProtected = handleInputProtection(this.form)
 
-      for (const property in formProtected) {
-        formProtected[property] = stripHtmlExceptTags(formProtected[property])
-      }
       this.userLogin(formProtected).then(res => {
         if (res) {
           this.onSuccess(this.$t('completion'), this.$t('login_success'))

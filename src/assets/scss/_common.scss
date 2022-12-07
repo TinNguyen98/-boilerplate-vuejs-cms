@@ -82,7 +82,9 @@ label {
 }
 
 .has_error input,
-.has_error select {
+.has_error select,
+.has_error .ant-select-selection,
+.has_error .ant-upload.ant-upload-select .ant-btn {
   border-color: #c20c33 !important;
 }
 
@@ -141,6 +143,21 @@ label {
 }
 
 // ---- Override ant-design  ----
+.ant-modal-confirm-body {
+  font-family: 'Roboto', sans-serif;
+
+  .ant-modal-confirm-title,
+  .ant-modal-confirm-content {
+    color: $text-color;
+  }
+
+  .ant-modal-confirm-title {
+    font-size: 16px;
+  }
+  .ant-modal-confirm-content {
+    font-size: 14px;
+  }
+}
 .ant-popover {
   font-family: 'Roboto', sans-serif;
   .ant-popover-message {
@@ -177,6 +194,20 @@ label {
         height: auto;
       }
     }
+  }
+}
+
+.ant-input,
+.ant-btn,
+.ant-select,
+.ant-select-selection {
+  border-radius: 2px;
+}
+
+.ant-btn {
+  font-family: 'Roboto', sans-serif;
+  .anticon {
+    margin-right: 7.5px;
   }
 }
 

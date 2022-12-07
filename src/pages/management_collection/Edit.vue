@@ -4,7 +4,7 @@
     <page-title-component :title="detail.name"/>
 
     <!-- Block: Main content -->
-    <collection-form-component edit-mode/>
+    <collection-form-component update-mode/>
   </div>
 </template>
 

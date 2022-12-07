@@ -114,7 +114,7 @@ export default {
 @import '@/assets/scss/helpers/_variables.scss';
 
 .label {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   font-weight: bold;
   color: $text-color;
 }

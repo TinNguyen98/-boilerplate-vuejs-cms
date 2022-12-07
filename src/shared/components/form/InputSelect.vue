@@ -4,15 +4,17 @@
     :name="field"
     :vid="vid"
     :rules="rules"
+    :class="classContainer"
     v-slot="{ errors }">
     <!-- Label -->
     <label
       v-if="label"
       class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
       <span
-        v-if="rules.includes('required')"
+        v-if="rules.includes('required') && !hiddenAsterisk"
         class="required"
         v-text="'*'"
       />
@@ -22,8 +24,11 @@
       <!-- Field -->
       <a-select
         :value="value || value == '0' ? value : undefined"
+        :mode="multiple ? 'multiple': undefined"
         :placeholder="placeholder"
         :disabled="disabled"
+        :showArrow="true"
+        :not-found-content="$t('no_data')"
         @change="handleChange"
       >
         <template v-for="(option, index) in options">
@@ -60,7 +65,10 @@ export default {
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
-    disabled: { type: Boolean, default: false }
+    hiddenAsterisk: { type: Boolean, default: false },
+    multiple: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    classContainer: { type: String, default: '' }
   },
 
   methods: {
@@ -72,17 +80,19 @@ export default {
 </script>
 
 <style lang="scss">
-  .label {
-    margin-bottom: 4px;
-    font-weight: bold;
-    color: #222222;
-  }
-  .ant-select {
-    width: 100%;
-    .ant-select-selection--multiple {
-      .ant-select-selection__choice__remove {
-        bottom: 10%
-      }
+@import '@/assets/scss/helpers/_variables.scss';
+
+.label {
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: $text-color;
+}
+.ant-select {
+  width: 100%;
+  .ant-select-selection--multiple {
+    .ant-select-selection__choice__remove {
+      bottom: 10%
     }
   }
+}
 </style>

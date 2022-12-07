@@ -3,14 +3,14 @@
     <!-- Block: page title -->
     <page-title-component :title="$t('management_frame.page_list')">
       <router-link tag="button"
-                   :to="{ name: 'create_frame', query: { type: 'effect-movie' } }"
+                   :to="{ name: 'create_frame', query: { type: FRAME_TYPE[0].value } }"
                    class="ant-btn ant-btn-primary">
         <a-icon type="plus"/>
         {{ $t('management_frame.create_effect') }}
       </router-link>
 
       <router-link tag="button"
-                   :to="{ name: 'create_frame', query: { type: 'background' } }"
+                   :to="{ name: 'create_frame', query: { type: FRAME_TYPE[1].value } }"
                    class="ant-btn ant-btn-primary">
         <a-icon type="plus"/>
         {{ $t('management_frame.create_background') }}
@@ -40,7 +40,7 @@
 
         <!-- Frame type -->
         <template slot="type" slot-scope="type">
-          {{ type + ' Frame' }}
+          {{ type | filterCapitalizeFirstLetter  }} Frame
         </template>
 
         <!-- Updated at -->
@@ -65,7 +65,7 @@
                     v-text="$t('edit')"/>
 
           <a-popconfirm :title="$t('delete_content')"
-                        :ok-text="$t('popcomfirm_delete_btn')"
+                        :ok-text="$t('popcomfirm_accept_btn')"
                         :cancel-text="$t('popcomfirm_cancel_btn')"
                         placement="topLeft"
                         :disabled="record.status === 'applying'"
@@ -99,7 +99,7 @@ import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
 // Others
 import { PER_PAGE } from '@/enum/pagination.enum'
-import { STATUS } from '@/enum/pages/frame.enum'
+import { STATUS, FRAME_TYPE } from '@/enum/pages/frame.enum'
 import { FRAME_DATA } from '@/enum/dummy-data.enum'
 
 export default {
@@ -121,6 +121,7 @@ export default {
       },
       isDelete: false,
       STATUS,
+      FRAME_TYPE,
       FRAME_DATA
     }
   },

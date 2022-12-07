@@ -24,8 +24,8 @@
                class="list-table custom-table"
                rowKey="id">
         <!-- Start at -->
-        <template slot="start_at" slot-scope="start_at">
-          {{ start_at | filterFormatDate('HH:mm YYYY-MM-DD')}}
+        <template slot="start_time" slot-scope="start_time">
+          {{ start_time | filterFormatDate('HH:mm YYYY-MM-DD')}}
         </template>
 
         <!-- Updated at -->
@@ -50,7 +50,7 @@
                     v-text="$t('edit')"/>
 
           <a-popconfirm :title="$t('delete_content')"
-                        :ok-text="$t('popcomfirm_delete_btn')"
+                        :ok-text="$t('popcomfirm_accept_btn')"
                         :cancel-text="$t('popcomfirm_cancel_btn')"
                         placement="topLeft"
                         :disabled="record.status === 'happening'"
@@ -136,10 +136,10 @@ export default {
           dataIndex: 'name',
         },
         {
-          title: this.$t('management_event.start_at'),
+          title: this.$t('management_event.start_time'),
           width: 200,
-          dataIndex: 'start_at',
-          scopedSlots: { customRender: 'start_at' }
+          dataIndex: 'start_time',
+          scopedSlots: { customRender: 'start_time' }
         },
         {
           title: this.$t('management_event.updated_at'),
