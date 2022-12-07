@@ -2,11 +2,11 @@
   <a-layout-header id="header"
                    class="d-flex justify-content-between align-items-center">
 
-    <router-link :to="{ name: 'home' }" tag="h1" class="blur-effect mb-0">
-      <img :src="require('@/assets/images/aeon-logo.png')"
-           class="cursor-pointer"
-           alt="logo-aeon"/>
-    </router-link>
+    <router-link :to="{ name: 'home' }"
+                 tag="h1"
+                 class="header-logo blur-effect mb-0"
+                 v-text="'Logo template'"
+    />
 
     <div class="header-profile">
       <div class="header-profile-avatar"
@@ -135,6 +135,13 @@ export default {
       overflow: hidden;
       cursor: pointer;
     }
+  }
+
+  .header-logo {
+    color: $white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
   }
 }
 </style>

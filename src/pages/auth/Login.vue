@@ -1,67 +1,58 @@
 <template>
   <div v-if="layout === 'auth'"
-       class="login d-flex justify-content-between align-items-stretch">
-    <div class="login-block login-left flex-shrink-0">
-      <ValidationObserver
-        ref="observer"
-        tag="form"
-        class="login-container ml-auto mr-auto"
-        @submit.prevent="validateBeforeSubmit()">
+       class="login d-flex justify-content-between align-items-center">
+    <ValidationObserver
+      ref="observer"
+      tag="form"
+      class="login-container ml-auto mr-auto"
+      @submit.prevent="validateBeforeSubmit()">
 
-        <h1 class="login-logo text-center">
-          <img :src="require('@/assets/images/aeon-logo-large.png')"
-               alt="aeon-logo">
-        </h1>
+      <h3 class="login-title" v-text="$t('login')"/>
 
-        <h3 class="login-title" v-text="$t('login')"/>
+      <InputText v-model="form.login_id"
+                 vid="username"
+                 :label="$t('login_id')"
+                 field="login_id"
+                 :placeholder="$t('login_id_placeholder')"
+                 rules="required|max:100"
+                 class-container="mb-2"
+                 class-input="login-custom__input"
+                 hidden-asterisk
+      />
 
-        <InputText v-model="form.login_id"
-                   vid="username"
-                   :label="$t('login_id')"
-                   field="login_id"
-                   :placeholder="$t('login_id_placeholder')"
-                   rules="required|max:100"
-                   class-container="mb-2"
-                   class-input="login-custom__input"
-                   hidden-asterisk
+      <InputText v-model="form.password"
+                 vid="password"
+                 type="password"
+                 :label="$t('password')"
+                 field="password"
+                 :placeholder="$t('password_placeholder')"
+                 rules="required|max:100"
+                 class-container="mb-3"
+                 class-input="login-custom__input"
+                 show-password
+                 hidden-asterisk
+      />
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <InputCheckbox v-model="remember_password"
+                       :name-label="$t('remember_password')"
+                       field="remember_password"
         />
 
-        <InputText v-model="form.password"
-                   vid="password"
-                   type="password"
-                   :label="$t('password')"
-                   field="password"
-                   :placeholder="$t('password_placeholder')"
-                   rules="required|max:100"
-                   class-container="mb-3"
-                   class-input="login-custom__input"
-                   show-password
-                   hidden-asterisk
-        />
+        <p class="login-forgot_password"
+           @click.prevent="openAlertForgotPassword"
+           v-text="$t('forgot_password')"/>
+      </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <InputCheckbox v-model="remember_password"
-                         :name-label="$t('remember_password')"
-                         field="remember_password"
-          />
-
-          <p class="login-forgot_password"
-             @click.prevent="openAlertForgotPassword"
-             v-text="$t('forgot_password')"/>
-        </div>
-
-        <a-button type="primary"
-                  html-type="submit"
-                  :loading="isSubmit"
-                  class="login-submit_btn"
-                  block
-        >
-          {{ $t('login') }}
-        </a-button>
-      </ValidationObserver>
-    </div>
-
-    <div class="login-block login-right"></div>
+      <a-button type="primary"
+                html-type="submit"
+                :loading="isSubmit"
+                class="login-submit_btn"
+                block
+      >
+        {{ $t('login') }}
+      </a-button>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -148,7 +139,6 @@ export default {
   &-container {
     width: 404px;
     max-width: 31.222vw;
-    padding-top: 20%;
   }
 
   &-submit_btn {
@@ -175,16 +165,6 @@ export default {
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
-  }
-
-  &-block {
-    flex-basis: 50%;
-  }
-
-  &-right {
-    background-image: url("@/assets/images/aeon-outdoor-background.jpg");
-    background-size: cover;
-    background-position: center;
   }
 }
 </style>
