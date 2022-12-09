@@ -1,6 +1,6 @@
 import * as moment from 'moment-timezone'
 import router from '@/router'
-import { forEach } from 'lodash-es'
+import { forEach, includes } from 'lodash-es'
 import i18n from "@/plugins/i18n"
 
 /**
@@ -32,6 +32,18 @@ export const formatDate = (date, format = '') => {
     convertDate = [objDate.year, objDate.month, objDate.day].join('-') + ' ' + time
   }
   return moment(convertDate.toString(), 'YYYY-MM-DD HH:mm:ss').format(format)
+}
+
+export const formatNumberDecimal = (number, format = ',') => {
+  // Don't execute if it's negative number
+  if (
+    includes(['0', '-', '.'], number.toString().charAt(0)) ||
+    includes(number.toString(), '.')
+  ) { return number }
+
+  number = number.toString().replaceAll(format, '')
+  // REGEX: detect number decimal and add dot every 3 digits
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, format)
 }
 
 export const handleErrorNotAllow = async (errStatus) => {
@@ -131,6 +143,7 @@ export const capitalizeFirstLetter = (string) => {
 
 export default {
   formatDate,
+  formatNumberDecimal,
   handleErrorNotAllow,
   encodeMessage,
   decodeMessage,

@@ -4,8 +4,8 @@
 # Dependency directories
 node_modules/
 jspm_packages/
-package-lock.json
-yarn.lock
+#package-lock.json
+#yarn.lock
 /dist
 /deploy/keys/*
 
