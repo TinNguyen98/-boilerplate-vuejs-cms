@@ -1,4 +1,5 @@
 import { FrameService } from '@/api/services/frame.service'
+import { FRAME_DATA } from '@/enum/dummy-data.enum'
 
 const initialState = {
   list: null,
@@ -24,13 +25,15 @@ const mutations = {
 
 const actions = {
   getFrameList ({ commit }, params = {}) {
-    return FrameService.getList(params).then(res => {
-      commit('SET_LIST', res.data)
-      commit('SET_PAGINATION', res.pagination)
-      return res
-    }).catch(err => {
-      return err.response.data
-    })
+    commit('SET_LIST', FRAME_DATA)
+    return FRAME_DATA
+    // return FrameService.getList(params).then(res => {
+    //   commit('SET_LIST', res.data)
+    //   commit('SET_PAGINATION', res.pagination)
+    //   return res
+    // }).catch(err => {
+    //   return err.response.data
+    // })
   },
 
   createFrame ({ commit }, params = {}) {
@@ -59,13 +62,17 @@ const actions = {
 
   getDetail ({ commit }, payload = {}) {
     const { id, params } = payload
-    return FrameService.show(id, params).then((res) => {
-      commit('SET_DETAIL', res.data)
 
-      return true
-    }).catch(_ => {
-      return false
-    })
+    const result = FRAME_DATA.find(i => i.id === id)
+    commit('SET_DETAIL', result)
+    return true
+    // return FrameService.show(id, params).then((res) => {
+    //   commit('SET_DETAIL', res.data)
+    //
+    //   return true
+    // }).catch(_ => {
+    //   return false
+    // })
   }
 }
 

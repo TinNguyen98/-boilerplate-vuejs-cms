@@ -15,8 +15,8 @@
   }
 
   .ant-input {
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 1rem;
+    line-height: 1rem;
     height: 44px;
     color: #1F1816;
     padding: 0;
@@ -37,7 +37,7 @@
     &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
       font-family: $font-family-sans-serif;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: normal;
     }
   }
@@ -74,17 +74,6 @@
       display: inline-block;
       margin-bottom: 0;
     }
-  }
-}
-
-.ant-upload.ant-upload-select {
-  width: 100%;
-  .ant-btn {
-    @include flex();
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    color: $text-weak-black-color;
   }
 }
 
@@ -157,6 +146,25 @@
 
     &.turn-on {
       left: 10%;
+    }
+  }
+
+  &.checkbox-animated-large {
+    .checkbox-animated_checkbox {
+      .ant-checkbox-input[type="checkbox"] {
+        width: 105px;
+        &::after {
+          width: 18%;
+        }
+      }
+
+      &.checked {
+        .ant-checkbox-input[type="checkbox"] {
+          &::after {
+            left: calc((100% - 18%) - 2px); // (100% - roller's width) - 2px
+          }
+        }
+      }
     }
   }
 }

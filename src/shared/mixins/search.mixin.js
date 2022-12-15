@@ -1,5 +1,6 @@
 // Others
 import { handleInputProtection } from '@/shared/helpers'
+import { debounce } from 'lodash-es'
 
 export default {
   data () {
@@ -8,11 +9,18 @@ export default {
     }
   },
 
+  beforeDestroy () {
+    this.debounceSearch().cancel()
+  },
+
   methods: {
     search () {
       const filterProtected = handleInputProtection(this.filter)
-
       this.$emit('filter-changed', filterProtected)
+    },
+
+    debounceSearch () {
+      return debounce(() => this.search(), 800)
     },
 
     reset () {

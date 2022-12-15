@@ -33,9 +33,7 @@
 
         <!-- Frame image -->
         <template slot="image" slot-scope="image">
-          <img class="col-image"
-               :src="image || require('@/assets/images/noimage_bg.png')"
-               alt="frame image">
+          <image-zoom :src="image" class-image="col-image" />
         </template>
 
         <!-- Frame type -->
@@ -81,23 +79,28 @@
       <!-- Section: Pagination -->
       <pagination-component :total="FRAME_DATA.length"
                             :current-page="1"
+                            :page-size="params.per_page"
                             show-total
                             show-size-changer
-                            @handleCurrentChange="handleCurrentChange($event)"/>
+                            @handleSizeChange="handlePaginateChange($event, 'size')"
+                            @handleCurrentChange="handlePaginateChange($event, 'page')"/>
     </section>
   </div>
 </template>
 
 <script>
 // Store
-// import store from '@/shared/store'
+import store from '@/shared/store'
 import { mapActions, mapState } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import FrameSearchComponent from '@/shared/components/management_frame/FrameSearch'
 import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
+import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
+import moment from 'moment'
+import FormMixin from '@/shared/mixins/form.mixin'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS, FRAME_TYPE } from '@/enum/pages/frame.enum'
 import { FRAME_DATA } from '@/enum/dummy-data.enum'
@@ -109,8 +112,11 @@ export default {
     PageTitleComponent,
     FrameSearchComponent,
     StatusTagComponent,
-    PaginationComponent
+    PaginationComponent,
+    ImageZoom
   },
+
+  mixins: [FormMixin],
 
   data () {
     return {
@@ -119,6 +125,7 @@ export default {
         page: 1,
         per_page: PER_PAGE.FRAME
       },
+      statusOrder: ['applying', 'not_apply'],
       isDelete: false,
       STATUS,
       FRAME_TYPE,
@@ -127,18 +134,16 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    // const params = {
-    //   page: 1,
-    //   per_page: PER_PAGE.FRAME
-    // }
-    next()
-    // return store.dispatch('frame/getFrameList', params).then(() => next())
+    const params = {
+      page: 1,
+      per_page: PER_PAGE.FRAME
+    }
+    return store.dispatch('frame/getFrameList', params).then(() => next())
   },
 
   created () {
     // Clone list from vuex
-    // this.listData = JSON.parse(JSON.stringify(this.list))
-    this.listData = FRAME_DATA
+    this.listData = JSON.parse(JSON.stringify(this.list))
   },
 
   computed: {
@@ -173,7 +178,14 @@ export default {
           title: this.$t('status'),
           width: 147,
           dataIndex: 'status',
-          scopedSlots: { customRender: 'status' }
+          scopedSlots: { customRender: 'status' },
+          sorter: (a, b) => {
+            const posA = this.statusOrder.indexOf(a.status)
+            const posB = this.statusOrder.indexOf(b.status)
+
+            if (posA === posB) return moment(a.updated_at) - moment(b.updated_at)
+            return posA - posB
+          }
         },
         {
           title: this.$t('management_frame.manipulation'),
@@ -206,12 +218,17 @@ export default {
       this.fetchList(this.params)
     },
 
-    // Pagination
-    handleCurrentChange (num) {
-      this.params = {
-        ...this.params,
-        page: num
+    /**
+     * @param arg
+     * @param type {string} ['page', 'size']
+     */
+    handlePaginateChange (arg, type = 'page') {
+      if (type === 'page') {
+        this.params = { ...this.params, page: arg }
+      } else {
+        this.params = { ...arg }
       }
+
       this.fetchList(this.params)
     },
 
@@ -225,7 +242,7 @@ export default {
       if (!record || status === 'applying') return
 
       this.isDelete = true
-      this.removeEvent(id).then(res => {
+      this.removeFrame(id).then(res => {
         if (res) {
           this.isDelete = false
           this.onSuccess(this.$t('completion'), this.$t('delete_message_successfully'))
@@ -242,5 +259,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

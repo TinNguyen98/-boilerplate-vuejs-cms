@@ -83,6 +83,7 @@ label {
 
 .has_error input,
 .has_error select,
+.has_error .ant-input-number,
 .has_error .ant-select-selection,
 .has_error .ant-upload.ant-upload-select .ant-btn {
   border-color: #c20c33 !important;
@@ -152,7 +153,7 @@ label {
   }
 
   .ant-modal-confirm-title {
-    font-size: 16px;
+    font-size: 1rem;
   }
   .ant-modal-confirm-content {
     font-size: 14px;
@@ -168,14 +169,21 @@ label {
     }
     &-title {
       font-weight: 500;
-      font-size: 16px;
+      font-size: 1rem;
       padding-left: 38px;
     }
   }
-  .ant-popover-inner-content {
+
+  .ant-popover-inner-content:not(:has(.table-order)) {
     padding: 24px 32px;
     width: 416px;
     max-width: 416px;
+  }
+
+  .ant-popover-inner-content:has(.table-order) {
+    padding: 20px;
+    padding-right: 5px;
+    width: 220px;
   }
 
   .ant-popover-buttons {
@@ -197,11 +205,51 @@ label {
   }
 }
 
+.modal-image-zoom {
+  .ant-modal-content {
+    background-color: transparent;
+    box-shadow: none;
+
+    .ant-modal-body {
+      width: 45vh;
+      padding: 0;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .ant-modal-close {
+      top: -25px;
+      color: $white;
+      &-x {
+        width: auto;
+        height: fit-content;
+        font-size: 25px;
+        line-height: unset;
+      }
+    }
+  }
+}
+
+.ant-notification-notice-description {
+  white-space: pre-line;
+}
+
 .ant-input,
+.ant-input-number,
 .ant-btn,
 .ant-select,
 .ant-select-selection {
   border-radius: 2px;
+  width: 100%;
+}
+
+.ant-select-selection__placeholder,
+.ant-select-search__field__placeholder {
+  display: block;
+}
+
+.ant-btn {
+  width: auto;
 }
 
 .ant-btn {
@@ -257,7 +305,7 @@ label {
 .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
 .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-submenu > .ant-menu-submenu-title,
 .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
-  padding: 0 16px !important;
+  padding: 0 1rem !important;
 }
 
 .ant-menu-inline-collapsed > .ant-menu-submenu {

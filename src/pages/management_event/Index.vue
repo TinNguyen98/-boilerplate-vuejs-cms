@@ -66,16 +66,18 @@
       <!-- Section: Pagination -->
       <pagination-component :total="EVENT_DATA.length"
                             :current-page="1"
+                            :page-size="params.per_page"
                             show-total
                             show-size-changer
-                            @handleCurrentChange="handleCurrentChange($event)"/>
+                            @handleSizeChange="handlePaginateChange($event, 'size')"
+                            @handleCurrentChange="handlePaginateChange($event, 'page')"/>
     </section>
   </div>
 </template>
 
 <script>
 // Store
-// import store from '@/shared/store'
+import store from '@/shared/store'
 import { mapActions, mapState } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
@@ -83,6 +85,7 @@ import EventSearchComponent from '@/shared/components/management_event/EventSear
 import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
 // Others
+import moment from 'moment'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS } from '@/enum/pages/event.enum'
 import { EVENT_DATA } from '@/enum/dummy-data.enum'
@@ -104,6 +107,7 @@ export default {
         page: 1,
         per_page: PER_PAGE.EVENT
       },
+      statusOrder: ['happening', 'upcoming', 'happened'],
       isDelete: false,
       STATUS,
       EVENT_DATA
@@ -111,18 +115,16 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    // const params = {
-    //   page: 1,
-    //   per_page: PER_PAGE.EVENT
-    // }
-    next()
-    // return store.dispatch('event/getEventList', params).then(() => next())
+    const params = {
+      page: 1,
+      per_page: PER_PAGE.EVENT
+    }
+    return store.dispatch('event/getEventList', params).then(() => next())
   },
 
   created () {
     // Clone list from vuex
-    // this.listData = JSON.parse(JSON.stringify(this.list))
-    this.listData = EVENT_DATA
+    this.listData = JSON.parse(JSON.stringify(this.list))
   },
 
   computed: {
@@ -151,7 +153,14 @@ export default {
           title: this.$t('status'),
           width: 218,
           dataIndex: 'status',
-          scopedSlots: { customRender: 'status' }
+          scopedSlots: { customRender: 'status' },
+          sorter: (a, b) => {
+            const posA = this.statusOrder.indexOf(a.status)
+            const posB = this.statusOrder.indexOf(b.status)
+
+            if (posA === posB) return moment(a.updated_at) - moment(b.updated_at)
+            return posA - posB
+          }
         },
         {
           title: this.$t('management_event.manipulation'),
@@ -184,12 +193,17 @@ export default {
       this.fetchList(this.params)
     },
 
-    // Pagination
-    handleCurrentChange (num) {
-      this.params = {
-        ...this.params,
-        page: num
+    /**
+     * @param arg
+     * @param type {string} ['page', 'size']
+     */
+    handlePaginateChange (arg, type = 'page') {
+      if (type === 'page') {
+        this.params = { ...this.params, page: arg }
+      } else {
+        this.params = { ...arg }
       }
+
       this.fetchList(this.params)
     },
 
@@ -220,5 +234,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

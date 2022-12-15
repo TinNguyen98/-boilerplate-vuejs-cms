@@ -9,12 +9,12 @@
 
       <h3 class="login-title" v-text="$t('login')"/>
 
-      <InputText v-model="form.login_id"
+      <InputText v-model="form.username"
                  vid="username"
                  :label="$t('login_id')"
                  field="login_id"
                  :placeholder="$t('login_id_placeholder')"
-                 rules="required|max:100"
+                 rules="required|half_width|max:100|not_emoji"
                  class-container="mb-2"
                  class-input="login-custom__input"
                  hidden-asterisk
@@ -26,7 +26,7 @@
                  :label="$t('password')"
                  field="password"
                  :placeholder="$t('password_placeholder')"
-                 rules="required|max:100"
+                 rules="required|half_width|min:8|max:100|not_emoji"
                  class-container="mb-3"
                  class-input="login-custom__input"
                  show-password
@@ -118,8 +118,9 @@ export default {
       this.userLogin(formProtected).then(res => {
         if (res) {
           this.onSuccess(this.$t('completion'), this.$t('login_success'))
-          this.$router.push({ name: 'home' })
           this.isSubmit = false
+          // Remove process login api in network tab
+          window.location.reload()
         } else {
           this.onError(this.$t('fail'), this.$t('login_fail'))
           this.isSubmit = false

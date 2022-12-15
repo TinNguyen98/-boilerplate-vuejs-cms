@@ -4,31 +4,36 @@
     :name="field"
     :vid="vid"
     :rules="rules"
+    :class="classContainer"
     v-slot="{ errors }">
     <!-- Label -->
     <label
       v-if="label"
       class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
       <span
-        v-if="rules.includes('required')"
+        v-if="rules.includes('required') && !hiddenAsterisk"
         class="required"
         v-text="'*'"
       />
     </label>
 
     <div :class="{ 'has_error': errors[0] }">
-      <a-checkbox
+      <!-- Field -->
+      <a-input-number
         :disabled="disabled"
         :value="value"
         :class="classInput"
+        :placeholder="placeholder"
         :readOnly="!autofill || readonly"
-        @change="handleChange"
+        :min="+min"
+        :max="+max"
+        @change="handleType($event)"
         @focus="handleFocus"
-      >
-        {{ nameLabel }}
-      </a-checkbox>
+        @blur="handleBlur"
+      />
       <!-- Message Error -->
       <span v-if="errors[0]"
             class="errors"
@@ -39,7 +44,7 @@
 
 <script>
 export default {
-  name: 'InputCheckbox',
+  name: 'InputTextNumberComponent',
 
   model: {
     prop: 'value',
@@ -48,27 +53,46 @@ export default {
 
   props: {
     vid: { type: String, default: '' },
-    value: { type: [Boolean, String], default: false },
+    value: { type: [Number, String], default: '' },
     field: { type: String, default: '' },
     label: { type: String, default: '' },
-    nameLabel: { type: String, default: '' },
     rules: { type: String, default: '' },
+    placeholder: { type: String, default: '' },
+    min: { type: [String, Number], default: 1 },
+    max: { type: [String, Number], default: 100 },
     classInput: { type: String, default: '' },
+    classContainer: { type: String, default: '' },
+    hiddenAsterisk: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    showPassword: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
     autofill: { type: Boolean, default: true }
   },
 
   methods: {
-    handleChange ($event) {
-      this.$emit('change', $event.target.checked)
+    handleType ($event) {
+      this.$emit('change', $event)
     },
 
     handleFocus ($event) {
       if (!this.autofill) {
         $event.target.removeAttribute('readonly')
       }
+    },
+
+    handleBlur (event) {
+      this.$emit('blur', event.target.value)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/scss/helpers/_variables.scss';
+
+.label {
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: $text-color;
+}
+</style>

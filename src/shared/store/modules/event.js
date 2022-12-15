@@ -1,4 +1,5 @@
 import { EventService } from '@/api/services/event.service'
+import { EVENT_DATA } from '@/enum/dummy-data.enum'
 
 const initialState = {
   list: null,
@@ -24,13 +25,15 @@ const mutations = {
 
 const actions = {
   getEventList ({ commit }, params = {}) {
-    return EventService.getList(params).then(res => {
-      commit('SET_LIST', res.data)
-      commit('SET_PAGINATION', res.pagination)
-      return res
-    }).catch(err => {
-      return err.response.data
-    })
+    commit('SET_LIST', EVENT_DATA)
+    return EVENT_DATA
+    // return EventService.getList(params).then(res => {
+    //   commit('SET_LIST', res.data)
+    //   commit('SET_PAGINATION', res.pagination)
+    //   return res
+    // }).catch(err => {
+    //   return err.response.data
+    // })
   },
 
   createEvent ({ commit }, params = {}) {
@@ -59,13 +62,18 @@ const actions = {
 
   getDetail ({ commit }, payload = {}) {
     const { id, params } = payload
-    return EventService.show(id, params).then((res) => {
-      commit('SET_DETAIL', res.data)
 
-      return true
-    }).catch(_ => {
-      return false
-    })
+    const result = EVENT_DATA.find(i => i.id === id)
+    commit('SET_DETAIL', result)
+    return true
+
+    // return EventService.show(id, params).then((res) => {
+    //   commit('SET_DETAIL', res.data)
+    //
+    //   return true
+    // }).catch(_ => {
+    //   return false
+    // })
   }
 }
 

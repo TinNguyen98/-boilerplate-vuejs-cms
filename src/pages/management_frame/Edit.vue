@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="$route.meta['frame_detail'].name"/>
+    <page-title-component :title="detail.name"/>
 
     <!-- Block: Main content -->
     <frame-form-component update-mode/>
@@ -10,12 +10,11 @@
 
 <script>
 // Store
-// import store from '@/shared/store'
-import { mapActions } from 'vuex'
+import store from '@/shared/store'
+import { mapState } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import FrameFormComponent from '@/shared/components/management_frame/FrameForm'
-import { FRAME_DATA } from '@/enum/dummy-data.enum'
 
 export default {
   name: 'EditFramePage',
@@ -26,19 +25,11 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    const result = FRAME_DATA.find(i => i.id === to.params.id)
-    if (!result) {
-      return next({ name: 'not_found' })
-    }
-    to.meta['frame_detail'] = result
-    next()
-    // return store.dispatch('frame/getDetail').then(() => next())
+    return store.dispatch('frame/getDetail', { id: to.params.id }).then(() => next())
   },
 
-  methods: {
-    ...mapActions('frame', ['getDetail'])
+  computed: {
+    ...mapState('frame', ['detail'])
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

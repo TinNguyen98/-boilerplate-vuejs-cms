@@ -6,6 +6,9 @@
 
       <a-input-search v-model="filter.keyword"
                       :placeholder="$t('search')"
+                      @change="debounceSearch"
+                      @keydown.enter.prevent="search"
+                      allow-clear
       />
     </div>
 
@@ -14,7 +17,10 @@
       <label v-text="$t('status')"/>
 
       <a-select v-model="filter.status"
-                :placeholder="$t('status_placeholder')">
+                :placeholder="$t('status_placeholder')"
+                allow-clear
+                @change="search"
+      >
         <a-select-option v-for="item in STATUS"
                          :key="item.id"
                          :value="item.value">

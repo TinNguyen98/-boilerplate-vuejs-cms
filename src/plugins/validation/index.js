@@ -12,33 +12,6 @@ for (let [rule, validation] of Object.entries(rules)) {
   })
 }
 
-// Check Start Date and End Date based on range
-extend('limit_startend_date', {
-  validate (value, params) {
-    if (value.start.date !== '' && value.end.date !== '') {
-      let startDate = value.start.date
-      let endDate = value.end.date
-      let limitEnd = moment(startDate).clone().add(+(params[0]), 'years')
-      let limitStart = moment(endDate).clone().subtract(+(params[0]), 'years')
-      return formatDate(endDate, 'YYYY-MM-DD') < formatDate(limitEnd, 'YYYY-MM-DD') ||
-        formatDate(startDate, 'YYYY-MM-DD') > formatDate(limitStart, 'YYYY-MM-DD')
-    }
-    return false
-  }
-})
-
-// Check Start Date < End Date and Required
-extend('real_startend_date', {
-  validate (value) {
-    const startDate = value.start.date
-    const endDate = value.end.date
-    if (startDate && endDate) {
-      return formatDate(startDate, 'YYYY-MM-DD') <= formatDate(endDate, 'YYYY-MM-DD')
-    }
-    return false
-  }
-})
-
 extend('valid_url', {
   validate (value) {
     // REGEX: check url
@@ -62,36 +35,20 @@ extend('required_editor', {
   }
 })
 
-extend('max_editor', {
+extend('half_width', {
+  validate (value) {
+    return /^[a-zA-Z0-9!-'*-.^-`~:?@=]+$/.test(value)
+  }
+})
+
+extend('full_width', {
   validate (value, params) {
-    // REGEX: remove all tag html
-    return value.replaceAll(/<[^>]*>/g, '').trim().length <= +(params[0])
+    return /^[ａ-ｚＡ-Ｚ一-龠々-〇ぁ-んァ-ヶ０-９ー・]+$/.test(value)
   }
 })
 
-extend('contain_lower_latin', {
-  validate (value) {
-    return value.match(/[a-z]/g) !== null
-  }
-})
-
-extend('contain_upper_latin', {
-  validate (value) {
-    return value.match(/[A-Z]/g) !== null
-  }
-})
-
-extend('contain_numeric', {
-  validate (value) {
-    return value.match(/[0-9]/g) !== null
-  }
-})
-
-extend('contain_special_char', {
-  validate (value) {
-    const format = /[`~!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/
-    return format.test(value)
-  }
+extend('required_file', {
+  ...rules.required
 })
 
 extend('required_image', {
@@ -102,11 +59,7 @@ extend('required_choose', {
   ...rules.required
 })
 
-extend('required_only_enter', {
-  ...rules.required
-})
-
-extend('required_only_choose', {
+extend('required_multi_choose', {
   ...rules.required
 })
 

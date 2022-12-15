@@ -12,22 +12,31 @@ Vue.use(VueI18n)
 
 const dictionary = {
   vi: {
-    required: '{_field_} là bắt buộc', // override 'required' rule.
-    required_choose: '{_field_} là bắt buộc chọn', // override 'required' rule.
-    required_only_enter: '{_field_}を入力ください',
-    required_only_choose: '{_field_}を選択ください',
-    required_editor: '{_field_}を入力してください',
-    required_image: '画像を選択してください',
-    email: '{_field_}ドレスの形式が正しくありません',
-    not_emoji: '使用できない文字が入力されています',
-    contain_lower_latin: 'パスワードは英大文字・英小文字・数字・記号から4 種混ぜ合わせて10 以上16文字以内を入力してください。',
-    contain_upper_latin: 'パスワードは英大文字・英小文字・数字・記号から4 種混ぜ合わせて10 以上16文字以内を入力してください。',
-    contain_numeric: 'パスワードは英大文字・英小文字・数字・記号から4 種混ぜ合わせて10 以上16文字以内を入力してください。',
-    contain_special_char: 'パスワードは英大文字・英小文字・数字・記号から4 種混ぜ合わせて10 以上16文字以内を入力してください。',
-    valid_url: 'URLの形式が正しくありません',
-    limit_startend_date: '応募期間は10年以内にご入力ください',
-    real_startend_date: '終了日には、開始日より後の日付を指定してください',
-    max_editor: '{length}文字以内で入力してください'
+    required: 'Vui lòng nhập vào mục {_field_}.', // override 'required' rule.
+    required_choose: 'Vui lòng nhập chọn một {_field_}.',
+    required_multi_choose: 'Vui lòng nhập chọn ít nhất một {_field_}.',
+    min: 'Vui lòng nhập từ {length} ký tự trở lên.',
+    max: 'Vui lòng nhập trong phạm vi {length} ký tự.',
+    required_file: 'Vui lòng chọn file {_field_}.',
+    required_editor: 'Vui lòng nhập vào mục {_field_}.',
+    required_image: 'Vui lòng tải ảnh.',
+    not_emoji: 'Vui lòng không nhập các ký tự emoji.',
+    valid_url: 'URL không đúng định dạng.',
+    half_width: 'Vui lòng chỉ nhập các ký tự, ký tự chữ và số half-width.',
+    full_width: 'Vui lòng chỉ nhập các ký tự full-width.',
+  },
+  en: {
+    required: 'Please enter {_field_}.', // override 'required' rule.
+    required_choose: 'Please enter select one {_field_}.',
+    required_multi_choose: 'Please enter at least one {_field_}.',
+    min: 'Please enter {length} characters or more.',
+    max: 'Please enter within {length} characters.',
+    required_editor: 'Please enter {_field_}.',
+    required_image: 'Please upload pictures.',
+    not_emoji: 'Please do not enter emoji characters.',
+    valid_url: 'The URL is malformed.',
+    half_width: 'Please enter only alphanumeric characters and half-width.',
+    full_width: 'Please enter only full-width characters.',
   }
 }
 

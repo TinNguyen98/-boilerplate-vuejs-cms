@@ -56,6 +56,7 @@
       margin-right: 90px;
       @media #{$info-ipad-pro} {
         margin-right: 0;
+        margin-bottom: 10px;
       }
     }
   }
@@ -68,7 +69,7 @@
     background: $white;
 
     > *:not(:last-child) {
-      margin-right: 16px;
+      margin-right: 1rem;
     }
   }
 }

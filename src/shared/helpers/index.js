@@ -2,6 +2,7 @@ import * as moment from 'moment-timezone'
 import router from '@/router'
 import { forEach, includes } from 'lodash-es'
 import i18n from "@/plugins/i18n"
+import { notification } from 'ant-design-vue'
 
 /**
  * @param date
@@ -46,6 +47,22 @@ export const formatNumberDecimal = (number, format = ',') => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, format)
 }
 
+export const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload = () => resolve(reader.result)
+  reader.onerror = error => reject(error)
+})
+
+export const checkImageSizeByMb = (file, limitSize = 5) => {
+  const sizeMb = +((file.size / (1024 * 1024)).toFixed(2))
+  if (sizeMb > +(limitSize)) {
+    alert(i18n.t('limit_size', { size: limitSize }))
+    return true
+  }
+  return false
+}
+
 export const handleErrorNotAllow = async (errStatus) => {
   if ([403, 405].includes(errStatus)) {
     await router.push({ name: 'not_authenticated' })
@@ -54,48 +71,18 @@ export const handleErrorNotAllow = async (errStatus) => {
   return false
 }
 
-export const encodeMessage = (content) => {
-  // Includes two-step use the remove character script or tag html before send api:
-  // Step 1: encodeURI() convert structure HTML to character
-  // Step 2: btoa() convert all character to base64
-  return content ? window.btoa(encodeURI(content)) : ''
-}
-
-export const decodeMessage = (content) => {
-  if (!content) return ''
-  // Cuz old record only encodeURI so have to distinguish base64 vs base64url
-  // Reference link: https://stackoverflow.com/questions/55389211/string-based-data-encoding-base64-vs-base64url
-  let formatText = content
-  if (!content.includes('%')) {
-    try {
-      formatText = window.atob(content)
-    } catch (e) { throw e }
-  }
-
-  try {
-    formatText = decodeURI(formatText)
-  } catch (e) { throw e }
-
-  return formatText
-}
-
-export const detectShiftEnter = (event) => {
-  // enter keycode = 13
-  return Object.keys(event).length &&
-    event.keyCode === 13 && event.shiftKey
-}
-
-export const scrollToErrorPlace = (form) => {
+export const scrollToErrorPlace = (form, scrollScope = null) => {
   if (!form) return
   // Scroll into error field
   setTimeout(() => {
     const errors = Object.entries(form.errors)
       .map(([key, value]) => ({ key, value }))
       .filter(error => error['value'].length)
-    let elementPosition = form.refs[errors[0]['key']].$el.getBoundingClientRect().top
-    let offsetPosition = elementPosition + window.pageYOffset - (window.innerHeight / 2)
+    const elementPosition = form.refs[errors[0]['key']].$el.getBoundingClientRect().top
+    const offsetPosition = elementPosition + window.pageYOffset - (window.innerHeight / 2)
+    const scope = scrollScope ? scrollScope : window
 
-    window.scrollTo({
+    scope.scrollTo({
       top: offsetPosition,
       behavior: 'smooth'
     })
@@ -137,19 +124,52 @@ export const handleInputProtection = (form) => {
   return cloneForm
 }
 
+export const handleRequestErrorMessage = (response, fallback = 'action_fail') => {
+  const { status, message } = response
+
+  // Validate error
+  if (status === 422) {
+    let contentError = ''
+    if (typeof message === 'object') {
+      Object.keys(message).forEach(field => {
+        contentError += Array.isArray(message[field])
+          ? message[field].join('\n') : message[field]
+      })
+    }
+
+    return notification.error({
+      message: i18n.t('fail'),
+      description: contentError || message
+    })
+  }
+
+  return notification.error({
+    message: i18n.t('fail'),
+    description: i18n.t(fallback)
+  })
+}
+
+export const verifyArgument = (arrRule, cb) => {
+  if (!arrRule.includes(cb)) {
+    return console.error(`The parameter's path is wrong or not found. ' +
+      'Expected [${arrRule.join(', ')}], please check again parameter.`)
+  }
+}
+
 export const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+  return string ? string.charAt(0).toUpperCase() + string.slice(1) : string
 }
 
 export default {
   formatDate,
   formatNumberDecimal,
+  toBase64,
+  checkImageSizeByMb,
   handleErrorNotAllow,
-  encodeMessage,
-  decodeMessage,
-  detectShiftEnter,
   scrollToErrorPlace,
   stripHtmlExceptTags,
   handleInputProtection,
+  handleRequestErrorMessage,
+  verifyArgument,
   capitalizeFirstLetter
 }

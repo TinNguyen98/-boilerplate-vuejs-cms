@@ -1,21 +1,28 @@
 <template>
   <div id="app">
     <component :is="layout" v-if="layout"/>
+
+    <loading-component v-if="loading"/>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// Store
+import { mapState, mapGetters } from 'vuex'
+// Components
+import LoadingComponent from '@/shared/components/layout/Loading'
 
 export default {
   name: 'ApplicationLayout',
 
   components: {
+    LoadingComponent,
     'auth': () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
     'default': () => import(/* webpackChunkName: "default" */ '@/layouts/Default.vue')
   },
 
   computed: {
+    ...mapState('loader', ['loading']),
     ...mapGetters({ layout: 'layout' })
   }
 }

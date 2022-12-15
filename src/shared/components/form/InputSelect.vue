@@ -27,8 +27,9 @@
         :mode="multiple ? 'multiple': undefined"
         :placeholder="placeholder"
         :disabled="disabled"
-        :showArrow="true"
+        :showArrow="showArrow"
         :not-found-content="$t('no_data')"
+        :allow-clear="multiple"
         @change="handleChange"
       >
         <template v-for="(option, index) in options">
@@ -36,7 +37,7 @@
             :key="index"
             :value="option.value"
           >
-            {{ option.name }}
+            {{ moduleName ? $t(moduleName + '.' + option[contentField]) : option[contentField] }}
           </a-select-option>
         </template>
       </a-select>
@@ -63,17 +64,20 @@ export default {
     options: { type: [Array, Object], default: () => [] },
     field: { type: String, default: '' },
     label: { type: String, default: '' },
+    contentField: { type: String, default: 'name' },
+    moduleName: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
+    classContainer: { type: String, default: '' },
+    showArrow: { type: Boolean, default: true },
     hiddenAsterisk: { type: Boolean, default: false },
     multiple: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    classContainer: { type: String, default: '' }
+    disabled: { type: Boolean, default: false }
   },
 
   methods: {
     handleChange (value) {
-      this.$emit('change', value)
+      this.$emit('change', this.$props.multiple ? value.reverse() : value)
     }
   }
 }

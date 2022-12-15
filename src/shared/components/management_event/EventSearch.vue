@@ -5,7 +5,11 @@
       <label v-text="$t('management_event.search_by_keyword')"/>
 
       <a-input-search v-model="filter.keyword"
-                      :placeholder="$t('search')"/>
+                      :placeholder="$t('search')"
+                      @change="debounceSearch"
+                      @keydown.enter.prevent="search"
+                      allow-clear
+      />
     </div>
 
     <!-- Date of occurrence -->
@@ -16,7 +20,9 @@
                       :placeholder="[FORMAT_DATE, FORMAT_DATE]"
                       :value-format="FORMAT_DATE"
                       separator="⇀"
-                      :format="FORMAT_DATE">
+                      :format="FORMAT_DATE"
+                      @change="search"
+      >
         <template #suffixIcon>
           <a-icon type="calendar"/>
         </template>
@@ -28,7 +34,10 @@
       <label v-text="$t('status')"/>
 
       <a-select v-model="filter.status"
-                :placeholder="$t('status_placeholder')">
+                :placeholder="$t('status_placeholder')"
+                allow-clear
+                @change="search"
+      >
         <a-select-option v-for="item in STATUS"
                          :key="item.id"
                          :value="item.value">

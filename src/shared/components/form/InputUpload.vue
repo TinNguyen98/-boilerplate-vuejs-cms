@@ -1,9 +1,10 @@
 <template>
   <ValidationProvider
+    ref="upload"
     tag="div"
     :name="field"
     :vid="vid"
-    :rules="rules"
+    :rules="!valueModel ? rules : null"
     :class="classContainer"
     v-slot="{ errors }">
     <!-- Label -->
@@ -20,35 +21,65 @@
       />
     </label>
 
-    <div :class="{ 'has_error': errors[0] }">
-      <!-- Field -->
-      <a-upload
-        :file-list="valueModel"
-        :disabled="disabled || isUploading"
-        :multiple="multiple"
-        :accept="acceptableFileTypes"
-        @change="handleChange"
+    <div class="position-relative d-flex"
+         :class="[
+            errors[0] ? 'has_error' : null,
+            previewAlign === 'bottom' ? 'flex-column' : null
+         ]"
+    >
+      <div class="flex-shrink-0 w-100"
+           :class="[previewAlign === 'bottom' ? 'mb-2' : 'mr-2']"
       >
-        <a-button :loading="isUploading">
-          {{ placeholder }}
-          <a-icon type="upload"/>
-        </a-button>
-      </a-upload>
+        <!-- Field -->
+        <label :for="`${vid}_upload`"
+               :title="inputName"
+               :class="{ 'ant-btn-loading': isUploading }"
+               class="file-button ant-btn">
+          <a-icon v-if="isUploading" type="loading"/>
+          <span class="text-ellipsis pr-2" v-text="inputName"/>
 
-      <!-- Message Error -->
-      <span v-if="errors[0]"
-            class="errors"
-            v-html="errors[0]" />
+          <a-icon v-if="!valueModel" type="upload"
+                  class="flex-shrink-0"/>
+          <a-icon v-else
+                  type="delete"
+                  class="flex-shrink-0"
+                  @click.prevent="deleteFile"/>
+        </label>
+
+        <input type="file"
+               :id="`${vid}_upload`"
+               :disabled="valueModel || isUploading"
+               :accept="acceptableFileTypes"
+               class="file-input"
+               @change="handleChange"
+        >
+
+        <!-- Message Error -->
+        <span v-if="errors[0]"
+              class="errors"
+              v-html="errors[0]" />
+      </div>
+
+      <!-- Preview image -->
+      <figure v-if="isPreview && previewSrc" class="preview-image">
+        <image-zoom :src="previewSrc" alt="aeon_preview_image" />
+      </figure>
     </div>
   </ValidationProvider>
 </template>
 
 <script>
-// Store
-import { mapActions } from 'vuex'
+// Components
+import ImageZoom from '@/shared/components/common/ImageZoom'
+// Others
+import { checkImageSizeByMb, toBase64 } from '@/shared/helpers'
 
 export default {
   name: 'InputUploadComponent',
+
+  components: {
+    ImageZoom
+  },
 
   model: {
     prop: 'value',
@@ -57,21 +88,24 @@ export default {
 
   props: {
     vid: { type: String, default: '' },
-    value: { type: [File, Array], default: () => [] },
+    value: { type: [File, String], default: '' },
     field: { type: String, default: '' },
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
-    acceptableFileTypes: { type: String, default: 'image/png,image/jpeg,image/jpg' },
     placeholder: { type: String, default: '' },
+    classContainer: { type: String, default: '' },
+    acceptableFileTypes: { type: String, default: 'image/png,image/jpeg,image/jpg' },
+    sizeLimit: { type: [String, Number], default: 150 }, // unit MB
+    isPreview: { type: Boolean, default: false },
+    previewAlign: { type: String, default: 'bottom' }, // right, bottom
     hiddenAsterisk: { type: Boolean, default: false },
     multiple: { type: Boolean, default: false },
-    limitForMultiple: { type: [String, Number], default: 0 },
-    disabled: { type: Boolean, default: false },
-    classContainer: { type: String, default: '' }
+    disabled: { type: Boolean, default: false }
   },
 
   data () {
     return {
+      previewSrc: null,
       isUploading: false
     }
   },
@@ -84,63 +118,88 @@ export default {
       set (newVal) {
         this.$emit('change', newVal)
       }
+    },
+
+    inputName () {
+      if (!this.valueModel) return this.$props.placeholder
+
+      if (typeof this.valueModel === 'object') {
+        return this.valueModel.name
+      }
+      return this.valueModel
     }
   },
 
   methods: {
-    ...mapActions('upload', [
-      'postFile'
-    ]),
-
-    handleChange (info) {
-      let resFileList = [...info.fileList]
-      const formData = new FormData()
-      const { multiple, limitForMultiple } = this.$props
-
-      this.isUploading = true
-      resFileList.forEach((file) => {
-        formData.append('files[]', file)
-      })
-
-      // Limit the number of uploaded files
-      // Only to show two recent uploaded files, and old ones will be replaced by the new
-      if (multiple) {
-        resFileList = resFileList.slice(-Math.abs(limitForMultiple))
-      }
-
-      // Receive response and show file link
-      resFileList = resFileList.map(file => {
-        if (file.response) {
-          file.url = file.response.url
-        }
-        return file
-      })
-
-      this.valueModel = resFileList
-      // this.onPostFile(resFileList)
+    deleteFile () {
+      this.valueModel = ''
+      this.previewSrc = null
     },
 
-    onPostFile (formData) {
-      this.postFile(formData).then(res => {
-        if (res) {
-          this.isUploading = false
-          this.onSuccess(this.$t('completion'), this.$t('upload_message_successfully'))
-        } else {
-          this.onError(this.$t('fail'), this.$t('upload_message_fail'))
-          this.isUploading = false
-        }
-      }).catch(() => {})
+    async handleChange (event) {
+      const files = event.target.files || event.dataTransfer.files
+      // If the file isn't an image nothing happens
+      // Check size image before send server
+      if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit)) return
+
+      this.isUploading = true
+      this.valueModel = files[0]
+      this.previewSrc = await toBase64(files[0])
+
+      this.isUploading = false
+      this.$refs.upload.reset()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/helpers/_mixins.scss';
 @import '@/assets/scss/helpers/_variables.scss';
 
 .label {
   margin-bottom: 4px;
   font-weight: bold;
   color: $text-color;
+}
+
+.file-button {
+  position: relative;
+  @include flex();
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  color: $text-weak-black-color;
+
+  .anticon {
+    margin: 0;
+  }
+
+  .anticon-delete {
+    pointer-events: auto;
+    transition: color 0.3s ease;
+    &:hover {
+      color: $text-light-black-color;
+    }
+  }
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preview-image {
+  margin: 0 auto;
+  max-width: 80%;
+
+  img {
+    width: 100%;
+  }
 }
 </style>

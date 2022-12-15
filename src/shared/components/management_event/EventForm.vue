@@ -25,7 +25,7 @@
                          :value-format="FORMAT_DATE"
                          :placeholder="$t('management_event.start_time_placeholder')"
                          class-container="main-form_field mb-sm-2"
-                         rules="required"
+                         rules="required_choose"
                          hidden-asterisk
         />
 
@@ -35,9 +35,9 @@
                      field="management_event.background_music"
                      :label="$t('management_event.background_music')"
                      :placeholder="$t('management_event.background_music_placeholder')"
-                     acceptable-file-types=".mp3,audio/*"
+                     acceptable-file-types=".mp3"
                      class-container="main-form_field"
-                     rules="required"
+                     rules="required_file"
                      hidden-asterisk
         />
       </div>
@@ -51,7 +51,7 @@
                      field="management_event.effect_movie_frame"
                      :placeholder="$t('please_select')"
                      class-container="main-form_field mb-sm-2"
-                     rules="required"
+                     rules="required_choose"
                      hidden-asterisk
         />
 
@@ -63,7 +63,7 @@
                      field="management_event.background_frame"
                      :placeholder="$t('please_select')"
                      class-container="main-form_field mb-sm-2"
-                     rules="required"
+                     rules="required_multi_choose"
                      multiple
                      hidden-asterisk
         />
@@ -71,12 +71,12 @@
         <!-- Collection -->
         <InputSelect v-model="form.collection"
                      vid="collection"
-                     :options="backgroundOption"
+                     :options="collectionOption"
                      :label="$t('collection')"
                      field="collection"
                      :placeholder="$t('please_select')"
                      class-container="main-form_field mb-sm-2"
-                     rules="required"
+                     rules="required_multi_choose"
                      multiple
                      hidden-asterisk
         />
@@ -115,15 +115,21 @@
 
 <script>
 // Store
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // Components
 import InputText from '@/shared/components/form/InputText'
 import InputDatePicker from '@/shared/components/form/InputDatePicker'
 import InputUpload from '@/shared/components/form/InputUpload'
 import InputSelect from '@/shared/components/form/InputSelect'
 // Others
+import moment from 'moment'
 import FormMixin from '@/shared/mixins/form.mixin'
-import { scrollToErrorPlace, handleInputProtection } from '@/shared/helpers'
+import {
+  verifyArgument,
+  scrollToErrorPlace,
+  handleInputProtection,
+  handleRequestErrorMessage
+} from '@/shared/helpers'
 import { FORMAT_DATE } from '@/enum/pages/event.enum'
 
 export default {
@@ -152,7 +158,7 @@ export default {
         background_frame: [],
         collection: []
       },
-      detail: {},
+      recordDetail: {},
       effectMovieOption: [
         {
           id: 0,
@@ -187,6 +193,7 @@ export default {
           value: 'chirstmas-nen-xanh'
         }
       ],
+      collectionOption: [],
       isSubmit: false,
       isPriority: false,
       FORMAT_DATE
@@ -195,9 +202,19 @@ export default {
 
   mounted () {
     if (this.$props.updateMode) {
-      this.detail = this.$route.meta['event_detail']
+      this.recordDetail = this.detail
       this.fillUpdateMode()
     }
+
+    this.effectMovieOption = this.fillOptionsByType('effect_movie')
+    this.backgroundOption = this.fillOptionsByType('background')
+    this.collectionOption = this.fillOptionsByType('collection')
+  },
+
+  computed: {
+    ...mapState('event', ['detail']),
+    ...mapState('frame', { frameList: 'list' }),
+    ...mapState('collection', { collectionList: 'list' })
   },
 
   methods: {
@@ -209,9 +226,42 @@ export default {
     fillUpdateMode () {
       this.form = {
         ...this.form,
-        event_name: this.detail.name,
-        start_time: this.detail.start_time,
+        id: this.recordDetail.id,
+        name: this.recordDetail.name,
+        time_start: moment(this.recordDetail.time_start).format(FORMAT_DATE),
+        background_music: this.recordDetail.background_music_name,
+        effect_movie_id: this.recordDetail.effect_movie.id,
+        background_frame: this.recordDetail.background_frames.length
+          ? this.recordDetail.background_frames.map(i => i.id)
+          : [],
+        collections: this.recordDetail.collections.length
+          ? this.recordDetail.collections.map(i => i.id)
+          : []
       }
+
+      // true: 1, false: 0
+      this.isPriority = this.recordDetail.is_priority === 1
+    },
+
+    /**
+     * @param type {string} ['effect_movie', 'background', 'collection']
+     */
+    fillOptionsByType (type) {
+      verifyArgument(['effect_movie', 'background', 'collection'], type)
+      const listDependent = type === 'collection'
+        ? this.collectionList
+        : this.frameList
+
+      return listDependent.reduce((arr, item) => {
+        if (item.type === type || type === 'collection') {
+          arr.push({
+            id: item.id,
+            name: item.name,
+            value: item.id
+          })
+        }
+        return arr
+      }, [])
     },
 
     changePriority () {
@@ -242,37 +292,37 @@ export default {
      * @param type {string} ['create', 'update']
      */
     handleSubmit (type) {
-      if (!['create', 'update'].includes(type)) {
-        return console.error('The parameter\'s path is wrong or not found. ' +
-          'Expected \'create\' or \'update\', please check again parameter.')
-      }
+      verifyArgument(['create', 'update'], type)
 
       this.isSubmit = true
       let formProtected = handleInputProtection(this.form)
-      const promise = type === 'create'
-        ? this.createEvent(formProtected)
-        : this.updateEvent(formProtected)
 
       if (type === 'update') {
+        // Verify background_music unchanged
+        if (typeof formProtected.background_music !== 'object') {
+          delete formProtected.background_music
+        }
         formProtected = {
           ...formProtected,
           is_priority: this.isPriority
         }
       }
 
+      const promise = type === 'create'
+        ? this.createEvent(formProtected)
+        : this.updateEvent(formProtected)
+
       promise.then(res => {
-        if (res) {
+        if (res.success) {
           this.isSubmit = false
           this.onSuccess(this.$t('completion'), this.$t(`${type}_message_successfully`))
           this.$router.push({ name: 'management_event' })
         } else {
-          this.onError(this.$t('fail'), this.$t(`${type}_message_fail`))
           this.isSubmit = false
+          handleRequestErrorMessage(res, `${type}_message_fail`)
         }
       }).catch(() => {})
-    },
+    }
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

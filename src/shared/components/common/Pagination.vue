@@ -3,7 +3,7 @@
     :current="currentPage"
     :page-size="pageSize"
     :total="total"
-    :page-size-options="['10', '50', '100']"
+    :page-size-options="['10', '20', '50']"
     :show-size-changer="showSizeChanger"
     :show-total="onShowTotal"
     @showSizeChange="onShowSizeChange"
@@ -33,7 +33,7 @@ export default {
     },
 
     onShowSizeChange (current, pageSize) {
-      console.log(current, pageSize)
+      this.$emit('handleSizeChange', { page: current, per_page: pageSize })
     }
   }
 }

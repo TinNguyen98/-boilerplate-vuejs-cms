@@ -1,6 +1,6 @@
 <template>
   <div class="loading-mode">
-    <a-spin size="large" />
+    <a-spin size="large" :tip="$t('loading')" />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 1020;
-  background-color: $main-color;
+  background-color: $text-weak-black-color;
   width: 100%;
   display: flex;
   justify-content: center;
