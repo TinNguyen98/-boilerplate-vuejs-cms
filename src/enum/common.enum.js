@@ -1,1 +1,4 @@
-export const FORMAT_DATE = 'YYYY-MM-DD'
+export const COMMON_FORMAT_DATE = {
+  ONLY_DATE: 'YYYY-MM-DD',
+  HOUR_DATE: 'HH:mm YYYY-MM-DD'
+}

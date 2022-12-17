@@ -21,19 +21,17 @@
                :pagination="false"
                :scroll="{ x: 1300 }"
                :locale="{ emptyText: $t('no_data')}"
-               class="list-table custom-table"
-               rowKey="id">
+               :rowKey="(record) => record.id"
+               class="list-table custom-table custom-scrollbar-vertical">
 
         <!-- Collection image -->
         <template slot="image" slot-scope="image">
-          <img class="col-image"
-               :src="image || require('@/assets/images/noimage_bg.png')"
-               alt="collection image">
+          <image-zoom :src="image" class-image="col-image" />
         </template>
 
         <!-- Updated at -->
         <template slot="updated_at" slot-scope="updated_at">
-          {{ updated_at | filterFormatDate('HH:mm YYYY-MM-DD')}}
+          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE)}}
         </template>
 
         <!-- Status -->
@@ -67,28 +65,32 @@
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component :total="COLLECTION_DATA.length"
-                            :current-page="1"
+      <pagination-component v-if="pagination && pagination.total > 0"
+                            :total="pagination.total"
+                            :current-page="pagination.current_page"
+                            :page-size="params.per_page"
                             show-total
                             show-size-changer
-                            @handleCurrentChange="handleCurrentChange($event)"/>
+                            @handleSizeChange="handlePaginateChange($event, 'size')"
+                            @handleCurrentChange="handlePaginateChange($event, 'page')"/>
     </section>
   </div>
 </template>
 
 <script>
 // Store
-// import store from '@/shared/store'
+import store from '@/shared/store'
 import { mapActions, mapState } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import CollectionSearchComponent from '@/shared/components/management_collection/CollectionSearch'
 import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
+import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
+import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS } from '@/enum/pages/collection.enum'
-import { COLLECTION_DATA } from '@/enum/dummy-data.enum'
 
 export default {
   name: 'ManagementCollectionPage',
@@ -97,7 +99,8 @@ export default {
     PageTitleComponent,
     CollectionSearchComponent,
     StatusTagComponent,
-    PaginationComponent
+    PaginationComponent,
+    ImageZoom
   },
 
   data () {
@@ -109,23 +112,21 @@ export default {
       },
       isDelete: false,
       STATUS,
-      COLLECTION_DATA
+      COMMON_FORMAT_DATE
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    // const params = {
-    //   page: 1,
-    //   per_page: PER_PAGE.COLLECTION
-    // }
-    next()
-    // return store.dispatch('collection/getCollectionList', params).then(() => next())
+    const params = {
+      page: 1,
+      per_page: PER_PAGE.COLLECTION
+    }
+    return store.dispatch('collection/getCollectionList', params).then(() => next())
   },
 
   created () {
     // Clone list from vuex
-    // this.listData = JSON.parse(JSON.stringify(this.list))
-    this.listData = COLLECTION_DATA
+    this.listData = JSON.parse(JSON.stringify(this.list))
   },
 
   computed: {
@@ -193,12 +194,17 @@ export default {
       this.fetchList(this.params)
     },
 
-    // Pagination
-    handleCurrentChange (num) {
-      this.params = {
-        ...this.params,
-        page: num
+    /**
+     * @param arg
+     * @param type {string} ['page', 'size']
+     */
+    handlePaginateChange (arg, type = 'page') {
+      if (type === 'page') {
+        this.params = { ...this.params, page: arg }
+      } else {
+        this.params = { ...this.params, ...arg }
       }
+
       this.fetchList(this.params)
     },
 
@@ -212,7 +218,7 @@ export default {
       if (!record || status === 'applying') return
 
       this.isDelete = true
-      this.removeEvent(id).then(res => {
+      this.removeCollection(id).then(res => {
         if (res) {
           this.isDelete = false
           this.onSuccess(this.$t('completion'), this.$t('delete_message_successfully'))
@@ -229,5 +235,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

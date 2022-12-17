@@ -5,7 +5,7 @@ export default {
   create_collection: 'Create new collection',
   edit_collection: 'Edit Collection',
   applying: 'Applying',
-  'not-apply': 'Not apply',
+  not_apply: 'Not apply',
   search_by_keyword: 'Search by keyword',
   collection_name: 'Collection name',
   display_order: 'Display order',

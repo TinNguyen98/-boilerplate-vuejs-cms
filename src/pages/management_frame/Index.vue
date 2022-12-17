@@ -28,8 +28,8 @@
                :pagination="false"
                :scroll="{ x: 1300 }"
                :locale="{ emptyText: $t('no_data')}"
-               class="list-table custom-table"
-               rowKey="id">
+               :rowKey="(record) => record.id"
+               class="list-table custom-table custom-scrollbar-vertical">
 
         <!-- Frame image -->
         <template slot="image" slot-scope="image">
@@ -43,7 +43,7 @@
 
         <!-- Updated at -->
         <template slot="updated_at" slot-scope="updated_at">
-          {{ updated_at | filterFormatDate('HH:mm YYYY-MM-DD')}}
+          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE)}}
         </template>
 
         <!-- Status -->
@@ -77,8 +77,9 @@
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component :total="FRAME_DATA.length"
-                            :current-page="1"
+      <pagination-component v-if="pagination && pagination.total > 0"
+                            :total="pagination.total"
+                            :current-page="pagination.current_page"
                             :page-size="params.per_page"
                             show-total
                             show-size-changer
@@ -100,10 +101,10 @@ import PaginationComponent from '@/shared/components/common/Pagination'
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
 import moment from 'moment'
+import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
 import FormMixin from '@/shared/mixins/form.mixin'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS, FRAME_TYPE } from '@/enum/pages/frame.enum'
-import { FRAME_DATA } from '@/enum/dummy-data.enum'
 
 export default {
   name: 'ManagementFramePage',
@@ -129,7 +130,7 @@ export default {
       isDelete: false,
       STATUS,
       FRAME_TYPE,
-      FRAME_DATA
+      COMMON_FORMAT_DATE
     }
   },
 
@@ -226,7 +227,7 @@ export default {
       if (type === 'page') {
         this.params = { ...this.params, page: arg }
       } else {
-        this.params = { ...arg }
+        this.params = { ...this.params, ...arg }
       }
 
       this.fetchList(this.params)

@@ -85,7 +85,7 @@ label {
 .has_error select,
 .has_error .ant-input-number,
 .has_error .ant-select-selection,
-.has_error .ant-upload.ant-upload-select .ant-btn {
+.has_error .file-button.ant-btn {
   border-color: #c20c33 !important;
 }
 

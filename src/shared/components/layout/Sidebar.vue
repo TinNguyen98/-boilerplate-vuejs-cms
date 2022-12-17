@@ -85,6 +85,14 @@ export default {
     }
   },
 
+  created () {
+    window.addEventListener("resize", this.handleResize)
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize)
+  },
+
   computed: {
     // State
     ...mapState('auth', ['userProfile']),
@@ -107,6 +115,14 @@ export default {
     toggleSidebar () {
       this.collapsedController = !this.collapsedController
     },
+
+    handleResize (event) {
+      const { innerWidth } = event.target
+
+      if (innerWidth <= 768) {
+        this.collapsedController = true
+      }
+    }
   }
 }
 </script>

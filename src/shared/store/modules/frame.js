@@ -26,6 +26,11 @@ const mutations = {
 const actions = {
   getFrameList ({ commit }, params = {}) {
     commit('SET_LIST', FRAME_DATA)
+    commit('SET_PAGINATION', {
+      total: FRAME_DATA.length,
+      current_page: 1
+    })
+
     return FRAME_DATA
     // return FrameService.getList(params).then(res => {
     //   commit('SET_LIST', res.data)

@@ -7,6 +7,7 @@
       <a-input-search v-model="filter.keyword"
                       :placeholder="$t('search')"
                       @change="debounceSearch"
+                      @blur="search"
                       @keydown.enter.prevent="search"
                       allow-clear
       />

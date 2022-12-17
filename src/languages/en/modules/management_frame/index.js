@@ -7,7 +7,7 @@ export default {
   create_frame: 'Create new Frame',
   edit_frame: 'Edit Frame',
   applying: 'Applying',
-  'not-apply': 'Not apply',
+  not_apply: 'Not apply',
   search_by_keyword: 'Search by keyword',
   frame_name: 'Frame name',
   frame_name_placeholder: 'Please enter frame name',

@@ -21,16 +21,17 @@
                :pagination="false"
                :scroll="{ x: 1300 }"
                :locale="{ emptyText: $t('no_data')}"
-               class="list-table custom-table"
-               rowKey="id">
+               :rowKey="(record) => record.id"
+               class="list-table custom-table custom-scrollbar-vertical">
+
         <!-- Start at -->
         <template slot="start_time" slot-scope="start_time">
-          {{ start_time | filterFormatDate('HH:mm YYYY-MM-DD')}}
+          {{ start_time | filterFormatDate(COMMON_FORMAT_DATE.ONLY_DATE)}}
         </template>
 
         <!-- Updated at -->
         <template slot="updated_at" slot-scope="updated_at">
-          {{ updated_at | filterFormatDate('HH:mm YYYY-MM-DD')}}
+          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE)}}
         </template>
 
         <!-- Status -->
@@ -64,8 +65,9 @@
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component :total="EVENT_DATA.length"
-                            :current-page="1"
+      <pagination-component v-if="pagination && pagination.total > 0"
+                            :total="pagination.total"
+                            :current-page="pagination.current_page"
                             :page-size="params.per_page"
                             show-total
                             show-size-changer
@@ -86,6 +88,7 @@ import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
 // Others
 import moment from 'moment'
+import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS } from '@/enum/pages/event.enum'
 import { EVENT_DATA } from '@/enum/dummy-data.enum'
@@ -110,7 +113,8 @@ export default {
       statusOrder: ['happening', 'upcoming', 'happened'],
       isDelete: false,
       STATUS,
-      EVENT_DATA
+      EVENT_DATA,
+      COMMON_FORMAT_DATE
     }
   },
 
@@ -201,7 +205,7 @@ export default {
       if (type === 'page') {
         this.params = { ...this.params, page: arg }
       } else {
-        this.params = { ...arg }
+        this.params = { ...this.params, ...arg }
       }
 
       this.fetchList(this.params)

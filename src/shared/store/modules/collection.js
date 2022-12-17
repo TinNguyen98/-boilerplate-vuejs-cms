@@ -1,4 +1,5 @@
 import { CollectionService } from '@/api/services/collection.service'
+import { COLLECTION_DATA } from '@/enum/dummy-data.enum'
 
 const initialState = {
   list: null,
@@ -24,13 +25,19 @@ const mutations = {
 
 const actions = {
   getCollectionList ({ commit }, params = {}) {
-    return CollectionService.getList(params).then(res => {
-      commit('SET_LIST', res.data)
-      commit('SET_PAGINATION', res.pagination)
-      return res
-    }).catch(err => {
-      return err.response.data
+    commit('SET_LIST', COLLECTION_DATA)
+    commit('SET_PAGINATION', {
+      total: COLLECTION_DATA.length,
+      current_page: 1
     })
+    return COLLECTION_DATA
+    // return CollectionService.getList(params).then(res => {
+    //   commit('SET_LIST', res.data)
+    //   commit('SET_PAGINATION', res.pagination)
+    //   return res
+    // }).catch(err => {
+    //   return err.response.data
+    // })
   },
 
   createCollection ({ commit }, params = {}) {
@@ -59,13 +66,18 @@ const actions = {
 
   getDetail ({ commit }, payload = {}) {
     const { id, params } = payload
-    return CollectionService.show(id, params).then((res) => {
-      commit('SET_DETAIL', res.data)
 
-      return true
-    }).catch(_ => {
-      return false
-    })
+    const result = COLLECTION_DATA.find(i => i.id === id)
+    commit('SET_DETAIL', result)
+    return true
+
+    // return CollectionService.show(id, params).then((res) => {
+    //   commit('SET_DETAIL', res.data)
+    //
+    //   return true
+    // }).catch(_ => {
+    //   return false
+    // })
   }
 }
 

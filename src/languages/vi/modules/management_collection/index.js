@@ -5,7 +5,7 @@ export default {
   create_collection: 'Tạo mới bộ sưu tập',
   edit_collection: 'Chỉnh sửa bộ sưu tập',
   applying: 'Đang áp dụng',
-  'not-apply': 'Không áp dụng',
+  not_apply: 'Không áp dụng',
   search_by_keyword: 'Tìm kiếm theo từ khóa',
   collection_name: 'Tên Bộ sưu tập',
   display_order: 'Thứ tự hiện thị',

@@ -79,8 +79,8 @@ export default {
   data () {
     return {
       form: {
-        login_id: 'admin',
-        password: '123'
+        username: 'admin',
+        password: '12345678'
       },
       remember_password: false,
       isSubmit: false

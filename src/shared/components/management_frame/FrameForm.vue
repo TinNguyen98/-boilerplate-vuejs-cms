@@ -1,12 +1,12 @@
 <template>
-  <ValidationObserver
-    ref="observer"
-    tag="form"
-    class="main-form">
+  <ValidationObserver ref="observer"
+                      tag="form"
+                      class="main-form frame-page"
+                      @submit.prevent="validateBeforeSubmit">
     <div class="main-form_container pb-5">
       <div class="main-form_row d-flex flex-wrap">
         <!-- Frame name -->
-        <InputText v-model="form.frame_name"
+        <InputText v-model="form.name"
                    vid="frame_name"
                    field="management_frame.frame_name"
                    :label="$t('management_frame.frame_name')"
@@ -17,13 +17,14 @@
         />
 
         <!-- Frame type -->
-        <InputSelect v-model="form.frame_type"
+        <InputSelect v-model="form.type"
                      vid="frame_type"
                      :options="FRAME_TYPE"
                      :label="$t('management_frame.frame_type')"
                      field="management_frame.frame_type"
                      class-container="main-form_field mb-sm-2"
-                     rules="required"
+                     rules="required_choose"
+                     :show-arrow="false"
                      disabled
                      hidden-asterisk
         />
@@ -34,9 +35,11 @@
                      field="management_frame.frame_file"
                      :label="$t('management_frame.frame_file')"
                      :placeholder="$t('management_frame.frame_file')"
+                     :preview-edit.sync="previewEdit"
                      class-container="main-form_field"
-                     rules="required"
+                     rules="required_file"
                      hidden-asterisk
+                     is-preview
         />
       </div>
     </div>
@@ -48,9 +51,9 @@
                    v-text="$t('cancel')"/>
 
       <a-button type="primary"
+                html-type="submit"
                 :loading="isSubmit"
                 class="save-button"
-                @click.prevent="validateBeforeSubmit"
       >
         {{ $t('save') }}
       </a-button>
@@ -60,14 +63,19 @@
 
 <script>
 // Store
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // Components
 import InputText from '@/shared/components/form/InputText'
 import InputUpload from '@/shared/components/form/InputUpload'
 import InputSelect from '@/shared/components/form/InputSelect'
 // Others
 import FormMixin from '@/shared/mixins/form.mixin'
-import { scrollToErrorPlace, handleInputProtection } from '@/shared/helpers'
+import {
+  verifyArgument,
+  scrollToErrorPlace,
+  handleInputProtection,
+  handleRequestErrorMessage
+} from '@/shared/helpers'
 import { FRAME_TYPE } from '@/enum/pages/frame.enum'
 
 export default {
@@ -88,11 +96,12 @@ export default {
   data () {
     return {
       form: {
-        frame_name: null,
-        frame_type: null,
-        frame_file: [],
+        name: null,
+        type: null,
+        frame_file: null,
       },
-      detail: {},
+      recordDetail: {},
+      previewEdit: null,
       isSubmit: false,
       FRAME_TYPE
     }
@@ -100,11 +109,16 @@ export default {
 
   mounted () {
     if (this.$props.updateMode) {
-      this.detail = this.$route.meta['frame_detail']
-      this.fillUpdateMode()
+      this.recordDetail = this.detail
+      this.form = { ...this.recordDetail, frame_file: this.recordDetail.frame_name }
+      this.previewEdit = this.recordDetail.frame_image
     } else {
-      this.form.frame_type = this.$route.query['type'] || FRAME_TYPE[0].value
+      this.form.type = this.$route.query['type'] || FRAME_TYPE[0].value
     }
+  },
+
+  computed: {
+    ...mapState('frame', ['detail'])
   },
 
   methods: {
@@ -112,14 +126,6 @@ export default {
       'createFrame',
       'updateFrame'
     ]),
-
-    fillUpdateMode () {
-      this.form = {
-        ...this.form,
-        frame_name: this.detail.name,
-        frame_type: this.detail.type
-      }
-    },
 
     async validateBeforeSubmit () {
       const isValid = await this.$refs.observer.validate()
@@ -135,10 +141,7 @@ export default {
      * @param type {string} ['create', 'update']
      */
     handleSubmit (type) {
-      if (!['create', 'update'].includes(type)) {
-        return console.error('The parameter\'s path is wrong or not found. ' +
-          'Expected \'create\' or \'update\', please check again parameter.')
-      }
+      verifyArgument(['create', 'update'], type)
 
       this.isSubmit = true
       const formProtected = handleInputProtection(this.form)
@@ -152,8 +155,8 @@ export default {
           this.onSuccess(this.$t('completion'), this.$t(`${type}_message_successfully`))
           this.$router.push({ name: 'management_frame' })
         } else {
-          this.onError(this.$t('fail'), this.$t(`${type}_message_fail`))
           this.isSubmit = false
+          handleRequestErrorMessage(res, `${type}_message_fail`)
         }
       }).catch(() => {})
     },
@@ -162,4 +165,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.frame-page {
+  .main-form_container {
+    max-height: calc(100vh - 220.89px);
+    overflow: auto;
+  }
+}
+</style>
+

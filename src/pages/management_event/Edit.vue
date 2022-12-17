@@ -25,7 +25,11 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    return store.dispatch('event/getDetail', { id: to.params.id }).then(() => next())
+    return Promise.all([
+      store.dispatch('event/getDetail', { id: to.params.id }),
+      store.dispatch('frame/getFrameList'),
+      store.dispatch('collection/getCollectionList')
+    ]).then(_ => next())
   },
 
   computed: {

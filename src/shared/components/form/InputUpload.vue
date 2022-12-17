@@ -61,8 +61,8 @@
       </div>
 
       <!-- Preview image -->
-      <figure v-if="isPreview && previewSrc" class="preview-image">
-        <image-zoom :src="previewSrc" alt="aeon_preview_image" />
+      <figure v-if="isPreview && (previewSrc || previewEdit)" class="preview-image">
+        <image-zoom :src="previewSrc || previewEdit" alt="aeon_preview_image" />
       </figure>
     </div>
   </ValidationProvider>
@@ -88,12 +88,14 @@ export default {
 
   props: {
     vid: { type: String, default: '' },
-    value: { type: [File, String], default: '' },
+    value: { type: [String, Object], default: null },
+    returnType: { type: String, default: 'string' }, // string, object
     field: { type: String, default: '' },
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     classContainer: { type: String, default: '' },
+    previewEdit: { type: String, default: '' },
     acceptableFileTypes: { type: String, default: 'image/png,image/jpeg,image/jpg' },
     sizeLimit: { type: [String, Number], default: 150 }, // unit MB
     isPreview: { type: Boolean, default: false },
@@ -134,6 +136,7 @@ export default {
     deleteFile () {
       this.valueModel = ''
       this.previewSrc = null
+      this.$props.previewEdit && this.$emit('update:previewEdit', null)
     },
 
     async handleChange (event) {

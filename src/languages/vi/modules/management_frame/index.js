@@ -7,7 +7,7 @@ export default {
   create_frame: 'Tạo mới Frame',
   edit_frame: 'Chỉnh sửa Frame',
   applying: 'Đang áp dụng',
-  'not-apply': 'Không áp dụng',
+  not_apply: 'Không áp dụng',
   search_by_keyword: 'Tìm kiếm theo từ khóa',
   frame_name: 'Tên frame',
   frame_name_placeholder: 'Nhập tên frame',

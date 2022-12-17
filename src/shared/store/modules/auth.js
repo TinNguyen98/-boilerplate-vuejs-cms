@@ -35,7 +35,7 @@ const actions = {
   userLogin ({ commit }, params = {}) {
     // LOGIN DUMMY
     const accountInfo = ACCOUNT.find(user =>
-      user.login_id === params.login_id && user.password === params.password)
+      user.username === params.username && user.password === params.password)
     if (!accountInfo) return false
 
     commit('SET_TOKEN', {
@@ -76,7 +76,6 @@ const actions = {
       role: 'admin',
       name: 'Admin nè',
       avatar: 'https://img.freepik.com/premium-vector/cute-white-cat-cartoon-vector-illustration_42750-808.jpg?w=2000',
-      login_id: 'admin',
       created_at: '2022-06-30 19:19:03'
     })
     return true

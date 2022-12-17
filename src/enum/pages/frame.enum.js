@@ -8,8 +8,8 @@ export const STATUS = [
   },
   {
     id: 1,
-    name: i18n.t('management_frame.not-apply'),
-    value: 'not-apply'
+    name: i18n.t('management_frame.not_apply'),
+    value: 'not_apply'
   }
 ]
 
@@ -17,7 +17,7 @@ export const FRAME_TYPE = [
   {
     id: 0,
     name: 'Effect-movie',
-    value: 'effect-movie'
+    value: 'effect_movie'
   },
   {
     id: 1,

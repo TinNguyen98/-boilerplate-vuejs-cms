@@ -26,6 +26,11 @@ const mutations = {
 const actions = {
   getEventList ({ commit }, params = {}) {
     commit('SET_LIST', EVENT_DATA)
+    commit('SET_PAGINATION', {
+      total: EVENT_DATA.length,
+      current_page: 1
+    })
+
     return EVENT_DATA
     // return EventService.getList(params).then(res => {
     //   commit('SET_LIST', res.data)

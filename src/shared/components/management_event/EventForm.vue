@@ -1,8 +1,8 @@
 <template>
-  <ValidationObserver
-    ref="observer"
-    tag="form"
-    class="main-form">
+  <ValidationObserver ref="observer"
+                      tag="form"
+                      class="main-form event-page"
+                      @submit.prevent="validateBeforeSubmit">
     <div class="main-form_container pb-4">
       <div class="main-form_row d-flex flex-wrap">
         <!-- Event name -->
@@ -103,9 +103,9 @@
                    v-text="$t('cancel')"/>
 
       <a-button type="primary"
+                html-type="submit"
                 :loading="isSubmit"
                 class="save-button"
-                @click.prevent="validateBeforeSubmit"
       >
         {{ $t('save') }}
       </a-button>
@@ -326,3 +326,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.event-page {
+  .main-form_container {
+    max-height: calc(100vh - 220.89px);
+    overflow: auto;
+  }
+}
+</style>

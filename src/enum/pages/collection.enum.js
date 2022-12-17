@@ -8,9 +8,13 @@ export const STATUS = [
   },
   {
     id: 1,
-    name: i18n.t('management_collection.not-apply'),
-    value: 'not-apply'
+    name: i18n.t('management_collection.not_apply'),
+    value: 'not_apply'
   }
 ]
+
+export const MAXIMUM_COLOR = 10
+
+export const MAXIMUM_ITEM = 999
 
 export const FORMAT_DATE = 'YYYY-MM-DD'
