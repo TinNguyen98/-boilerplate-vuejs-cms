@@ -216,7 +216,7 @@ export default {
 
     editRecord (id) {
       if (!id) return
-      this.$router.push({ name: 'edit_collection', params: { id } }, () => {})
+      this.$router.push({ name: 'edit_collection', params: { id } })
     },
 
     deleteRecord (record) {

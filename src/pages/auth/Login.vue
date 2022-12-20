@@ -125,7 +125,7 @@ export default {
           this.onError(this.$t('fail'), this.$t('login_fail'))
           this.isSubmit = false
         }
-      }).catch(() => {})
+      })
     }
   }
 }

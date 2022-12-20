@@ -60,21 +60,23 @@
               v-html="errors[0]" />
       </div>
 
-      <!-- Preview image -->
-      <template v-if="!isAudio">
-        <figure v-if="isPreview && (previewSrc || previewEdit)" class="preview-image">
-          <image-zoom :src="previewSrc || previewEdit" alt="aeon_preview_image" />
-        </figure>
-      </template>
+      <template v-if="isPreview">
+        <!-- Preview image -->
+        <template v-if="!isAudio">
+          <figure v-if="(valueModel && valueModel.path) || previewSrc" class="preview-image">
+            <image-zoom :src="valueModel.path || previewSrc" alt="aeon_preview_image" />
+          </figure>
+        </template>
 
-      <!-- Preview music -->
-      <template v-else>
-        <audio v-if="isPreview && (previewSrc || previewEdit)"
-               ref="audio"
-               class="preview-music w-100"
-               controls>
-          <source :src="previewSrc || previewEdit"/>
-        </audio>
+        <!-- Preview music -->
+        <template v-else>
+          <audio v-if="(valueModel && valueModel.path) || previewSrc"
+                 ref="audio"
+                 class="preview-music w-100"
+                 controls>
+            <source :src="(valueModel.path || previewSrc)"/>
+          </audio>
+        </template>
       </template>
     </div>
   </ValidationProvider>
@@ -113,9 +115,9 @@ export default {
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     classContainer: { type: String, default: '' },
-    previewEdit: { type: String, default: '' },
     acceptableFileTypes: { type: String, default: 'image/png,image/jpeg,image/jpg' },
-    sizeLimit: { type: [String, Number], default: 150 }, // unit MB
+    sizeLimit: { type: [String, Number], default: 300 }, // unit MB
+    isAudio: { type: Boolean, default: false },
     isPreview: { type: Boolean, default: false },
     previewAlign: { type: String, default: 'bottom' }, // right, bottom
     hiddenAsterisk: { type: Boolean, default: false },
@@ -126,7 +128,6 @@ export default {
   data () {
     return {
       previewSrc: null,
-      isAudio: false,
       isUploading: false
     }
   },
@@ -151,13 +152,20 @@ export default {
     }
   },
 
+  watch: {
+    valueModel (val) {
+      if (val && this.isPreview && this.isAudio && this.$refs.audio) {
+        this.$refs.audio.load()
+      }
+    }
+  },
+
   methods: {
     ...mapActions('upload', ['postFile']),
 
     deleteFile () {
       this.valueModel = null
       this.previewSrc = null
-      this.$props.previewEdit && this.$emit('update:previewEdit', null)
     },
 
     async handleChange (event) {
@@ -173,11 +181,6 @@ export default {
         this.previewSrc = await toBase64(files[0])
       } else {
         this.handlePostFile(files[0])
-      }
-
-      this.isAudio = files[0].type === 'audio/mpeg'
-      if (this.isAudio && this.$refs.audio) {
-        this.$refs.audio.load()
       }
 
       this.isUploading = false

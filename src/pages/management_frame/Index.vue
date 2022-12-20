@@ -241,7 +241,7 @@ export default {
 
     editRecord (id) {
       if (!id) return
-      this.$router.push({ name: 'edit_frame', params: { id } }, () => {})
+      this.$router.push({ name: 'edit_frame', params: { id } })
     },
 
     deleteRecord (record) {

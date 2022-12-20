@@ -35,7 +35,6 @@
                      field="management_frame.frame_file"
                      :label="$t('management_frame.frame_file')"
                      :placeholder="$t('management_frame.frame_file')"
-                     :preview-edit.sync="previewEdit"
                      class-container="main-form_field"
                      rules="required_file"
                      hidden-asterisk
@@ -101,7 +100,6 @@ export default {
         frame_file: null,
       },
       recordDetail: {},
-      previewEdit: null,
       isSubmit: false,
       FRAME_TYPE
     }
@@ -110,8 +108,14 @@ export default {
   mounted () {
     if (this.$props.updateMode) {
       this.recordDetail = this.detail
-      this.form = { ...this.recordDetail, frame_file: this.recordDetail.frame_name }
-      this.previewEdit = this.recordDetail.frame_image
+      this.form = {
+        ...this.recordDetail,
+        frame_file: {
+          old_file: true,
+          name: this.recordDetail.frame_name,
+          path: this.recordDetail.frame_image
+        }
+      }
     } else {
       this.form.type = this.$route.query['type'] || FRAME_TYPE[0].value
     }
@@ -145,6 +149,14 @@ export default {
 
       this.isSubmit = true
       const formProtected = handleInputProtection(this.form)
+
+      if (type === 'update') {
+        // Verify file_frame unchanged
+        if (formProtected.frame_file.old_file) {
+          delete formProtected.frame_file
+        }
+      }
+
       const promise = type === 'create'
         ? this.createFrame(formProtected)
         : this.updateFrame(formProtected)
@@ -158,7 +170,7 @@ export default {
           this.isSubmit = false
           handleRequestErrorMessage(res, `${type}_message_fail`)
         }
-      }).catch(() => {})
+      })
     },
   }
 

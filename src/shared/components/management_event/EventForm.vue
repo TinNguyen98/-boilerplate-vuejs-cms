@@ -39,6 +39,7 @@
                      class-container="main-form_field"
                      rules="required_file"
                      hidden-asterisk
+                     is-audio
                      is-preview
         />
       </div>
@@ -231,7 +232,11 @@ export default {
         id: this.recordDetail.id,
         name: this.recordDetail.name,
         time_start: moment(this.recordDetail.time_start).format(FORMAT_DATE),
-        background_music: this.recordDetail.background_music_name,
+        background_music: {
+          old_file: true,
+          name: this.recordDetail.background_music_name,
+          path: this.recordDetail.background_music
+        },
         effect_movie_id: this.recordDetail.effect_movie.id,
         background_frame: this.recordDetail.background_frames.length
           ? this.recordDetail.background_frames.map(i => i.id)
@@ -269,7 +274,7 @@ export default {
     changePriority () {
       // Block action for upcoming event
       if (this.recordDetail.status === 'upcoming') return
-      
+
        if (!this.isPriority) {
         this.$confirm({
           title: this.$t('management_event.priority_event_content'),
@@ -304,12 +309,12 @@ export default {
 
       if (type === 'update') {
         // Verify background_music unchanged
-        if (typeof formProtected.background_music !== 'object') {
+        if (formProtected.background_music.old_file) {
           delete formProtected.background_music
         }
         formProtected = {
           ...formProtected,
-          is_priority: this.isPriority
+          is_priority: this.isPriority ? 1 : 0 // true: 1, false: 0
         }
       }
 
@@ -326,7 +331,7 @@ export default {
           this.isSubmit = false
           handleRequestErrorMessage(res, `${type}_message_fail`)
         }
-      }).catch(() => {})
+      })
     }
   }
 }
