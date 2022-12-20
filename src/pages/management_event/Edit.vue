@@ -15,6 +15,7 @@ import { mapState } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import EventFormComponent from '@/shared/components/management_event/EventForm'
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'EditEventPage',
@@ -30,6 +31,11 @@ export default {
       store.dispatch('frame/getFrameList'),
       store.dispatch('collection/getCollectionList')
     ]).then(_ => next())
+  },
+
+  beforeRouteLeave (_, __, next) {
+    liberateStore('event/detail', 'frame/list', 'collection/list')
+    next()
   },
 
   computed: {

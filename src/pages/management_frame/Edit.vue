@@ -15,6 +15,7 @@ import { mapState } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import FrameFormComponent from '@/shared/components/management_frame/FrameForm'
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'EditFramePage',
@@ -26,6 +27,11 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     return store.dispatch('frame/getDetail', { id: to.params.id }).then(() => next())
+  },
+
+  beforeRouteLeave (_, __, next) {
+    liberateStore('frame/detail')
+    next()
   },
 
   computed: {

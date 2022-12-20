@@ -39,6 +39,7 @@
                      class-container="main-form_field"
                      rules="required_file"
                      hidden-asterisk
+                     is-preview
         />
       </div>
 
@@ -88,10 +89,11 @@
         <div class="checkbox-animated" @click.prevent="changePriority">
           <a-checkbox class="checkbox-animated_checkbox"
                       :class="{ 'checked': isPriority }"
+                      :disabled="recordDetail.status === 'upcoming'"
                       v-model="isPriority"/>
           <span class="checkbox-animated_desc"
                 :class="{ 'turn-on': isPriority }"
-                v-text="$t(`management_event.${isPriority ? 'close' : 'open'}_priority`)"/>
+                v-text="$t(`management_event.${isPriority ? 'open' : 'close'}_priority`)"/>
         </div>
       </div>
     </div>
@@ -265,6 +267,9 @@ export default {
     },
 
     changePriority () {
+      // Block action for upcoming event
+      if (this.recordDetail.status === 'upcoming') return
+      
        if (!this.isPriority) {
         this.$confirm({
           title: this.$t('management_event.priority_event_content'),

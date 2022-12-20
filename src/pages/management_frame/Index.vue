@@ -105,6 +105,7 @@ import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
 import FormMixin from '@/shared/mixins/form.mixin'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS, FRAME_TYPE } from '@/enum/pages/frame.enum'
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'ManagementFramePage',
@@ -140,6 +141,11 @@ export default {
       per_page: PER_PAGE.FRAME
     }
     return store.dispatch('frame/getFrameList', params).then(() => next())
+  },
+
+  beforeRouteLeave (_, __, next) {
+    liberateStore('frame/list')
+    next()
   },
 
   created () {

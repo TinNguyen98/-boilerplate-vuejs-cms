@@ -61,18 +61,36 @@
       </div>
 
       <!-- Preview image -->
-      <figure v-if="isPreview && (previewSrc || previewEdit)" class="preview-image">
-        <image-zoom :src="previewSrc || previewEdit" alt="aeon_preview_image" />
-      </figure>
+      <template v-if="!isAudio">
+        <figure v-if="isPreview && (previewSrc || previewEdit)" class="preview-image">
+          <image-zoom :src="previewSrc || previewEdit" alt="aeon_preview_image" />
+        </figure>
+      </template>
+
+      <!-- Preview music -->
+      <template v-else>
+        <audio v-if="isPreview && (previewSrc || previewEdit)"
+               ref="audio"
+               class="preview-music w-100"
+               controls>
+          <source :src="previewSrc || previewEdit"/>
+        </audio>
+      </template>
     </div>
   </ValidationProvider>
 </template>
 
 <script>
+// Store
+import { mapActions } from 'vuex'
 // Components
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
-import { checkImageSizeByMb, toBase64 } from '@/shared/helpers'
+import {
+  toBase64,
+  checkImageSizeByMb,
+  handleRequestErrorMessage
+} from '@/shared/helpers'
 
 export default {
   name: 'InputUploadComponent',
@@ -88,7 +106,7 @@ export default {
 
   props: {
     vid: { type: String, default: '' },
-    value: { type: [String, Object], default: null },
+    value: { type: [String, File, Object], default: null },
     returnType: { type: String, default: 'string' }, // string, object
     field: { type: String, default: '' },
     label: { type: String, default: '' },
@@ -108,6 +126,7 @@ export default {
   data () {
     return {
       previewSrc: null,
+      isAudio: false,
       isUploading: false
     }
   },
@@ -133,8 +152,10 @@ export default {
   },
 
   methods: {
+    ...mapActions('upload', ['postFile']),
+
     deleteFile () {
-      this.valueModel = ''
+      this.valueModel = null
       this.previewSrc = null
       this.$props.previewEdit && this.$emit('update:previewEdit', null)
     },
@@ -146,11 +167,32 @@ export default {
       if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit)) return
 
       this.isUploading = true
-      this.valueModel = files[0]
-      this.previewSrc = await toBase64(files[0])
+
+      if (this.$props.returnType !== 'object') {
+        this.valueModel = files[0]
+        this.previewSrc = await toBase64(files[0])
+      } else {
+        this.handlePostFile(files[0])
+      }
+
+      this.isAudio = files[0].type === 'audio/mpeg'
+      if (this.isAudio && this.$refs.audio) {
+        this.$refs.audio.load()
+      }
 
       this.isUploading = false
       this.$refs.upload.reset()
+    },
+
+    handlePostFile (file) {
+      this.postFile({ upload_file: file }).then(res => {
+        if (res.success) {
+          this.valueModel = res.data
+          this.previewSrc = res.data.path
+        } else {
+          handleRequestErrorMessage(res)
+        }
+      })
     }
   }
 }

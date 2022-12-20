@@ -14,6 +14,7 @@ import store from '@/shared/store'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import EventFormComponent from '@/shared/components/management_event/EventForm'
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'CreateEventPage',
@@ -28,6 +29,11 @@ export default {
       store.dispatch('frame/getFrameList'),
       store.dispatch('collection/getCollectionList')
     ]).then(_ => next())
+  },
+
+  beforeRouteLeave (_, __, next) {
+    liberateStore('frame/list', 'collection/list')
+    next()
   }
 }
 </script>

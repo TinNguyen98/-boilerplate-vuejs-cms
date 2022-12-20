@@ -92,6 +92,7 @@ import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS } from '@/enum/pages/event.enum'
 import { EVENT_DATA } from '@/enum/dummy-data.enum'
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'ManagementEventPage',
@@ -124,6 +125,11 @@ export default {
       per_page: PER_PAGE.EVENT
     }
     return store.dispatch('event/getEventList', params).then(() => next())
+  },
+
+  beforeRouteLeave (_, __, next) {
+    liberateStore('event/list')
+    next()
   },
 
   created () {

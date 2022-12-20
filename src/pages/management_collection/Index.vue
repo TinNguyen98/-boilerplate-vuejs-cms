@@ -91,6 +91,7 @@ import ImageZoom from '@/shared/components/common/ImageZoom'
 import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
 import { PER_PAGE } from '@/enum/pagination.enum'
 import { STATUS } from '@/enum/pages/collection.enum'
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'ManagementCollectionPage',
@@ -122,6 +123,11 @@ export default {
       per_page: PER_PAGE.COLLECTION
     }
     return store.dispatch('collection/getCollectionList', params).then(() => next())
+  },
+
+  beforeRouteLeave (_, __, next) {
+    liberateStore('collection/list')
+    next()
   },
 
   created () {

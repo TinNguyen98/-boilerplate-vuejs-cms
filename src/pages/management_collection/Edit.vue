@@ -10,12 +10,13 @@
 
 <script>
 // Store
-// import store from '@/shared/store'
+import store from '@/shared/store'
 import { mapActions } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import CollectionFormComponent from '@/shared/components/management_collection/CollectionForm'
-import { COLLECTION_DATA } from '@/enum/dummy-data.enum'
+// Others
+import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'EditEventPage',
@@ -32,27 +33,16 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    next()
-    // return store.dispatch('collection/getDetail').then(() => next())
+    return store.dispatch('collection/getDetail', { id: to.params.id }).then(() => next())
   },
 
-  created () {
-    // Clone list from vuex
-    // this.listData = JSON.parse(JSON.stringify(this.list))
-    const result = COLLECTION_DATA.find(i => i.id === this.$route.params.id)
-    if (!result) {
-      return this.$router.push({ name: 'not_found' }, () => {})
-    }
-    this.detail = result
+  beforeRouteLeave (_, __, next) {
+    liberateStore('collection/detail')
+    next()
   },
 
   methods: {
-    ...mapActions('collection', [
-      'getDetail',
-      'updateCollection'
-    ]),
+    ...mapActions('collection', ['getDetail'])
   }
 }
 </script>
-
-<style lang="scss" scoped></style>
