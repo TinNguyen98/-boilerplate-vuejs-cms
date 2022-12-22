@@ -1,22 +1,19 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    :class="classContainer"
-    v-slot="{ errors }">
+  <ValidationProvider tag="div"
+                      :name="field"
+                      :vid="vid"
+                      :rules="rules"
+                      :class="classContainer"
+                      v-slot="{ errors }">
     <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }"
+    <label v-if="label"
+           class="label"
+           :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'"
+      <span v-if="rules.includes('required') && !hiddenAsterisk"
+            class="required"
+            v-text="'*'"
       />
     </label>
 
@@ -30,6 +27,7 @@
         :showArrow="showArrow"
         :not-found-content="$t('no_data')"
         :allow-clear="multiple"
+        :filterOption="handleSearch"
         @change="handleChange"
       >
         <template v-for="(option, index) in options">
@@ -41,10 +39,9 @@
           </a-select-option>
         </template>
       </a-select>
+
       <!-- Message Error -->
-      <span v-if="errors[0]"
-            class="errors"
-            v-html="errors[0]" />
+      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
     </div>
   </ValidationProvider>
 </template>
@@ -77,7 +74,11 @@ export default {
 
   methods: {
     handleChange (value) {
-      this.$emit('change', this.$props.multiple ? value.reverse() : value)
+      this.$emit('change', value)
+    },
+
+    handleSearch (value, option) {
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(value) >= 0
     }
   }
 }

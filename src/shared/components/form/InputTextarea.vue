@@ -1,21 +1,18 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules + '|not_emoji'"
-    :class="classContainer"
-    v-slot="{ errors }">
+  <ValidationProvider tag="div"
+                      :name="field"
+                      :vid="vid"
+                      :rules="rules + '|not_emoji'"
+                      :class="classContainer"
+                      v-slot="{ errors }">
     <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-    >
+    <label v-if="label"
+           class="label"
+           :class="{ 'font-weight-normal': hiddenAsterisk }">
       {{ label }}
-      <span
-        v-if="rules.includes('required')"
-        class="required"
-        v-text="'*'"
+      <span v-if="rules.includes('required') && !hiddenAsterisk"
+            class="required"
+            v-text="'*'"
       />
     </label>
 
@@ -29,10 +26,9 @@
         @input="handleType($event)"
         @focus="handleFocus"
       />
+
       <!-- Message Error -->
-      <span v-if="errors[0]"
-            class="errors"
-            v-html="errors[0]" />
+      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
     </div>
   </ValidationProvider>
 </template>
@@ -56,6 +52,7 @@ export default {
     disabled: { type: Boolean, default: false },
     classInput: { type: String, default: '' },
     classContainer: { type: String, default: '' },
+    hiddenAsterisk: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
     autofill: { type: Boolean, default: true },
     maxlength: { type: [String, Number], default: '' }

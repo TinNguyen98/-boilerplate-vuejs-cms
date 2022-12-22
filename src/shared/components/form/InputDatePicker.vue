@@ -1,16 +1,14 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    :class="classContainer"
-    v-slot="{ errors }">
+  <ValidationProvider tag="div"
+                      :name="field"
+                      :vid="vid"
+                      :rules="rules"
+                      :class="classContainer"
+                      v-slot="{ errors }">
     <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }"
+    <label v-if="label"
+           class="label"
+           :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
       <span
@@ -28,22 +26,25 @@
         :placeholder="placeholder"
         :locale="localeOptions[locale]"
         :disabled="disabled"
+        :disabledDate="handleDisabledDate"
         :valueFormat="valueFormat"
         :format="format"
         @change="handleChange"/>
+
       <!-- Message Error -->
-      <span v-if="errors[0]"
-            class="errors"
-            v-html="errors[0]" />
+      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
     </div>
 
   </ValidationProvider>
 </template>
 
 <script>
+// Core
 import moment from 'moment'
-import en from 'ant-design-vue/lib/date-picker/locale/en_US'
-import vi from 'ant-design-vue/lib/date-picker/locale/vi_VN'
+import english from 'ant-design-vue/lib/date-picker/locale/en_US'
+import vietnamese from 'ant-design-vue/lib/date-picker/locale/vi_VN'
+// Helpers
+import { verifyArgument } from '@/shared/helpers'
 
 export default {
   name: 'InputDatePickerComponent',
@@ -64,8 +65,10 @@ export default {
     hiddenAsterisk: { type: Boolean, default: false },
     classContainer: { type: String, default: '' },
     format: { type: String, default: 'YYYY-MM-DD' },
-    locale: { type: String, default: 'vi' },
+    locale: { type: String, default: 'vietnamese' },
     disabled: { type: Boolean, default: false },
+    // before_today, today, after_today, before_and_today, after_and_today
+    disabledDate: { type: String, default: '' },
     showTime: { type: Boolean, default: false }
   },
 
@@ -77,13 +80,44 @@ export default {
 
   data () {
     return {
-      localeOptions: { en, vi }
+      localeOptions: { english, vietnamese }
     }
   },
 
   methods: {
     handleChange (value) {
       this.$emit('change', value)
+    },
+
+    handleDisabledDate (current) {
+      if (!this.$props.disabledDate) return false
+      verifyArgument([
+        'before_today', 'today',
+        'after_today', 'before_and_today',
+        'after_and_today'],
+        this.$props.disabledDate
+      )
+
+      let result = false
+      switch (this.$props.disabledDate) {
+        case 'before_today':
+          result = moment().isAfter(current, 'day')
+          break
+        case 'today':
+          result = moment().isSame(moment(current), 'day')
+          break
+        case 'after_today':
+          result = moment().isBefore(moment(current), 'day')
+          break
+        case 'before_and_today':
+          result = moment().isSameOrAfter(current, 'day')
+          break
+        case 'after_and_today':
+          result = moment().isSameOrBefore(moment(current), 'day')
+          break
+      }
+
+      return result
     }
   }
 }

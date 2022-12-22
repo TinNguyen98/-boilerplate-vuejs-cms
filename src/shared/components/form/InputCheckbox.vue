@@ -1,20 +1,18 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    v-slot="{ errors }">
+  <ValidationProvider tag="div"
+                      :name="field"
+                      :vid="vid"
+                      :rules="rules"
+                      v-slot="{ errors }">
     <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
+    <label v-if="label"
+           class="label"
+           :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
-      <span
-        v-if="rules.includes('required')"
-        class="required"
-        v-text="'*'"
+      <span v-if="rules.includes('required') && !hiddenAsterisk"
+            class="required"
+            v-text="'*'"
       />
     </label>
 
@@ -29,10 +27,9 @@
       >
         {{ nameLabel }}
       </a-checkbox>
+
       <!-- Message Error -->
-      <span v-if="errors[0]"
-            class="errors"
-            v-html="errors[0]" />
+      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
     </div>
   </ValidationProvider>
 </template>
@@ -54,6 +51,7 @@ export default {
     nameLabel: { type: String, default: '' },
     rules: { type: String, default: '' },
     classInput: { type: String, default: '' },
+    hiddenAsterisk: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
     autofill: { type: Boolean, default: true }

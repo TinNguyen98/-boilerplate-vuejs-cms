@@ -1,22 +1,19 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    :class="classContainer"
-    v-slot="{ errors }">
+  <ValidationProvider tag="div"
+                      :name="field"
+                      :vid="vid"
+                      :rules="rules"
+                      :class="classContainer"
+                      v-slot="{ errors }">
     <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }"
+    <label v-if="label"
+           class="label"
+           :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'"
+      <span v-if="rules.includes('required') && !hiddenAsterisk"
+            class="required"
+            v-text="'*'"
       />
     </label>
 
@@ -50,10 +47,9 @@
           @keypress="type === 'number' ? preventE($event) : ''"
         />
       </template>
+
       <!-- Message Error -->
-      <span v-if="errors[0]"
-            class="errors"
-            v-html="errors[0]" />
+      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
     </div>
   </ValidationProvider>
 </template>

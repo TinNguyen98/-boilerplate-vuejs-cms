@@ -1,17 +1,15 @@
 <template>
-  <ValidationProvider
-    ref="upload"
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="!valueModel ? rules : null"
-    :class="classContainer"
-    v-slot="{ errors }">
+  <ValidationProvider ref="upload"
+                      tag="div"
+                      :name="field"
+                      :vid="vid"
+                      :rules="!valueModel ? rules : null"
+                      :class="classContainer"
+                      v-slot="{ errors }">
     <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }"
+    <label v-if="label"
+           class="label"
+           :class="{ 'font-weight-normal': hiddenAsterisk }"
     >
       {{ label }}
       <span
@@ -55,9 +53,7 @@
         >
 
         <!-- Message Error -->
-        <span v-if="errors[0]"
-              class="errors"
-              v-html="errors[0]" />
+        <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
       </div>
 
       <template v-if="isPreview">

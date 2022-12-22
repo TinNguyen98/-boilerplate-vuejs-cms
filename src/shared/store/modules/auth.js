@@ -19,7 +19,13 @@ const mutations = {
   SET_TOKEN (state, payload) {
     const { token, expires } = payload
     state.bearerToken = token
-    Cookie.set(COOKIES_KEY.token, token, { expires })
+    Cookie.set(COOKIES_KEY.token, token, {
+      expires,
+      // requires a secure protocol (https) when transmitting cookies
+      secure: process.env.NODE_ENV === 'production',
+      // allowing to control whether the browser is sending a cookie along with cross-site requests
+      sameSite: 'lax'
+    })
   },
   SET_LOGOUT (state) {
     state.bearerToken = initialState.bearerToken
