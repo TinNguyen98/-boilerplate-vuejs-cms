@@ -33,7 +33,9 @@
 
         <!-- Frame image -->
         <template slot="image" slot-scope="image">
-          <image-zoom :src="image" class-image="col-image" />
+          <image-zoom :src="image"
+                      :all-loaded.sync="isImageAllLoaded"
+                      class-image="col-image" />
         </template>
 
         <!-- Frame type -->
@@ -92,7 +94,7 @@
 <script>
 // Store
 import store from '@/shared/store'
-import { mapActions, mapState } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import FrameSearchComponent from '@/shared/components/management_frame/FrameSearch'
@@ -129,6 +131,7 @@ export default {
       },
       statusOrder: ['applying', 'not_apply'],
       isDelete: false,
+      isImageAllLoaded: false,
       STATUS,
       FRAME_TYPE,
       COMMON_FORMAT_DATE
@@ -155,6 +158,7 @@ export default {
 
   computed: {
     ...mapState('frame', ['list', 'pagination']),
+    ...mapGetters({ isMobile: 'isMobile' }),
 
     columns () {
       return [
@@ -197,8 +201,8 @@ export default {
         {
           title: this.$t('management_frame.manipulation'),
           align: 'center',
-          fixed: 'right',
-          width: 202,
+          fixed: this.isImageAllLoaded ? 'right' : false,
+          width: this.isMobile ? 150 : 202,
           scopedSlots: { customRender: 'action' }
         }
       ]

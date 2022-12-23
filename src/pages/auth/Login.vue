@@ -58,7 +58,7 @@
 
 <script>
 // Store
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 // Components
 import InputText from '@/shared/components/form/InputText'
 import InputCheckbox from '@/shared/components/form/InputCheckbox'
@@ -140,6 +140,10 @@ export default {
   &-container {
     width: 404px;
     max-width: 31.222vw;
+    @media #{$info-ipad} {
+      width: 80%;
+      max-width: none;
+    }
   }
 
   &-submit_btn {

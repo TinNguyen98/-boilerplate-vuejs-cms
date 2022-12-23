@@ -26,7 +26,9 @@
 
         <!-- Collection image -->
         <template slot="image" slot-scope="image">
-          <image-zoom :src="image" class-image="col-image" />
+          <image-zoom :src="image"
+                      :all-loaded.sync="isImageAllLoaded"
+                      class-image="col-image" />
         </template>
 
         <!-- Updated at -->
@@ -80,7 +82,7 @@
 <script>
 // Store
 import store from '@/shared/store'
-import { mapActions, mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import CollectionSearchComponent from '@/shared/components/management_collection/CollectionSearch'
@@ -112,6 +114,7 @@ export default {
         per_page: PER_PAGE.COLLECTION
       },
       isDelete: false,
+      isImageAllLoaded: false,
       STATUS,
       COMMON_FORMAT_DATE
     }
@@ -172,7 +175,7 @@ export default {
         {
           title: this.$t('management_collection.manipulation'),
           align: 'center',
-          fixed: 'right',
+          fixed: this.isImageAllLoaded ? 'right' : false,
           width: 202,
           scopedSlots: { customRender: 'action' }
         }

@@ -68,7 +68,7 @@
 
 <script>
 // Store
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 // Other
 import { SIDEBAR } from '@/enum/sidebar.enum'
 
@@ -86,6 +86,7 @@ export default {
   },
 
   created () {
+    this.collapsedController = this.isMobile
     window.addEventListener("resize", this.handleResize)
   },
 
@@ -94,8 +95,8 @@ export default {
   },
 
   computed: {
-    // State
     ...mapState('auth', ['userProfile']),
+    ...mapGetters({ isMobile: 'isMobile' }),
 
     collapsedController: {
       get() {

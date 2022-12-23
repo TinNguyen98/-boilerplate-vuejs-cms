@@ -28,7 +28,8 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    layout: state => state.layout
+    layout: state => state.layout,
+    isMobile: _ => window.innerWidth <= 767
   },
   mutations: {
     SET_LAYOUT (state, { layout }) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-title d-flex justify-content-between align-items-center">
+  <div class="page-title d-flex flex-wrap justify-content-between align-items-center">
     <h5 class="page-title_content" v-text="title"/>
 
     <!-- Custom button -->
@@ -26,6 +26,9 @@ export default {
   padding: 12px 10px 12px 38px;
   background-color: $white;
   margin-bottom: 9px;
+  @media #{$info-ipad} {
+    padding-left: 25px;
+  }
 
   &_content {
     font-family: 'Roboto', sans-serif;
@@ -34,9 +37,17 @@ export default {
     text-transform: uppercase;
     color: $text-black-color;
     padding-right: 10px;
+    @media #{$info-ipad} {
+      font-size: 18px;
+      flex-basis: 100%;
+    }
   }
 
   &_action {
+    @media #{$info-ipad} {
+      margin-top: 10px;
+    }
+
     & > *:not(:last-child) {
       margin-right: 15px;
     }

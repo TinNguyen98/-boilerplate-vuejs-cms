@@ -43,7 +43,7 @@
 
 <script>
 // Store
-import { mapActions, mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // Other
 import FormMixin from '@/shared/mixins/form.mixin'
 import { LOCALE } from '@/enum/locale.enum'

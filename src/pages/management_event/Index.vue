@@ -80,7 +80,7 @@
 <script>
 // Store
 import store from '@/shared/store'
-import { mapActions, mapState } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 // Components
 import PageTitleComponent from '@/shared/components/common/PageTitle'
 import EventSearchComponent from '@/shared/components/management_event/EventSearch'
@@ -139,6 +139,7 @@ export default {
 
   computed: {
     ...mapState('event', ['list', 'pagination']),
+    ...mapGetters({ isMobile: 'isMobile' }),
 
     columns () {
       return [
@@ -176,7 +177,7 @@ export default {
           title: this.$t('management_event.manipulation'),
           align: 'center',
           fixed: 'right',
-          width: 219,
+          width: this.isMobile ? 150 : 219,
           scopedSlots: { customRender: 'action' }
         }
       ]

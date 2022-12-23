@@ -167,3 +167,18 @@
     }
   }
 }
+
+.checkbox-delete {
+  .ant-checkbox .ant-checkbox-inner {
+    border-color: $button-delete;
+  }
+
+  .ant-checkbox-checked {
+    &::after {
+      border-color: $button-delete;
+    }
+    .ant-checkbox-inner {
+      background-color: $button-delete;
+    }
+  }
+}

@@ -2,6 +2,7 @@
 
 ## Technologies
 Project is created with:
+* Node version: >= 16
 * VueJS version: 2.6.14
 * Ant design Vue version: 1.6.2
 * Lodash es version: 4.17.15
@@ -49,6 +50,4 @@ yarn lint | npm run lint
 ```
 
 ## License
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Copyright by [Chain Nguyễn](https://chainnguyen.github.io/chain-curriculum-vitae/).

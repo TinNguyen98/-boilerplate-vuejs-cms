@@ -78,7 +78,7 @@ export default {
     },
 
     handleSearch (value, option) {
-      return option.componentOptions.children[0].text.toLowerCase().indexOf(value) >= 0
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(value.toString().toLowerCase()) >= 0
     }
   }
 }
