@@ -27,6 +27,7 @@
         :showArrow="showArrow"
         :not-found-content="$t('no_data')"
         :allow-clear="multiple"
+        :getPopupContainer="(triggerNode) => triggerNode.parentNode"
         :filterOption="handleSearch"
         @change="handleChange"
       >

@@ -47,12 +47,29 @@ export const formatNumberDecimal = (number, format = ',') => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, format)
 }
 
+export const generateId = () => {
+  const head = Date.now().toString(36)
+  const tail = Math.random().toString(36).substr(2)
+  return head + tail
+}
+
 export const toBase64 = file => new Promise((resolve, reject) => {
   const reader = new FileReader()
   reader.readAsDataURL(file)
   reader.onload = () => resolve(reader.result)
   reader.onerror = error => reject(error)
 })
+
+export const verifyArgument = (arrRule, cb) => {
+  if (!arrRule.includes(cb)) {
+    return console.error(`The parameter's path is wrong or not found. ' +
+      'Expected [${arrRule.join(', ')}], please check again parameter.`)
+  }
+}
+
+export const capitalizeFirstLetter = (string) => {
+  return string ? string.charAt(0).toUpperCase() + string.slice(1) : string
+}
 
 export const checkImageSizeByMb = (file, limitSize = 5) => {
   const sizeMb = +((file.size / (1024 * 1024)).toFixed(2))
@@ -149,27 +166,17 @@ export const handleRequestErrorMessage = (response, fallback = 'action_fail') =>
   })
 }
 
-export const verifyArgument = (arrRule, cb) => {
-  if (!arrRule.includes(cb)) {
-    return console.error(`The parameter's path is wrong or not found. ' +
-      'Expected [${arrRule.join(', ')}], please check again parameter.`)
-  }
-}
-
-export const capitalizeFirstLetter = (string) => {
-  return string ? string.charAt(0).toUpperCase() + string.slice(1) : string
-}
-
 export default {
   formatDate,
   formatNumberDecimal,
+  generateId,
   toBase64,
+  verifyArgument,
+  capitalizeFirstLetter,
   checkImageSizeByMb,
   handleErrorNotAllow,
   scrollToErrorPlace,
   stripHtmlExceptTags,
   handleInputProtection,
   handleRequestErrorMessage,
-  verifyArgument,
-  capitalizeFirstLetter
 }
