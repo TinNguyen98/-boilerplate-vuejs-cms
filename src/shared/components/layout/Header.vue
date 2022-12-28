@@ -34,6 +34,7 @@
                        :class="{ 'ant-dropdown-menu-item-active': $i18n.locale === locale }">
             <span @click.prevent="changeLanguage(locale)"
                   v-text="capitalizeFirstLetter(locale)"/>
+            <a-icon v-if="$i18n.locale === locale" type="check" class="ml-3"/>
           </a-menu-item>
         </a-menu>
       </a-dropdown>

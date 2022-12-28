@@ -42,9 +42,9 @@ export const formatNumberDecimal = (number, format = ',') => {
     includes(number.toString(), '.')
   ) { return number }
 
-  number = number.toString().replaceAll(format, '')
+  number = number.toString().trim().replaceAll(format, '')
   // REGEX: detect number decimal and add dot every 3 digits
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, format)
+  return number.toString().trim().replace(/\B(?=(\d{3})+(?!\d))/g, format)
 }
 
 export const generateId = () => {

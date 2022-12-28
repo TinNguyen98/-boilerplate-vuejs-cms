@@ -36,6 +36,7 @@
 
       <a-select v-model="filter.status"
                 :placeholder="$t('status_placeholder')"
+                :class="{ 'not-value': !filter.status }"
                 allow-clear
                 @change="search"
       >

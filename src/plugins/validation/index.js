@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import * as rules from 'vee-validate/dist/rules'
 import i18n from '@/plugins/i18n'
-import moment from 'moment'
 import { ValidationProvider, ValidationObserver, extend, configure } from 'vee-validate'
-import { formatDate } from '@/shared/helpers'
 
 // with typescript
 for (let [rule, validation] of Object.entries(rules)) {
@@ -42,8 +40,30 @@ extend('half_width', {
 })
 
 extend('full_width', {
-  validate (value, params) {
+  validate (value) {
     return /^[ａ-ｚＡ-Ｚ一-龠々-〇ぁ-んァ-ヶ０-９ー・]+$/.test(value)
+  }
+})
+
+extend('min_multi', {
+  ...rules.min,
+  validate (value, params) {
+    if (!Array.isArray(value)) {
+      console.error('ERROR: The input value must be an array!')
+      return true
+    }
+    return !(value.length < params.length)
+  }
+})
+
+extend('max_multi', {
+  ...rules.max,
+  validate (value, params) {
+    if (!Array.isArray(value)) {
+      console.error('ERROR: The input value must be an array!')
+      return true
+    }
+    return !(value.length > params.length)
   }
 })
 

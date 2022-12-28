@@ -70,16 +70,29 @@ export default {
     showArrow: { type: Boolean, default: true },
     hiddenAsterisk: { type: Boolean, default: false },
     multiple: { type: Boolean, default: false },
+    limitMultiple: { type: [String, Number], default: 0 },
     disabled: { type: Boolean, default: false }
   },
 
   methods: {
     handleChange (value) {
-      this.$emit('change', value)
+      const { multiple, limitMultiple } = this.$props
+
+      if (multiple) {
+        const verifyValue = [...value]
+        if (+limitMultiple > 1 && verifyValue.length > +limitMultiple) {
+          verifyValue.pop()
+        }
+        this.$emit('change', verifyValue)
+      } else {
+        this.$emit('change', value)
+      }
     },
 
     handleSearch (value, option) {
-      return option.componentOptions.children[0].text.toLowerCase().indexOf(value.toString().toLowerCase()) >= 0
+      return option.componentOptions.children[0].text
+        .toLowerCase()
+        .indexOf(value.toString().toLowerCase().trim()) >= 0
     }
   }
 }
