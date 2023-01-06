@@ -34,7 +34,6 @@
       <!-- Message Error -->
       <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
     </div>
-
   </ValidationProvider>
 </template>
 
@@ -57,19 +56,30 @@ export default {
   props: {
     vid: { type: String, default: '' },
     value: { type: String, default: '' },
-    valueFormat: {type: String, default: 'YYYY-MM-DD HH:mm:ss'},
+    valueFormat: { type: String, default: 'YYYY-MM-DD HH:mm:ss' },
+    format: { type: String, default: 'YYYY-MM-DD' },
+    locale: { type: String, default: 'vietnamese' },
     field: { type: String, default: '' },
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     hiddenAsterisk: { type: Boolean, default: false },
     classContainer: { type: String, default: '' },
-    format: { type: String, default: 'YYYY-MM-DD' },
-    locale: { type: String, default: 'vietnamese' },
     disabled: { type: Boolean, default: false },
     // before_today, today, after_today, before_and_today, after_and_today
-    disabledDate: { type: String, default: '' },
+    disabledType: { type: String, default: '' },
+    disabledRange: { type: Array, default: () => [] },
     showTime: { type: Boolean, default: false }
+  },
+
+  data () {
+    return {
+      localeOptions: { english, vietnamese },
+      argumentRule: [
+        'before_today', 'today', 'after_today',
+        'before_and_today', 'after_and_today'
+      ]
+    }
   },
 
   computed: {
@@ -78,28 +88,35 @@ export default {
     }
   },
 
-  data () {
-    return {
-      localeOptions: { english, vietnamese }
-    }
-  },
-
   methods: {
     handleChange (value) {
+      if (this.$props.disabled) return
       this.$emit('change', value)
     },
 
     handleDisabledDate (current) {
-      if (!this.$props.disabledDate) return false
-      verifyArgument([
-        'before_today', 'today',
-        'after_today', 'before_and_today',
-        'after_and_today'],
-        this.$props.disabledDate
-      )
+      if (this.$props.disabled) return false
+      const { disabledType, disabledRange } = this.$props
+
+      if (disabledType) {
+        return this.executeDisabledType(current, disabledType)
+      } else if (disabledRange.length) {
+        return this.executeDisabledRange(current, disabledRange)
+      } else {
+        return false
+      }
+    },
+
+    /**
+     * @param current {date}
+     * @param type {string}
+     * @returns {boolean}
+     */
+    executeDisabledType (current, type) {
+      verifyArgument(this.argumentRule, type)
 
       let result = false
-      switch (this.$props.disabledDate) {
+      switch (type) {
         case 'before_today':
           result = moment().isAfter(current, 'day')
           break
@@ -118,6 +135,56 @@ export default {
       }
 
       return result
+    },
+
+    /**
+     * @param current {date}
+     * @param range {array}
+     * @returns {boolean}
+     */
+    executeDisabledRange (current, range) {
+      if (range.length > 3) {
+        console.error(`The parameter's path was wrong. Props "disabledRange" expected only three parameters at most, please check again parameter.`)
+        return false
+      }
+
+      const [periodStart, periodEnd, mode] = range
+      let momentCompare = [false, false]
+      !moment(periodStart).isValid() && verifyArgument(this.argumentRule, periodStart)
+      !moment(periodEnd).isValid() && verifyArgument(this.argumentRule, periodEnd)
+
+      // Between mode
+      if (mode === 'between') {
+        const start = periodStart !== 'today' ? moment(periodStart) : moment()
+        return moment(current).isBetween(start, moment(periodEnd), 'day', '[]')
+      }
+
+      // Standard mode
+      range.forEach((period, idx) => {
+        if (idx >= 2) return
+
+        switch (period) {
+          case 'before_today':
+            momentCompare[idx] = moment().isAfter(current, 'day')
+            break
+          case 'today':
+            momentCompare[idx] = moment().isSame(moment(current), 'day')
+            break
+          case 'after_today':
+            momentCompare[idx] = moment().isBefore(moment(current), 'day')
+            break
+          case 'before_and_today':
+            momentCompare[idx] = moment().isSameOrAfter(current, 'day')
+            break
+          case 'after_and_today':
+            momentCompare[idx] = moment().isSameOrBefore(moment(current), 'day')
+            break
+          default:
+            momentCompare[idx] = moment(period).isBefore(current, 'day')
+        }
+      })
+
+      return momentCompare[0] || momentCompare[1]
     }
   }
 }

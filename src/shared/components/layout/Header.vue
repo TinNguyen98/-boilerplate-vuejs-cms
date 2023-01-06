@@ -47,7 +47,7 @@
 import { mapState, mapActions } from 'vuex'
 // Other
 import FormMixin from '@/shared/mixins/form.mixin'
-import { LOCALE } from '@/enum/locale.enum'
+import { LOCALE } from '@/enums/locale.enum'
 import { capitalizeFirstLetter } from '@/shared/helpers'
 
 export default {

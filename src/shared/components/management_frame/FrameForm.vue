@@ -75,7 +75,7 @@ import {
   handleInputProtection,
   handleRequestErrorMessage
 } from '@/shared/helpers'
-import { FRAME_TYPE } from '@/enum/pages/frame.enum'
+import { FRAME_TYPE } from '@/enums/pages/frame.enum'
 
 export default {
   name: 'FrameFormComponent',

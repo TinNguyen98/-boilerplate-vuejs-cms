@@ -62,8 +62,7 @@ export const toBase64 = file => new Promise((resolve, reject) => {
 
 export const verifyArgument = (arrRule, cb) => {
   if (!arrRule.includes(cb)) {
-    return console.error(`The parameter's path is wrong or not found. ' +
-      'Expected [${arrRule.join(', ')}], please check again parameter.`)
+    return console.error(`The parameter's path is wrong or not found. Expected [${arrRule.join(', ')}], please check again parameter.`)
   }
 }
 

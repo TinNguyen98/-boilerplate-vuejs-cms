@@ -4,13 +4,24 @@
     <div class="block-field mb-sm-2">
       <label v-text="$t('management_collection.search_by_keyword')"/>
 
-      <a-input-search v-model="filter.keyword"
-                      :placeholder="$t('search')"
-                      @change="debounceSearch"
-                      @blur="search"
-                      @keydown.enter.prevent="search"
-                      allow-clear
-      />
+      <a-input v-model="filter.keyword"
+               :placeholder="$t('search')"
+               @change="debounceSearch"
+               @keydown.enter.prevent="search"
+      >
+        <template #suffix>
+          <a-icon v-if="filter.keyword"
+                  type="close-circle"
+                  theme="filled"
+                  class="icon-delete"
+                  @click.prevent="reset('keyword')"/>
+
+          <a-icon v-else
+                  type="search"
+                  class="cursor-pointer"
+                  @click.prevent="search"/>
+        </template>
+      </a-input>
     </div>
 
     <!-- Status -->
@@ -35,7 +46,7 @@
 <script>
 // Others
 import SearchMixin from '@/shared/mixins/search.mixin'
-import { STATUS, FORMAT_DATE } from '@/enum/pages/collection.enum'
+import { STATUS, FORMAT_DATE } from '@/enums/pages/collection.enum'
 
 export default {
   name: 'CollectionSearchComponent',

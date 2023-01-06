@@ -4,13 +4,24 @@
     <div class="block-field mb-sm-2">
       <label v-text="$t('management_event.search_by_keyword')"/>
 
-      <a-input-search v-model="filter.keyword"
-                      :placeholder="$t('search')"
-                      @change="debounceSearch"
-                      @blur="search"
-                      @keydown.enter.prevent="search"
-                      allow-clear
-      />
+      <a-input v-model="filter.keyword"
+               :placeholder="$t('search')"
+               @change="debounceSearch"
+               @keydown.enter.prevent="search"
+      >
+        <template #suffix>
+          <a-icon v-if="filter.keyword"
+                  type="close-circle"
+                  theme="filled"
+                  class="icon-delete"
+                  @click.prevent="reset('keyword')"/>
+
+          <a-icon v-else
+                  type="search"
+                  class="cursor-pointer"
+                  @click.prevent="search"/>
+        </template>
+      </a-input>
     </div>
 
     <!-- Date of occurrence -->
@@ -36,7 +47,6 @@
 
       <a-select v-model="filter.status"
                 :placeholder="$t('status_placeholder')"
-                :class="{ 'not-value': !filter.status }"
                 allow-clear
                 @change="search"
       >
@@ -53,7 +63,7 @@
 <script>
 // Others
 import SearchMixin from '@/shared/mixins/search.mixin'
-import { STATUS, FORMAT_DATE } from '@/enum/pages/event.enum'
+import { STATUS, FORMAT_DATE } from '@/enums/pages/event.enum'
 
 export default {
   name: 'EventSearchComponent',
@@ -65,7 +75,7 @@ export default {
       filter: {
         keyword: null,
         date_of_occurrence: null,
-        status: null
+        status: undefined
       },
       STATUS,
       FORMAT_DATE

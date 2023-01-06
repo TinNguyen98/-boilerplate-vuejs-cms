@@ -70,7 +70,7 @@
 // Store
 import { mapState, mapGetters } from 'vuex'
 // Other
-import { SIDEBAR } from '@/enum/sidebar.enum'
+import { SIDEBAR } from '@/enums/sidebar.enum'
 
 export default {
   name: 'SidebarComponent',

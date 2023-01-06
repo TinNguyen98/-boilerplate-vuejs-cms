@@ -60,7 +60,9 @@
         <!-- Preview image -->
         <template v-if="!isAudio">
           <figure v-if="(valueModel && valueModel.path) || previewSrc" class="preview-image">
-            <image-zoom :src="valueModel.path || previewSrc" alt="aeon_preview_image" />
+            <image-zoom :src="valueModel.path || previewSrc"
+                        :alt="valueModel.name || 'preview-image'"
+            />
           </figure>
         </template>
 

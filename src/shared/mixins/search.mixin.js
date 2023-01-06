@@ -23,9 +23,17 @@ export default {
       return debounce(() => this.search(), 800)
     },
 
-    reset () {
-      for (const property in this.filter) {
-        this.filter[property] = null
+    /**
+     *
+     * @param field {string}
+     */
+    reset (field) {
+      if (!field) {
+        for (const property in this.filter) {
+          this.filter[property] = null
+        }
+      } else {
+        this.filter[field] = null
       }
 
       this.$emit('filter-changed', this.filter)

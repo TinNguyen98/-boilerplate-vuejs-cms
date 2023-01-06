@@ -88,10 +88,10 @@ import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
 // Others
 import moment from 'moment'
-import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
-import { PER_PAGE } from '@/enum/pagination.enum'
-import { STATUS } from '@/enum/pages/event.enum'
-import { EVENT_DATA } from '@/enum/dummy-data.enum'
+import { COMMON_FORMAT_DATE } from '@/enums/common.enum'
+import { PER_PAGE } from '@/enums/pagination.enum'
+import { STATUS } from '@/enums/pages/event.enum'
+import { EVENT_DATA } from '@/enums/dummy-data.enum'
 import { liberateStore } from '@/shared/helpers/performance'
 
 export default {

@@ -21,7 +21,7 @@ export default {
 
   props: {
     src: { type: String, required: true, default: '' },
-    alt: { type: String, default: 'aeon image' },
+    alt: { type: String, default: 'vue2-cms-image' },
     classImage: { type: String, default: null },
     fallBack: { type: String, default: require('@/assets/images/noimage_bg.png') }
   },

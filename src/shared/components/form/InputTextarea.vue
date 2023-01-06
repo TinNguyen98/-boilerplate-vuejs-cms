@@ -60,6 +60,7 @@ export default {
 
   methods: {
     handleType ($event) {
+      if (this.$props.disabled) return
       this.$emit('change', $event.target.value)
     },
 

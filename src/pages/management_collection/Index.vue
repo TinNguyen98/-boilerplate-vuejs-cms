@@ -90,9 +90,9 @@ import StatusTagComponent from '@/shared/components/common/StatusTag'
 import PaginationComponent from '@/shared/components/common/Pagination'
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
-import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
-import { PER_PAGE } from '@/enum/pagination.enum'
-import { STATUS } from '@/enum/pages/collection.enum'
+import { COMMON_FORMAT_DATE } from '@/enums/common.enum'
+import { PER_PAGE } from '@/enums/pagination.enum'
+import { STATUS } from '@/enums/pages/collection.enum'
 import { liberateStore } from '@/shared/helpers/performance'
 
 export default {

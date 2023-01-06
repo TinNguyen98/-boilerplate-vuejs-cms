@@ -49,5 +49,9 @@ yarn build:production | npm run build:production
 yarn lint | npm run lint
 ```
 
+## Changelog
+
+See more [CHANGELOG.md](CHANGELOG.md).
+
 ## License
 Copyright by [Chain Nguyễn](https://chainnguyen.github.io/chain-curriculum-vitae/).

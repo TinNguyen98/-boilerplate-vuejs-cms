@@ -1,4 +1,4 @@
 export const COOKIES_KEY = {
-  token: 'boilerplate_cms_token',
+  token: '__vue2_cms_tkn',
   expires: 30 // 30 days
 }

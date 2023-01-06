@@ -4,7 +4,7 @@ import { page } from '@/router/routes'
 // Layout
 import Resource from '@/shared/components/Resource.vue'
 // Others
-import { PERMISSION } from '@/enum/permission.enum'
+import { PERMISSION } from '@/enums/permission.enum'
 
 export default [
   {

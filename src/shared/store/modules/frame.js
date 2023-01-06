@@ -1,5 +1,5 @@
 import { FrameService } from '@/api/services/frame.service'
-import { FRAME_DATA } from '@/enum/dummy-data.enum'
+import { FRAME_DATA } from '@/enums/dummy-data.enum'
 
 const initialState = {
   list: null,

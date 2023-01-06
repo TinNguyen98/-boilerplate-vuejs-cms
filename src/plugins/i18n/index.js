@@ -6,7 +6,7 @@ import validationMessagesVietnamese from 'vee-validate/dist/locale/vi'
 // import languages
 import english from '@/languages/en'
 import vietnamese from '@/languages/vi'
-import { LOCALE } from '@/enum/locale.enum'
+import { LOCALE } from '@/enums/locale.enum'
 
 Vue.use(VueI18n)
 

@@ -1,5 +1,5 @@
 import { CollectionService } from '@/api/services/collection.service'
-import { COLLECTION_DATA } from '@/enum/dummy-data.enum'
+import { COLLECTION_DATA } from '@/enums/dummy-data.enum'
 
 const initialState = {
   list: null,

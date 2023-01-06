@@ -3,7 +3,7 @@ import router from '@/router'
 import axios from 'axios'
 import i18n from '@/plugins/i18n'
 import Cookie from 'js-cookie'
-import { COOKIES_KEY } from '@/enum/cookie.enum'
+import { COOKIES_KEY } from '@/enums/cookie.enum'
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,

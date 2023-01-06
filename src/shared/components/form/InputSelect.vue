@@ -76,6 +76,7 @@ export default {
 
   methods: {
     handleChange (value) {
+      if (this.$props.disabled) return
       const { multiple, limitMultiple } = this.$props
 
       if (multiple) {

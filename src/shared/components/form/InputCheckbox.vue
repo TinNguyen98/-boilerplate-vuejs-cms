@@ -59,6 +59,7 @@ export default {
 
   methods: {
     handleChange ($event) {
+      if (this.$props.disabled) return
       this.$emit('change', $event.target.checked)
     },
 

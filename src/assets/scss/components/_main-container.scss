@@ -42,6 +42,7 @@
 
 .main-form {
   &_row {
+    position: relative;
     @media #{$info-ipad-pro} {
       justify-content: space-between;
     }

@@ -103,10 +103,10 @@ import PaginationComponent from '@/shared/components/common/Pagination'
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
 import moment from 'moment'
-import { COMMON_FORMAT_DATE } from '@/enum/common.enum'
+import { COMMON_FORMAT_DATE } from '@/enums/common.enum'
 import FormMixin from '@/shared/mixins/form.mixin'
-import { PER_PAGE } from '@/enum/pagination.enum'
-import { STATUS, FRAME_TYPE } from '@/enum/pages/frame.enum'
+import { PER_PAGE } from '@/enums/pagination.enum'
+import { STATUS, FRAME_TYPE } from '@/enums/pages/frame.enum'
 import { liberateStore } from '@/shared/helpers/performance'
 
 export default {

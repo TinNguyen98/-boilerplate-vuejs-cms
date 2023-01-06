@@ -1,7 +1,7 @@
 // import { AuthService } from '@/api/services/auth.service'
 import Cookie from 'js-cookie'
-import { COOKIES_KEY } from '@/enum/cookie.enum'
-import { ACCOUNT } from '@/enum/account.enum'
+import { COOKIES_KEY } from '@/enums/cookie.enum'
+import { ACCOUNT } from '@/enums/account.enum'
 
 const initialState = {
   bearerToken: null,

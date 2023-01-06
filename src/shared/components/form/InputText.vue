@@ -90,6 +90,7 @@ export default {
     },
 
     handleType ($event) {
+      if (this.$props.disabled) return
       this.$emit('change', $event.target.value)
     },
 
@@ -100,6 +101,7 @@ export default {
     },
 
     handleBlur (event) {
+      if (this.$props.disabled) return
       this.$emit('blur', event.target.value)
     }
   }

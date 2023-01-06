@@ -67,6 +67,7 @@ export default {
 
   methods: {
     handleType ($event) {
+      if (this.$props.disabled) return
       this.$emit('change', $event)
     },
 
@@ -77,6 +78,7 @@ export default {
     },
 
     handleBlur (event) {
+      if (this.$props.disabled) return
       this.$emit('blur', event.target.value)
     }
   }

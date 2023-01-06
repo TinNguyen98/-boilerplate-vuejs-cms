@@ -1,5 +1,5 @@
 import { EventService } from '@/api/services/event.service'
-import { EVENT_DATA } from '@/enum/dummy-data.enum'
+import { EVENT_DATA } from '@/enums/dummy-data.enum'
 
 const initialState = {
   list: null,

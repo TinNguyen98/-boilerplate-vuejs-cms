@@ -1,4 +1,4 @@
-import { PERMISSION } from '@/enum/permission.enum'
+import { PERMISSION } from '@/enums/permission.enum'
 
 export const SIDEBAR = [
   {
