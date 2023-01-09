@@ -8,7 +8,7 @@
 
 <script>
 // Store
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 // Components
 import LoadingComponent from '@/shared/components/layout/Loading'
 
@@ -23,7 +23,16 @@ export default {
 
   computed: {
     ...mapState('loader', ['loading']),
+    ...mapState('language', ['locale']),
     ...mapGetters({ layout: 'layout' })
+  },
+
+  created () {
+    this.locale && this.setLanguage(this.locale)
+  },
+
+  methods: {
+    ...mapActions('language', ['setLanguage'])
   }
 }
 </script>

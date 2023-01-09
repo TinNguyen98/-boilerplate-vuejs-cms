@@ -1,6 +1,6 @@
 import { UploadService } from '@/api/services/upload.service'
 
-export const state = {}
+const state = {}
 
 const getters = {}
 

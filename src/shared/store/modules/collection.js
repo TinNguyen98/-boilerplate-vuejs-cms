@@ -7,7 +7,7 @@ const initialState = {
   pagination: null
 }
 
-export const state = { ...initialState }
+const state = { ...initialState }
 
 const getters = {}
 

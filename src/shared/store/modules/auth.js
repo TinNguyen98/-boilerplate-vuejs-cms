@@ -2,13 +2,14 @@
 import Cookie from 'js-cookie'
 import { COOKIES_KEY } from '@/enums/cookie.enum'
 import { ACCOUNT } from '@/enums/account.enum'
+import { LOCAL_STORAGE } from '@/enums/locale.enum'
 
 const initialState = {
   bearerToken: null,
   userProfile: {}
 }
 
-export const state = {
+const state = {
   ...initialState,
   bearerToken: Cookie.get(COOKIES_KEY.token)
 }
@@ -31,6 +32,7 @@ const mutations = {
     state.bearerToken = initialState.bearerToken
     state.userProfile = initialState.userProfile
     Cookie.remove(COOKIES_KEY.token)
+    localStorage.removeItem(LOCAL_STORAGE.LANGUAGE)
   },
   SET_USER (state, payload) {
     state.userProfile = payload

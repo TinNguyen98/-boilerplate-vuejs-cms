@@ -3,7 +3,7 @@ const initialState = {
   requestsPending: 0
 }
 
-export const state = { ...initialState }
+const state = { ...initialState }
 
 const mutations = {
   show (state) {
