@@ -10,5 +10,5 @@ export default {
   ...login,
   management_collection,
   management_event,
-  management_frame
+  management_frame,
 }

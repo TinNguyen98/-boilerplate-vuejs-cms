@@ -1,25 +1,25 @@
 const initialState = {
   loading: false,
-  requestsPending: 0
+  requestsPending: 0,
 }
 
 const state = { ...initialState }
 
 const mutations = {
-  show (state) {
+  show(state) {
     state.loading = true
   },
-  hide (state) {
+  hide(state) {
     state.loading = false
   },
-  pending (state) {
+  pending(state) {
     if (state.requestsPending === 0) {
       this.commit('loader/show')
     }
 
     state.requestsPending++
   },
-  done (state) {
+  done(state) {
     if (state.requestsPending >= 1) {
       state.requestsPending--
     }
@@ -27,27 +27,27 @@ const mutations = {
     if (state.requestsPending <= 0) {
       this.commit('loader/hide')
     }
-  }
+  },
 }
 
 const actions = {
-  show ({ commit }) {
+  show({ commit }) {
     commit('show')
   },
-  hide ({ commit }) {
+  hide({ commit }) {
     commit('hide')
   },
-  pending ({ commit }) {
+  pending({ commit }) {
     commit('pending')
   },
-  done ({ commit }) {
+  done({ commit }) {
     commit('done')
-  }
+  },
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }

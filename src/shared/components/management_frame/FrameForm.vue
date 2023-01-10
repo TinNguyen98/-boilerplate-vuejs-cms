@@ -1,59 +1,61 @@
 <template>
-  <ValidationObserver ref="observer"
-                      tag="form"
-                      class="main-form frame-page"
-                      @submit.prevent="validateBeforeSubmit">
+  <ValidationObserver
+    ref="observer"
+    tag="form"
+    class="main-form frame-page"
+    @submit.prevent="validateBeforeSubmit">
     <div class="main-form_container pb-5">
       <div class="main-form_row d-flex flex-wrap">
         <!-- Frame name -->
-        <InputText v-model="form.name"
-                   vid="frame_name"
-                   field="management_frame.frame_name"
-                   :label="$t('management_frame.frame_name')"
-                   :placeholder="$t('management_frame.frame_name_placeholder')"
-                   class-container="main-form_field mb-sm-2"
-                   rules="required|max:100"
-                   hidden-asterisk
-        />
+        <InputText
+          v-model="form.name"
+          vid="frame_name"
+          field="management_frame.frame_name"
+          :label="$t('management_frame.frame_name')"
+          :placeholder="$t('management_frame.frame_name_placeholder')"
+          class-container="main-form_field mb-sm-2"
+          rules="required|max:100"
+          hidden-asterisk />
 
         <!-- Frame type -->
-        <InputSelect v-model="form.type"
-                     vid="frame_type"
-                     :options="FRAME_TYPE"
-                     :label="$t('management_frame.frame_type')"
-                     field="management_frame.frame_type"
-                     class-container="main-form_field mb-sm-2"
-                     rules="required_choose"
-                     :show-arrow="false"
-                     disabled
-                     hidden-asterisk
-        />
+        <InputSelect
+          v-model="form.type"
+          vid="frame_type"
+          :options="FRAME_TYPE"
+          :label="$t('management_frame.frame_type')"
+          field="management_frame.frame_type"
+          class-container="main-form_field mb-sm-2"
+          rules="required_choose"
+          :show-arrow="false"
+          disabled
+          hidden-asterisk />
 
         <!-- Frame file -->
-        <InputUpload v-model="form.frame_file"
-                     vid="frame_file"
-                     field="management_frame.frame_file"
-                     :label="$t('management_frame.frame_file')"
-                     :placeholder="$t('management_frame.frame_file')"
-                     class-container="main-form_field"
-                     rules="required_file"
-                     hidden-asterisk
-                     is-preview
-        />
+        <InputUpload
+          v-model="form.frame_file"
+          vid="frame_file"
+          field="management_frame.frame_file"
+          :label="$t('management_frame.frame_file')"
+          :placeholder="$t('management_frame.frame_file')"
+          class-container="main-form_field"
+          rules="required_file"
+          hidden-asterisk
+          is-preview />
       </div>
     </div>
 
     <div class="main-form_controller">
-      <router-link tag="button"
-                   :to="{ name: 'management_frame' }"
-                   class="cancel-button ant-btn"
-                   v-text="$t('cancel')"/>
+      <router-link
+        tag="button"
+        :to="{ name: 'management_frame' }"
+        class="cancel-button ant-btn"
+        v-text="$t('cancel')" />
 
-      <a-button type="primary"
-                html-type="submit"
-                :loading="isSubmit"
-                class="save-button"
-      >
+      <a-button
+        type="primary"
+        html-type="submit"
+        :loading="isSubmit"
+        class="save-button">
         {{ $t('save') }}
       </a-button>
     </div>
@@ -73,7 +75,7 @@ import {
   verifyArgument,
   scrollToErrorPlace,
   handleInputProtection,
-  handleRequestErrorMessage
+  handleRequestErrorMessage,
 } from '@/shared/helpers'
 import { FRAME_TYPE } from '@/enums/pages/frame.enum'
 
@@ -83,16 +85,16 @@ export default {
   components: {
     InputText,
     InputSelect,
-    InputUpload
+    InputUpload,
   },
 
   props: {
-    updateMode: { type: Boolean, default: false }
+    updateMode: { type: Boolean, default: false },
   },
 
   mixins: [FormMixin],
 
-  data () {
+  data() {
     return {
       form: {
         name: null,
@@ -101,11 +103,11 @@ export default {
       },
       recordDetail: {},
       isSubmit: false,
-      FRAME_TYPE
+      FRAME_TYPE,
     }
   },
 
-  mounted () {
+  mounted() {
     if (this.$props.updateMode) {
       this.recordDetail = this.detail
       this.form = {
@@ -113,8 +115,8 @@ export default {
         frame_file: {
           old_file: true,
           name: this.recordDetail.frame_name,
-          path: this.recordDetail.frame_image
-        }
+          path: this.recordDetail.frame_image,
+        },
       }
     } else {
       this.form.type = this.$route.query['type'] || FRAME_TYPE[0].value
@@ -122,16 +124,13 @@ export default {
   },
 
   computed: {
-    ...mapState('frame', ['detail'])
+    ...mapState('frame', ['detail']),
   },
 
   methods: {
-    ...mapActions('frame', [
-      'createFrame',
-      'updateFrame'
-    ]),
+    ...mapActions('frame', ['createFrame', 'updateFrame']),
 
-    async validateBeforeSubmit () {
+    async validateBeforeSubmit() {
       const isValid = await this.$refs.observer.validate()
 
       if (isValid) {
@@ -144,7 +143,7 @@ export default {
     /**
      * @param type {string} ['create', 'update']
      */
-    handleSubmit (type) {
+    handleSubmit(type) {
       verifyArgument(['create', 'update'], type)
 
       this.isSubmit = true
@@ -157,14 +156,18 @@ export default {
         }
       }
 
-      const promise = type === 'create'
-        ? this.createFrame(formProtected)
-        : this.updateFrame(formProtected)
+      const promise =
+        type === 'create'
+          ? this.createFrame(formProtected)
+          : this.updateFrame(formProtected)
 
-      promise.then(res => {
+      promise.then((res) => {
         if (res) {
           this.isSubmit = false
-          this.onSuccess(this.$t('completion'), this.$t(`${type}_message_successfully`))
+          this.onSuccess(
+            this.$t('completion'),
+            this.$t(`${type}_message_successfully`)
+          )
           this.$router.push({ name: 'management_frame' })
         } else {
           this.isSubmit = false
@@ -172,8 +175,7 @@ export default {
         }
       })
     },
-  }
-
+  },
 }
 </script>
 
@@ -185,4 +187,3 @@ export default {
   }
 }
 </style>
-

@@ -14,5 +14,5 @@ export default {
   frame_file: 'Upload frame',
   frame_type: 'Frame type',
   updated_at: 'Update time',
-  manipulation: 'Manipulation'
+  manipulation: 'Manipulation',
 }

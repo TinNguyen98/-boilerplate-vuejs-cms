@@ -24,5 +24,6 @@ export default {
   open_priority: 'Mở ưu tiên',
   close_priority: 'Tắt ưu tiên',
   priority_event_content: 'Bạn có chắc chắn muốn Ưu tiên sự kiện này?',
-  priority_event_desc: 'Khi chọn Ưu tiên sự kiện, sự kiện hiện tại sẽ dừng lại, bạn có chắc chắn muốn xác nhận không?'
+  priority_event_desc:
+    'Khi chọn Ưu tiên sự kiện, sự kiện hiện tại sẽ dừng lại, bạn có chắc chắn muốn xác nhận không?',
 }

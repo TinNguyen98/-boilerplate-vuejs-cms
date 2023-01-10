@@ -1,24 +1,24 @@
 <template>
-  <ValidationProvider tag="div"
-                      :name="field"
-                      :vid="vid"
-                      :rules="rules"
-                      :class="classContainer"
-                      v-slot="{ errors }">
+  <ValidationProvider
+    tag="div"
+    :name="field"
+    :vid="vid"
+    :rules="rules"
+    :class="classContainer"
+    v-slot="{ errors }">
     <!-- Label -->
-    <label v-if="label"
-           class="label"
-           :class="{ 'font-weight-normal': hiddenAsterisk }"
-    >
+    <label
+      v-if="label"
+      class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }">
       {{ label }}
       <span
         v-if="rules.includes('required') && !hiddenAsterisk"
         class="required"
-        v-text="'*'"
-      />
+        v-text="'*'" />
     </label>
 
-    <div :class="{ 'has_error': errors[0] }">
+    <div :class="{ has_error: errors[0] }">
       <!-- Field -->
       <a-date-picker
         :show-time="showTime"
@@ -29,10 +29,13 @@
         :disabledDate="handleDisabledDate"
         :valueFormat="valueFormat"
         :format="format"
-        @change="handleChange"/>
+        @change="handleChange" />
 
       <!-- Message Error -->
-      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
+      <span
+        v-if="errors[0]"
+        class="errors"
+        v-html="errors[0]" />
     </div>
   </ValidationProvider>
 </template>
@@ -50,7 +53,7 @@ export default {
 
   model: {
     prop: 'value',
-    event: 'change'
+    event: 'change',
   },
 
   props: {
@@ -69,32 +72,35 @@ export default {
     // before_today, today, after_today, before_and_today, after_and_today
     disabledType: { type: String, default: '' },
     disabledRange: { type: Array, default: () => [] },
-    showTime: { type: Boolean, default: false }
+    showTime: { type: Boolean, default: false },
   },
 
-  data () {
+  data() {
     return {
       localeOptions: { english, vietnamese },
       argumentRule: [
-        'before_today', 'today', 'after_today',
-        'before_and_today', 'after_and_today'
-      ]
+        'before_today',
+        'today',
+        'after_today',
+        'before_and_today',
+        'after_and_today',
+      ],
     }
   },
 
   computed: {
-    modelDate () {
+    modelDate() {
       return this.value ? moment(this.value) : null
-    }
+    },
   },
 
   methods: {
-    handleChange (value) {
+    handleChange(value) {
       if (this.$props.disabled) return
       this.$emit('change', value)
     },
 
-    handleDisabledDate (current) {
+    handleDisabledDate(current) {
       if (this.$props.disabled) return false
       const { disabledType, disabledRange } = this.$props
 
@@ -112,7 +118,7 @@ export default {
      * @param type {string}
      * @returns {boolean}
      */
-    executeDisabledType (current, type) {
+    executeDisabledType(current, type) {
       verifyArgument(this.argumentRule, type)
 
       let result = false
@@ -142,16 +148,20 @@ export default {
      * @param range {array}
      * @returns {boolean}
      */
-    executeDisabledRange (current, range) {
+    executeDisabledRange(current, range) {
       if (range.length > 3) {
-        console.error(`The parameter's path was wrong. Props "disabledRange" expected only three parameters at most, please check again parameter.`)
+        console.error(
+          `The parameter's path was wrong. Props "disabledRange" expected only three parameters at most, please check again parameter.`
+        )
         return false
       }
 
       const [periodStart, periodEnd, mode] = range
       let momentCompare = [false, false]
-      !moment(periodStart).isValid() && verifyArgument(this.argumentRule, periodStart)
-      !moment(periodEnd).isValid() && verifyArgument(this.argumentRule, periodEnd)
+      !moment(periodStart).isValid() &&
+        verifyArgument(this.argumentRule, periodStart)
+      !moment(periodEnd).isValid() &&
+        verifyArgument(this.argumentRule, periodEnd)
 
       // Between mode
       if (mode === 'between') {
@@ -185,19 +195,19 @@ export default {
       })
 
       return momentCompare[0] || momentCompare[1]
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-  .label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: bold;
-    color: #222222;
-  }
-  .ant-calendar-picker {
-    width: 100%;
-  }
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #222222;
+}
+.ant-calendar-picker {
+  width: 100%;
+}
 </style>

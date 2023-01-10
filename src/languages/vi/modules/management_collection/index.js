@@ -10,5 +10,5 @@ export default {
   collection_name: 'Tên Bộ sưu tập',
   display_order: 'Thứ tự hiện thị',
   updated_at: 'Thời gian cập nhật',
-  manipulation: 'Thao tác'
+  manipulation: 'Thao tác',
 }

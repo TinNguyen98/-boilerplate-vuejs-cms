@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="detail.name"/>
+    <page-title-component :title="detail.name" />
 
     <!-- Block: Main content -->
-    <event-form-component update-mode/>
+    <event-form-component update-mode />
   </div>
 </template>
 
@@ -22,24 +22,24 @@ export default {
 
   components: {
     PageTitleComponent,
-    EventFormComponent
+    EventFormComponent,
   },
 
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     return Promise.all([
       store.dispatch('event/getDetail', { id: to.params.id }),
       store.dispatch('frame/getFrameList'),
-      store.dispatch('collection/getCollectionList')
-    ]).then(_ => next())
+      store.dispatch('collection/getCollectionList'),
+    ]).then((_) => next())
   },
 
-  beforeRouteLeave (_, __, next) {
+  beforeRouteLeave(_, __, next) {
     liberateStore('event/detail', 'frame/list', 'collection/list')
     next()
   },
 
   computed: {
-    ...mapState('event', ['detail'])
-  }
+    ...mapState('event', ['detail']),
+  },
 }
 </script>

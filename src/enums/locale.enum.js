@@ -4,5 +4,5 @@ export const LOCALE = {
 }
 
 export const LOCAL_STORAGE = {
-  LANGUAGE: '__vue2_cms_lang'
+  language: '__vue2_cms_lang'
 }

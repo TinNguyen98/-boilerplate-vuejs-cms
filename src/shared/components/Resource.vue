@@ -1,11 +1,13 @@
 <template>
-  <transition name="page" mode="out-in">
-    <router-view/>
+  <transition
+    name="page"
+    mode="out-in">
+    <router-view />
   </transition>
 </template>
 
 <script>
 export default {
-  name: 'ResourceLayout'
+  name: 'ResourceLayout',
 }
 </script>

@@ -7,13 +7,15 @@ const getters = {}
 const mutations = {}
 
 const actions = {
-  postFile ({ commit }, params = {}) {
-    return UploadService.upload(params).then(res => {
-      return res
-    }).catch(err => {
-      return err.response.data
-    })
-  }
+  postFile({ commit }, params = {}) {
+    return UploadService.upload(params)
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err.response.data
+      })
+  },
 }
 
 export default {
@@ -21,5 +23,5 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 }

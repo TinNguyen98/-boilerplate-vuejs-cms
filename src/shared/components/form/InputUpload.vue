@@ -1,78 +1,92 @@
 <template>
-  <ValidationProvider ref="upload"
-                      tag="div"
-                      :name="field"
-                      :vid="vid"
-                      :rules="!valueModel ? rules : null"
-                      :class="classContainer"
-                      v-slot="{ errors }">
+  <ValidationProvider
+    ref="upload"
+    tag="div"
+    :name="field"
+    :vid="vid"
+    :rules="!valueModel ? rules : null"
+    :class="classContainer"
+    v-slot="{ errors }">
     <!-- Label -->
-    <label v-if="label"
-           class="label"
-           :class="{ 'font-weight-normal': hiddenAsterisk }"
-    >
+    <label
+      v-if="label"
+      class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }">
       {{ label }}
       <span
         v-if="rules.includes('required') && !hiddenAsterisk"
         class="required"
-        v-text="'*'"
-      />
+        v-text="'*'" />
     </label>
 
-    <div class="position-relative d-flex"
-         :class="[
-            errors[0] ? 'has_error' : null,
-            previewAlign === 'bottom' ? 'flex-column' : null
-         ]"
-    >
-      <div class="flex-shrink-0 w-100"
-           :class="[previewAlign === 'bottom' ? 'mb-2' : 'mr-2']"
-      >
+    <div
+      class="position-relative d-flex"
+      :class="[
+        errors[0] ? 'has_error' : null,
+        previewAlign === 'bottom' ? 'flex-column' : null,
+      ]">
+      <div
+        class="flex-shrink-0 w-100"
+        :class="[previewAlign === 'bottom' ? 'mb-2' : 'mr-2']">
         <!-- Field -->
-        <label :for="`${vid}_upload`"
-               :title="inputName"
-               :class="{ 'ant-btn-loading': isUploading }"
-               class="file-button ant-btn">
-          <a-icon v-if="isUploading" type="loading"/>
-          <span class="text-ellipsis pr-2" v-text="inputName"/>
+        <label
+          :for="`${vid}_upload`"
+          :title="inputName"
+          :class="{ 'ant-btn-loading': isUploading }"
+          class="file-button ant-btn">
+          <a-icon
+            v-if="isUploading"
+            type="loading" />
+          <span
+            class="text-ellipsis pr-2"
+            v-text="inputName" />
 
-          <a-icon v-if="!valueModel" type="upload"
-                  class="flex-shrink-0"/>
-          <a-icon v-else
-                  type="delete"
-                  class="flex-shrink-0"
-                  @click.prevent="deleteFile"/>
+          <a-icon
+            v-if="!valueModel"
+            type="upload"
+            class="flex-shrink-0" />
+          <a-icon
+            v-else
+            type="delete"
+            class="flex-shrink-0"
+            @click.prevent="deleteFile" />
         </label>
 
-        <input type="file"
-               :id="`${vid}_upload`"
-               :disabled="valueModel || isUploading"
-               :accept="acceptableFileTypes"
-               class="file-input"
-               @change="handleChange"
-        >
+        <input
+          type="file"
+          :id="`${vid}_upload`"
+          :disabled="valueModel || isUploading"
+          :accept="acceptableFileTypes"
+          class="file-input"
+          @change="handleChange" />
 
         <!-- Message Error -->
-        <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
+        <span
+          v-if="errors[0]"
+          class="errors"
+          v-html="errors[0]" />
       </div>
 
       <template v-if="isPreview">
         <!-- Preview image -->
         <template v-if="!isAudio">
-          <figure v-if="(valueModel && valueModel.path) || previewSrc" class="preview-image">
-            <image-zoom :src="valueModel.path || previewSrc"
-                        :alt="valueModel.name || 'preview-image'"
-            />
+          <figure
+            v-if="(valueModel && valueModel.path) || previewSrc"
+            class="preview-image">
+            <image-zoom
+              :src="valueModel.path || previewSrc"
+              :alt="valueModel.name || 'preview-image'" />
           </figure>
         </template>
 
         <!-- Preview music -->
         <template v-else>
-          <audio v-if="(valueModel && valueModel.path) || previewSrc"
-                 ref="audio"
-                 class="preview-music w-100"
-                 controls>
-            <source :src="(valueModel.path || previewSrc)"/>
+          <audio
+            v-if="(valueModel && valueModel.path) || previewSrc"
+            ref="audio"
+            class="preview-music w-100"
+            controls>
+            <source :src="valueModel.path || previewSrc" />
           </audio>
         </template>
       </template>
@@ -89,19 +103,19 @@ import ImageZoom from '@/shared/components/common/ImageZoom'
 import {
   toBase64,
   checkImageSizeByMb,
-  handleRequestErrorMessage
+  handleRequestErrorMessage,
 } from '@/shared/helpers'
 
 export default {
   name: 'InputUploadComponent',
 
   components: {
-    ImageZoom
+    ImageZoom,
   },
 
   model: {
     prop: 'value',
-    event: 'change'
+    event: 'change',
   },
 
   props: {
@@ -113,64 +127,68 @@ export default {
     rules: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     classContainer: { type: String, default: '' },
-    acceptableFileTypes: { type: String, default: 'image/png,image/jpeg,image/jpg' },
+    acceptableFileTypes: {
+      type: String,
+      default: 'image/png,image/jpeg,image/jpg',
+    },
     sizeLimit: { type: [String, Number], default: 300 }, // unit MB
     isAudio: { type: Boolean, default: false },
     isPreview: { type: Boolean, default: false },
     previewAlign: { type: String, default: 'bottom' }, // right, bottom
     hiddenAsterisk: { type: Boolean, default: false },
     multiple: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
   },
 
-  data () {
+  data() {
     return {
       previewSrc: null,
-      isUploading: false
+      isUploading: false,
     }
   },
 
   computed: {
     valueModel: {
-      get () {
+      get() {
         return this.$props.value
       },
-      set (newVal) {
+      set(newVal) {
         this.$emit('change', newVal)
-      }
+      },
     },
 
-    inputName () {
+    inputName() {
       if (!this.valueModel) return this.$props.placeholder
 
       if (typeof this.valueModel === 'object') {
         return this.valueModel.name
       }
       return this.valueModel
-    }
+    },
   },
 
   watch: {
-    valueModel (val) {
+    valueModel(val) {
       if (val && this.isPreview && this.isAudio && this.$refs.audio) {
         this.$refs.audio.load()
       }
-    }
+    },
   },
 
   methods: {
     ...mapActions('upload', ['postFile']),
 
-    deleteFile () {
+    deleteFile() {
       this.valueModel = null
       this.previewSrc = null
     },
 
-    async handleChange (event) {
+    async handleChange(event) {
       const files = event.target.files || event.dataTransfer.files
       // If the file isn't an image nothing happens
       // Check size image before send server
-      if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit)) return
+      if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit))
+        return
 
       this.isUploading = true
 
@@ -185,8 +203,8 @@ export default {
       this.$refs.upload.reset()
     },
 
-    handlePostFile (file) {
-      this.postFile({ upload_file: file }).then(res => {
+    handlePostFile(file) {
+      this.postFile({ upload_file: file }).then((res) => {
         if (res.success) {
           this.valueModel = res.data
           this.previewSrc = res.data.path
@@ -194,8 +212,8 @@ export default {
           handleRequestErrorMessage(res)
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

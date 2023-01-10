@@ -3,23 +3,23 @@ import { handleInputProtection } from '@/shared/helpers'
 import { debounce } from 'lodash-es'
 
 export default {
-  data () {
+  data() {
     return {
-      filter: {}
+      filter: {},
     }
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     this.debounceSearch().cancel()
   },
 
   methods: {
-    search () {
+    search() {
       const filterProtected = handleInputProtection(this.filter)
       this.$emit('filter-changed', filterProtected)
     },
 
-    debounceSearch () {
+    debounceSearch() {
       return debounce(() => this.search(), 800)
     },
 
@@ -27,7 +27,7 @@ export default {
      *
      * @param field {string}
      */
-    reset (field) {
+    reset(field) {
       if (!field) {
         for (const property in this.filter) {
           this.filter[property] = null
@@ -37,6 +37,6 @@ export default {
       }
 
       this.$emit('filter-changed', this.filter)
-    }
-  }
+    },
+  },
 }

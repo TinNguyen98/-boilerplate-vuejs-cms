@@ -42,7 +42,7 @@ const dictionary = {
     valid_url: 'The URL is malformed.',
     half_width: 'Please enter only alphanumeric characters and half-width.',
     full_width: 'Please enter only full-width characters.',
-  }
+  },
 }
 
 const messages = {
@@ -50,22 +50,22 @@ const messages = {
     ...vietnamese,
     validation: {
       ...validationMessagesVietnamese.messages,
-      ...dictionary.vi
-    }
+      ...dictionary.vi,
+    },
   },
   english: {
     ...english,
     validation: {
       ...validationMessagesEnglish.messages,
-      ...dictionary.en
-    }
-  }
+      ...dictionary.en,
+    },
+  },
 }
 
 const i18n = new VueI18n({
   locale: LOCALE.vi, // set locale
   fallbackLocale: LOCALE.en,
-  messages
+  messages,
 })
 
 export default i18n

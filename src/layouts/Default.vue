@@ -1,15 +1,15 @@
 <template>
   <a-layout>
-    <header-components/>
+    <header-component />
 
     <a-layout id="components-layout-demo-custom-trigger"
               :class="{ 'layout-fold': collapsed }">
-      <sidebar-components :collapsed.sync="collapsed"/>
+      <sidebar-component :collapsed.sync="collapsed" />
       <a-layout id="main-layout">
-        <breadcrumb-components/>
+        <breadcrumb-component />
 
         <a-config-provider :locale="locale">
-          <main-components/>
+          <main-component />
         </a-config-provider>
       </a-layout>
     </a-layout>
@@ -17,11 +17,13 @@
 </template>
 
 <script>
+// Store
+import { mapState } from 'vuex'
 // Components
-import SidebarComponents from '@/shared/components/layout/Sidebar'
-import HeaderComponents from '@/shared/components/layout/Header'
-import MainComponents from '@/shared/components/Main'
-import BreadcrumbComponents from '@/shared/components/common/Breadcrumb.vue'
+import SidebarComponent from '@/shared/components/layout/Sidebar'
+import HeaderComponent from '@/shared/components/layout/Header'
+import MainComponent from '@/shared/components/Main'
+import BreadcrumbComponent from '@/shared/components/common/Breadcrumb.vue'
 // Others
 import vi_VN from 'ant-design-vue/es/locale/vi_VN'
 
@@ -29,10 +31,10 @@ export default {
   name: 'DefaultLayout',
 
   components: {
-    SidebarComponents,
-    HeaderComponents,
-    MainComponents,
-    BreadcrumbComponents
+    SidebarComponent,
+    HeaderComponent,
+    MainComponent,
+    BreadcrumbComponent
   },
 
   data () {
@@ -40,7 +42,16 @@ export default {
       collapsed: false,
       locale: vi_VN
     }
-  }
+  },
+
+  computed: {
+    ...mapState('auth', ['bearerToken']),
+  },
+
+  created() {
+    // In case the user restores the previous page in the browsers
+    !this.bearerToken && this.$store.commit('SET_LAYOUT', { layout: 'auth' })
+  },
 }
 </script>
 

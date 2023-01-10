@@ -2,10 +2,11 @@
   <div class="main-container">
     <!-- Block: page title -->
     <page-title-component :title="$t('management_collection.page_list')">
-      <router-link tag="button"
-                   :to="{ name: 'create_collection' }"
-                   class="ant-btn ant-btn-primary">
-        <a-icon type="plus"/>
+      <router-link
+        tag="button"
+        :to="{ name: 'create_collection' }"
+        class="ant-btn ant-btn-primary">
+        <a-icon type="plus" />
         {{ $t('management_collection.create_collection') }}
       </router-link>
     </page-title-component>
@@ -13,68 +14,80 @@
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <collection-search-component @filter-changed="onFilterChange($event)"/>
+      <collection-search-component @filter-changed="onFilterChange($event)" />
 
       <!-- Section: List table -->
-      <a-table :columns="columns"
-               :data-source="listData"
-               :pagination="false"
-               :scroll="{ x: 1300 }"
-               :locale="{ emptyText: $t('no_data')}"
-               :rowKey="(record) => record.id"
-               class="list-table custom-table custom-scrollbar-vertical">
-
+      <a-table
+        :columns="columns"
+        :data-source="listData"
+        :pagination="false"
+        :scroll="{ x: 1300 }"
+        :locale="{ emptyText: $t('no_data') }"
+        :rowKey="(record) => record.id"
+        class="list-table custom-table custom-scrollbar-vertical">
         <!-- Collection image -->
-        <template slot="image" slot-scope="image">
-          <image-zoom :src="image"
-                      :all-loaded.sync="isImageAllLoaded"
-                      class-image="col-image" />
+        <template
+          slot="image"
+          slot-scope="image">
+          <image-zoom
+            :src="image"
+            :all-loaded.sync="isImageAllLoaded"
+            class-image="col-image" />
         </template>
 
         <!-- Updated at -->
-        <template slot="updated_at" slot-scope="updated_at">
-          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE)}}
+        <template
+          slot="updated_at"
+          slot-scope="updated_at">
+          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE) }}
         </template>
 
         <!-- Status -->
-        <template slot="status" slot-scope="status">
-          <status-tag-component :type="status"
-                                :name="$t(`management_collection.${status}`)"
-          />
+        <template
+          slot="status"
+          slot-scope="status">
+          <status-tag-component
+            :type="status"
+            :name="$t(`management_collection.${status}`)" />
         </template>
 
         <!-- Action: EDIT - DELETE -->
-        <template slot="action"
-                  slot-scope="_, record">
-          <a-button type="primary"
-                    :loading="isDelete"
-                    @click.prevent="editRecord(record.id)"
-                    class="edit-button mr-1"
-                    v-text="$t('edit')"/>
+        <template
+          slot="action"
+          slot-scope="_, record">
+          <a-button
+            type="primary"
+            :loading="isDelete"
+            @click.prevent="editRecord(record.id)"
+            class="edit-button mr-1"
+            v-text="$t('edit')" />
 
-          <a-popconfirm :title="$t('delete_content')"
-                        :ok-text="$t('popcomfirm_accept_btn')"
-                        :cancel-text="$t('popcomfirm_cancel_btn')"
-                        placement="topLeft"
-                        :disabled="record.status === 'applying'"
-                        @confirm="deleteRecord(record)">
-            <a-button type="danger"
-                      :disabled="record.status === 'applying'"
-                      class="delete-button"
-                      v-text="$t('delete')"/>
+          <a-popconfirm
+            :title="$t('delete_content')"
+            :ok-text="$t('popcomfirm_accept_btn')"
+            :cancel-text="$t('popcomfirm_cancel_btn')"
+            placement="topLeft"
+            :disabled="record.status === 'applying'"
+            @confirm="deleteRecord(record)">
+            <a-button
+              type="danger"
+              :disabled="record.status === 'applying'"
+              class="delete-button"
+              v-text="$t('delete')" />
           </a-popconfirm>
         </template>
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component v-if="pagination && pagination.total > 0"
-                            :total="pagination.total"
-                            :current-page="pagination.current_page"
-                            :page-size="params.per_page"
-                            show-total
-                            show-size-changer
-                            @handleSizeChange="handlePaginateChange($event, 'size')"
-                            @handleCurrentChange="handlePaginateChange($event, 'page')"/>
+      <pagination-component
+        v-if="pagination && pagination.total > 0"
+        :total="pagination.total"
+        :current-page="pagination.current_page"
+        :page-size="params.per_page"
+        show-total
+        show-size-changer
+        @handleSizeChange="handlePaginateChange($event, 'size')"
+        @handleCurrentChange="handlePaginateChange($event, 'page')" />
     </section>
   </div>
 </template>
@@ -103,37 +116,39 @@ export default {
     CollectionSearchComponent,
     StatusTagComponent,
     PaginationComponent,
-    ImageZoom
+    ImageZoom,
   },
 
-  data () {
+  data() {
     return {
       listData: [],
       params: {
         page: 1,
-        per_page: PER_PAGE.COLLECTION
+        per_page: PER_PAGE.COLLECTION,
       },
       isDelete: false,
       isImageAllLoaded: false,
       STATUS,
-      COMMON_FORMAT_DATE
+      COMMON_FORMAT_DATE,
     }
   },
 
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     const params = {
       page: 1,
-      per_page: PER_PAGE.COLLECTION
+      per_page: PER_PAGE.COLLECTION,
     }
-    return store.dispatch('collection/getCollectionList', params).then(() => next())
+    return store
+      .dispatch('collection/getCollectionList', params)
+      .then(() => next())
   },
 
-  beforeRouteLeave (_, __, next) {
+  beforeRouteLeave(_, __, next) {
     liberateStore('collection/list')
     next()
   },
 
-  created () {
+  created() {
     // Clone list from vuex
     this.listData = JSON.parse(JSON.stringify(this.list))
   },
@@ -141,7 +156,7 @@ export default {
   computed: {
     ...mapState('collection', ['list', 'pagination']),
 
-    columns () {
+    columns() {
       return [
         {
           title: this.$t('management_collection.collection_name'),
@@ -152,44 +167,41 @@ export default {
           title: this.$t('image'),
           width: 122,
           dataIndex: 'frame_image',
-          scopedSlots: { customRender: 'image' }
+          scopedSlots: { customRender: 'image' },
         },
         {
           title: this.$t('management_collection.display_order'),
           width: 114,
           dataIndex: 'display_order',
-          scopedSlots: { customRender: 'display_order' }
+          scopedSlots: { customRender: 'display_order' },
         },
         {
           title: this.$t('management_collection.updated_at'),
           width: 218,
           dataIndex: 'updated_at',
-          scopedSlots: { customRender: 'updated_at' }
+          scopedSlots: { customRender: 'updated_at' },
         },
         {
           title: this.$t('status'),
           width: 147,
           dataIndex: 'status',
-          scopedSlots: { customRender: 'status' }
+          scopedSlots: { customRender: 'status' },
         },
         {
           title: this.$t('management_collection.manipulation'),
           align: 'center',
           fixed: this.isImageAllLoaded ? 'right' : false,
           width: 202,
-          scopedSlots: { customRender: 'action' }
-        }
+          scopedSlots: { customRender: 'action' },
+        },
       ]
-    }
+    },
   },
 
   methods: {
-    ...mapActions('collection', [
-      'getCollectionList',
-      'removeCollection'
-    ]),
+    ...mapActions('collection', ['getCollectionList', 'removeCollection']),
 
-    onFilterChange ($event) {
+    onFilterChange($event) {
       const filter = {}
       for (const property in $event) {
         filter[`filters[${property}]`] = $event[property]
@@ -198,7 +210,7 @@ export default {
       this.params = {
         ...this.params,
         ...filter,
-        page: 1
+        page: 1,
       }
       this.fetchList(this.params)
     },
@@ -207,7 +219,7 @@ export default {
      * @param arg
      * @param type {string} ['page', 'size']
      */
-    handlePaginateChange (arg, type = 'page') {
+    handlePaginateChange(arg, type = 'page') {
       if (type === 'page') {
         this.params = { ...this.params, page: arg }
       } else {
@@ -217,30 +229,33 @@ export default {
       this.fetchList(this.params)
     },
 
-    editRecord (id) {
+    editRecord(id) {
       if (!id) return
       this.$router.push({ name: 'edit_collection', params: { id } })
     },
 
-    deleteRecord (record) {
+    deleteRecord(record) {
       const { id, status } = record
       if (!record || status === 'applying') return
 
       this.isDelete = true
-      this.removeCollection(id).then(res => {
+      this.removeCollection(id).then((res) => {
         if (res) {
           this.isDelete = false
-          this.onSuccess(this.$t('completion'), this.$t('delete_message_successfully'))
+          this.onSuccess(
+            this.$t('completion'),
+            this.$t('delete_message_successfully')
+          )
           this.fetchList(this.params)
         }
       })
     },
 
-    fetchList (params) {
+    fetchList(params) {
       this.getCollectionList(params).then(() => {
         this.listData = JSON.parse(JSON.stringify(this.list))
       })
-    }
-  }
+    },
+  },
 }
 </script>

@@ -8,16 +8,16 @@ import { COOKIES_KEY } from '@/enums/cookie.enum'
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
   headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
   },
-  timeout: 30000 // request timeout
+  timeout: 30000, // request timeout
 })
 
 axios.defaults.showLoader = true
 // Request interceptor
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     const token = Cookie.get(COOKIES_KEY.token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -25,7 +25,7 @@ instance.interceptors.request.use(
     store.dispatch('loader/pending')
     return config
   },
-  error => {
+  (error) => {
     store.dispatch('loader/done')
     return Promise.reject(error)
   }
@@ -33,11 +33,11 @@ instance.interceptors.request.use(
 
 // Response interceptor
 instance.interceptors.response.use(
-  response => {
+  (response) => {
     store.dispatch('loader/done')
     return response
   },
-  error => {
+  (error) => {
     // Catch err CORS with case type script inside (input, textarea)
     if (error.toString().includes('Network Error')) {
       alert(i18n.t('type_tag_script_err_mess'))

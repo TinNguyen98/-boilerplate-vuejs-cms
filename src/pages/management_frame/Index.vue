@@ -2,17 +2,19 @@
   <div class="main-container">
     <!-- Block: page title -->
     <page-title-component :title="$t('management_frame.page_list')">
-      <router-link tag="button"
-                   :to="{ name: 'create_frame', query: { type: FRAME_TYPE[0].value } }"
-                   class="ant-btn ant-btn-primary">
-        <a-icon type="plus"/>
+      <router-link
+        tag="button"
+        :to="{ name: 'create_frame', query: { type: FRAME_TYPE[0].value } }"
+        class="ant-btn ant-btn-primary">
+        <a-icon type="plus" />
         {{ $t('management_frame.create_effect') }}
       </router-link>
 
-      <router-link tag="button"
-                   :to="{ name: 'create_frame', query: { type: FRAME_TYPE[1].value } }"
-                   class="ant-btn ant-btn-primary">
-        <a-icon type="plus"/>
+      <router-link
+        tag="button"
+        :to="{ name: 'create_frame', query: { type: FRAME_TYPE[1].value } }"
+        class="ant-btn ant-btn-primary">
+        <a-icon type="plus" />
         {{ $t('management_frame.create_background') }}
       </router-link>
     </page-title-component>
@@ -20,73 +22,87 @@
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <frame-search-component @filter-changed="onFilterChange($event)"/>
+      <frame-search-component @filter-changed="onFilterChange($event)" />
 
       <!-- Section: List table -->
-      <a-table :columns="columns"
-               :data-source="listData"
-               :pagination="false"
-               :scroll="{ x: 1300 }"
-               :locale="{ emptyText: $t('no_data')}"
-               :rowKey="(record) => record.id"
-               class="list-table custom-table custom-scrollbar-vertical">
-
+      <a-table
+        :columns="columns"
+        :data-source="listData"
+        :pagination="false"
+        :scroll="{ x: 1300 }"
+        :locale="{ emptyText: $t('no_data') }"
+        :rowKey="(record) => record.id"
+        class="list-table custom-table custom-scrollbar-vertical">
         <!-- Frame image -->
-        <template slot="image" slot-scope="image">
-          <image-zoom :src="image"
-                      :all-loaded.sync="isImageAllLoaded"
-                      class-image="col-image" />
+        <template
+          slot="image"
+          slot-scope="image">
+          <image-zoom
+            :src="image"
+            :all-loaded.sync="isImageAllLoaded"
+            class-image="col-image" />
         </template>
 
         <!-- Frame type -->
-        <template slot="type" slot-scope="type">
-          {{ type | filterCapitalizeFirstLetter  }} Frame
+        <template
+          slot="type"
+          slot-scope="type">
+          {{ type | filterCapitalizeFirstLetter }} Frame
         </template>
 
         <!-- Updated at -->
-        <template slot="updated_at" slot-scope="updated_at">
-          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE)}}
+        <template
+          slot="updated_at"
+          slot-scope="updated_at">
+          {{ updated_at | filterFormatDate(COMMON_FORMAT_DATE.HOUR_DATE) }}
         </template>
 
         <!-- Status -->
-        <template slot="status" slot-scope="status">
-          <status-tag-component :type="status"
-                                :name="$t(`management_frame.${status}`)"
-          />
+        <template
+          slot="status"
+          slot-scope="status">
+          <status-tag-component
+            :type="status"
+            :name="$t(`management_frame.${status}`)" />
         </template>
 
         <!-- Action: EDIT - DELETE -->
-        <template slot="action"
-                  slot-scope="_, record">
-          <a-button type="primary"
-                    :loading="isDelete"
-                    @click.prevent="editRecord(record.id)"
-                    class="edit-button mr-1"
-                    v-text="$t('edit')"/>
+        <template
+          slot="action"
+          slot-scope="_, record">
+          <a-button
+            type="primary"
+            :loading="isDelete"
+            @click.prevent="editRecord(record.id)"
+            class="edit-button mr-1"
+            v-text="$t('edit')" />
 
-          <a-popconfirm :title="$t('delete_content')"
-                        :ok-text="$t('popcomfirm_accept_btn')"
-                        :cancel-text="$t('popcomfirm_cancel_btn')"
-                        placement="topLeft"
-                        :disabled="record.status === 'applying'"
-                        @confirm="deleteRecord(record)">
-            <a-button type="danger"
-                      :disabled="record.status === 'applying'"
-                      class="delete-button"
-                      v-text="$t('delete')"/>
+          <a-popconfirm
+            :title="$t('delete_content')"
+            :ok-text="$t('popcomfirm_accept_btn')"
+            :cancel-text="$t('popcomfirm_cancel_btn')"
+            placement="topLeft"
+            :disabled="record.status === 'applying'"
+            @confirm="deleteRecord(record)">
+            <a-button
+              type="danger"
+              :disabled="record.status === 'applying'"
+              class="delete-button"
+              v-text="$t('delete')" />
           </a-popconfirm>
         </template>
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component v-if="pagination && pagination.total > 0"
-                            :total="pagination.total"
-                            :current-page="pagination.current_page"
-                            :page-size="params.per_page"
-                            show-total
-                            show-size-changer
-                            @handleSizeChange="handlePaginateChange($event, 'size')"
-                            @handleCurrentChange="handlePaginateChange($event, 'page')"/>
+      <pagination-component
+        v-if="pagination && pagination.total > 0"
+        :total="pagination.total"
+        :current-page="pagination.current_page"
+        :page-size="params.per_page"
+        show-total
+        show-size-changer
+        @handleSizeChange="handlePaginateChange($event, 'size')"
+        @handleCurrentChange="handlePaginateChange($event, 'page')" />
     </section>
   </div>
 </template>
@@ -117,41 +133,41 @@ export default {
     FrameSearchComponent,
     StatusTagComponent,
     PaginationComponent,
-    ImageZoom
+    ImageZoom,
   },
 
   mixins: [FormMixin],
 
-  data () {
+  data() {
     return {
       listData: [],
       params: {
         page: 1,
-        per_page: PER_PAGE.FRAME
+        per_page: PER_PAGE.FRAME,
       },
       statusOrder: ['applying', 'not_apply'],
       isDelete: false,
       isImageAllLoaded: false,
       STATUS,
       FRAME_TYPE,
-      COMMON_FORMAT_DATE
+      COMMON_FORMAT_DATE,
     }
   },
 
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     const params = {
       page: 1,
-      per_page: PER_PAGE.FRAME
+      per_page: PER_PAGE.FRAME,
     }
     return store.dispatch('frame/getFrameList', params).then(() => next())
   },
 
-  beforeRouteLeave (_, __, next) {
+  beforeRouteLeave(_, __, next) {
     liberateStore('frame/list')
     next()
   },
 
-  created () {
+  created() {
     // Clone list from vuex
     this.listData = JSON.parse(JSON.stringify(this.list))
   },
@@ -160,7 +176,7 @@ export default {
     ...mapState('frame', ['list', 'pagination']),
     ...mapGetters({ isMobile: 'isMobile' }),
 
-    columns () {
+    columns() {
       return [
         {
           title: this.$t('management_frame.frame_name'),
@@ -171,19 +187,19 @@ export default {
           title: this.$t('image'),
           width: 122,
           dataIndex: 'frame_image',
-          scopedSlots: { customRender: 'image' }
+          scopedSlots: { customRender: 'image' },
         },
         {
           title: this.$t('management_frame.frame_type'),
           width: 232,
           dataIndex: 'type',
-          scopedSlots: { customRender: 'type' }
+          scopedSlots: { customRender: 'type' },
         },
         {
           title: this.$t('management_frame.updated_at'),
           width: 209,
           dataIndex: 'updated_at',
-          scopedSlots: { customRender: 'updated_at' }
+          scopedSlots: { customRender: 'updated_at' },
         },
         {
           title: this.$t('status'),
@@ -194,28 +210,26 @@ export default {
             const posA = this.statusOrder.indexOf(a.status)
             const posB = this.statusOrder.indexOf(b.status)
 
-            if (posA === posB) return moment(a.updated_at) - moment(b.updated_at)
+            if (posA === posB)
+              return moment(a.updated_at) - moment(b.updated_at)
             return posA - posB
-          }
+          },
         },
         {
           title: this.$t('management_frame.manipulation'),
           align: 'center',
           fixed: this.isImageAllLoaded ? 'right' : false,
           width: this.isMobile ? 150 : 202,
-          scopedSlots: { customRender: 'action' }
-        }
+          scopedSlots: { customRender: 'action' },
+        },
       ]
-    }
+    },
   },
 
   methods: {
-    ...mapActions('frame', [
-      'getFrameList',
-      'removeFrame'
-    ]),
+    ...mapActions('frame', ['getFrameList', 'removeFrame']),
 
-    onFilterChange ($event) {
+    onFilterChange($event) {
       const filter = {}
       for (const property in $event) {
         filter[`filters[${property}]`] = $event[property]
@@ -224,7 +238,7 @@ export default {
       this.params = {
         ...this.params,
         ...filter,
-        page: 1
+        page: 1,
       }
       this.fetchList(this.params)
     },
@@ -233,7 +247,7 @@ export default {
      * @param arg
      * @param type {string} ['page', 'size']
      */
-    handlePaginateChange (arg, type = 'page') {
+    handlePaginateChange(arg, type = 'page') {
       if (type === 'page') {
         this.params = { ...this.params, page: arg }
       } else {
@@ -243,30 +257,33 @@ export default {
       this.fetchList(this.params)
     },
 
-    editRecord (id) {
+    editRecord(id) {
       if (!id) return
       this.$router.push({ name: 'edit_frame', params: { id } })
     },
 
-    deleteRecord (record) {
+    deleteRecord(record) {
       const { id, status } = record
       if (!record || status === 'applying') return
 
       this.isDelete = true
-      this.removeFrame(id).then(res => {
+      this.removeFrame(id).then((res) => {
         if (res) {
           this.isDelete = false
-          this.onSuccess(this.$t('completion'), this.$t('delete_message_successfully'))
+          this.onSuccess(
+            this.$t('completion'),
+            this.$t('delete_message_successfully')
+          )
           this.fetchList(this.params)
         }
       })
     },
 
-    fetchList (params) {
+    fetchList(params) {
       this.getFrameList(params).then(() => {
         this.listData = JSON.parse(JSON.stringify(this.list))
       })
-    }
-  }
+    },
+  },
 }
 </script>

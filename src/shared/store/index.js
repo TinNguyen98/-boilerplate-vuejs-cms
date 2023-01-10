@@ -18,31 +18,28 @@ const modules = {
   upload,
   event,
   collection,
-  frame
+  frame,
 }
 
 const debug = process.env.NODE_ENV !== 'production'
 
 const store = new Vuex.Store({
-  state () {
+  state() {
     return {
-      layout: null
+      layout: null,
     }
   },
   getters: {
-    layout: state => state.layout,
-    isMobile: _ => window.innerWidth <= 767
+    layout: (state) => state.layout,
+    isMobile: (_) => window.innerWidth <= 767,
   },
   mutations: {
-    SET_LAYOUT (state, { layout }) {
+    SET_LAYOUT(state, { layout }) {
       state.layout = layout
-    }
+    },
   },
   modules,
-  strict: debug
+  strict: debug,
 })
 
 export default store
-
-
-

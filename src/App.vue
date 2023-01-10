@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <component :is="layout" v-if="layout"/>
+    <component
+      :is="layout"
+      v-if="layout" />
 
-    <loading-component v-if="loading"/>
+    <loading-component v-if="loading" />
   </div>
 </template>
 
@@ -17,23 +19,24 @@ export default {
 
   components: {
     LoadingComponent,
-    'auth': () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
-    'default': () => import(/* webpackChunkName: "default" */ '@/layouts/Default.vue')
+    auth: () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
+    default: () =>
+      import(/* webpackChunkName: "default" */ '@/layouts/Default.vue'),
   },
 
   computed: {
     ...mapState('loader', ['loading']),
     ...mapState('language', ['locale']),
-    ...mapGetters({ layout: 'layout' })
+    ...mapGetters({ layout: 'layout' }),
   },
 
-  created () {
+  created() {
     this.locale && this.setLanguage(this.locale)
   },
 
   methods: {
-    ...mapActions('language', ['setLanguage'])
-  }
+    ...mapActions('language', ['setLanguage']),
+  },
 }
 </script>
 

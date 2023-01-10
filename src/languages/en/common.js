@@ -33,8 +33,10 @@ export default {
   parameter_wrong: 'YOUR PARAMETER PASSED WRONG!!!',
   editor_placeholder: 'Please enter the text',
   limit_size: 'Please upload an image within {size}MB',
-  upload_image_error: 'エラーが発生しましたため、画像アップロードできませんでした',
-  rules_type_image: '使用できない画像形式が含まれています。{type}のいずれかの画像をご使用ください',
+  upload_image_error:
+    'エラーが発生しましたため、画像アップロードできませんでした',
+  rules_type_image:
+    '使用できない画像形式が含まれています。{type}のいずれかの画像をご使用ください',
   type_tag_script_err_mess: 'Illegal error (script) occurred',
   action_fail: 'Your operation failed!',
   create_message_successfully: 'Registration has been completed.',
@@ -51,5 +53,6 @@ export default {
   please_enter: 'Please enter',
   record: 'record',
   total_number: 'Total',
-  strip_parameter_wrong: 'The parameter\'s path is wrong or not found. Expected Array, please check again parameter.'
+  strip_parameter_wrong:
+    "The parameter's path is wrong or not found. Expected Array, please check again parameter.",
 }

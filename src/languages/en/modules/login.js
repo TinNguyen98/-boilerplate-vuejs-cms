@@ -10,5 +10,5 @@ export default {
   login_success: 'Login successful',
   login_fail: 'Login failed',
   logout_success: 'Logout successful',
-  log_out: 'Logout'
+  log_out: 'Logout',
 }

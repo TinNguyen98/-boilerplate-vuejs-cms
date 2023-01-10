@@ -10,5 +10,5 @@ export default {
   collection_name: 'Collection name',
   display_order: 'Display order',
   updated_at: 'Update time',
-  manipulation: 'Manipulation'
+  manipulation: 'Manipulation',
 }

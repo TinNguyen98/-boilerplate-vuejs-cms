@@ -1,9 +1,11 @@
 <template>
-  <a-layout-content id="main"
-                    :class="{ 'full-screen': layout === 'auth' }">
-
-    <transition name="page" mode="out-in">
-      <router-view v-if="true"/>
+  <a-layout-content
+    id="main"
+    :class="{ 'full-screen': layout === 'auth' }">
+    <transition
+      name="page"
+      mode="out-in">
+      <router-view v-if="true" />
     </transition>
   </a-layout-content>
 </template>
@@ -16,8 +18,8 @@ export default {
   name: 'MainLayout',
 
   computed: {
-    ...mapGetters({ layout: 'layout' })
-  }
+    ...mapGetters({ layout: 'layout' }),
+  },
 }
 </script>
 

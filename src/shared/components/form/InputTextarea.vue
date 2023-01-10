@@ -1,22 +1,24 @@
 <template>
-  <ValidationProvider tag="div"
-                      :name="field"
-                      :vid="vid"
-                      :rules="rules + '|not_emoji'"
-                      :class="classContainer"
-                      v-slot="{ errors }">
+  <ValidationProvider
+    tag="div"
+    :name="field"
+    :vid="vid"
+    :rules="rules + '|not_emoji'"
+    :class="classContainer"
+    v-slot="{ errors }">
     <!-- Label -->
-    <label v-if="label"
-           class="label"
-           :class="{ 'font-weight-normal': hiddenAsterisk }">
+    <label
+      v-if="label"
+      class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }">
       {{ label }}
-      <span v-if="rules.includes('required') && !hiddenAsterisk"
-            class="required"
-            v-text="'*'"
-      />
+      <span
+        v-if="rules.includes('required') && !hiddenAsterisk"
+        class="required"
+        v-text="'*'" />
     </label>
 
-    <div :class="{ 'has_error': errors[0] }">
+    <div :class="{ has_error: errors[0] }">
       <a-textarea
         :disabled="disabled"
         :value="value"
@@ -24,11 +26,13 @@
         :placeholder="placeholder"
         :readOnly="!autofill || readonly"
         @input="handleType($event)"
-        @focus="handleFocus"
-      />
+        @focus="handleFocus" />
 
       <!-- Message Error -->
-      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
+      <span
+        v-if="errors[0]"
+        class="errors"
+        v-html="errors[0]" />
     </div>
   </ValidationProvider>
 </template>
@@ -39,7 +43,7 @@ export default {
 
   model: {
     prop: 'value',
-    event: 'change'
+    event: 'change',
   },
 
   props: {
@@ -55,21 +59,21 @@ export default {
     hiddenAsterisk: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
     autofill: { type: Boolean, default: true },
-    maxlength: { type: [String, Number], default: '' }
+    maxlength: { type: [String, Number], default: '' },
   },
 
   methods: {
-    handleType ($event) {
+    handleType($event) {
       if (this.$props.disabled) return
       this.$emit('change', $event.target.value)
     },
 
-    handleFocus ($event) {
+    handleFocus($event) {
       if (!this.autofill) {
         $event.target.removeAttribute('readonly')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

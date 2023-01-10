@@ -1,40 +1,52 @@
 <template>
-  <a-layout-header id="header"
-                   class="d-flex justify-content-between align-items-center">
-
-    <router-link :to="{ name: 'home' }"
-                 tag="h1"
-                 class="header-logo blur-effect mb-0"
-                 v-text="'Logo template'"
-    />
+  <a-layout-header
+    id="header"
+    class="d-flex justify-content-between align-items-center">
+    <router-link
+      :to="{ name: 'home' }"
+      tag="h1"
+      class="header-logo blur-effect mb-0"
+      v-text="'Logo template'" />
 
     <div class="header-profile">
-      <div class="header-profile-avatar"
-        :style="{'background-image': `url('${userAvatar}')`}"/>
+      <div
+        class="header-profile-avatar"
+        :style="{ 'background-image': `url('${userAvatar}')` }" />
 
       <a-dropdown placement="bottomRight">
-        <p v-if="Object.keys(userProfile).length && userProfile.name"
-           :title="userProfile.name"
-           v-text="userProfile.name"
-           class="header-profile-name"/>
+        <p
+          v-if="Object.keys(userProfile).length && userProfile.name"
+          :title="userProfile.name"
+          v-text="userProfile.name"
+          class="header-profile-name" />
         <a-menu slot="overlay">
           <a-menu-item>
-            <span @click.prevent="handleLogout"
-                  v-text="$t('log_out')"/>
+            <span
+              @click.prevent="handleLogout"
+              v-text="$t('log_out')" />
           </a-menu-item>
         </a-menu>
       </a-dropdown>
 
       <a-dropdown placement="bottomRight">
-        <img :src="require('@/assets/images/language-icon.png')"
-             class="cursor-pointer"
-             alt="language-icon"/>
+        <img
+          :src="require('@/assets/images/language-icon.png')"
+          class="cursor-pointer"
+          alt="language-icon" />
         <a-menu slot="overlay">
-          <a-menu-item v-for="locale in LOCALE" :key="`locale-${locale}`"
-                       :class="{ 'ant-dropdown-menu-item-active': $i18n.locale === locale }">
-            <span @click.prevent="changeLanguage(locale)"
-                  v-text="capitalizeFirstLetter(locale)"/>
-            <a-icon v-if="$i18n.locale === locale" type="check" class="ml-3"/>
+          <a-menu-item
+            v-for="locale in LOCALE"
+            :key="`locale-${locale}`"
+            :class="{
+              'ant-dropdown-menu-item-active': $i18n.locale === locale,
+            }">
+            <span
+              @click.prevent="changeLanguage(locale)"
+              v-text="capitalizeFirstLetter(locale)" />
+            <a-icon
+              v-if="$i18n.locale === locale"
+              type="check"
+              class="ml-3" />
           </a-menu-item>
         </a-menu>
       </a-dropdown>
@@ -55,10 +67,10 @@ export default {
 
   mixins: [FormMixin],
 
-  data () {
+  data() {
     return {
       defaultAvatar: require('@/assets/images/noimage_user.svg'),
-      LOCALE
+      LOCALE,
     }
   },
 
@@ -66,34 +78,40 @@ export default {
     // State
     ...mapState('auth', ['userProfile']),
 
-    userAvatar () {
-      return this.userProfile && Object.keys(this.userProfile).length && this.userProfile.avatar
-        ? this.userProfile.avatar : this.defaultAvatar
-    }
+    userAvatar() {
+      return this.userProfile &&
+        Object.keys(this.userProfile).length &&
+        this.userProfile.avatar
+        ? this.userProfile.avatar
+        : this.defaultAvatar
+    },
   },
 
   methods: {
     capitalizeFirstLetter,
     ...mapActions('auth', ['userLogout']),
+    ...mapActions('language', ['setLanguage']),
 
-    changeLanguage (lang) {
+    changeLanguage(lang) {
       // If the language does not exist will do nothing
       if (!Object.values(LOCALE).includes(lang)) return
 
-      const htmlLang = Object.keys(LOCALE).find(key => LOCALE[key] === lang)
-      this.$i18n.locale = lang
+      const htmlLang = Object.keys(LOCALE).find((key) => LOCALE[key] === lang)
+      this.setLanguage(lang)
       document.querySelector('html').setAttribute('lang', htmlLang)
     },
 
-    handleLogout () {
-      this.userLogout().then(res => {
-        if (res) {
-          this.onSuccess(this.$t('completion'), this.$t('logout_success'))
-          this.$router.push({ name: 'auth.login' })
-        }
-      }).catch(err => err)
-    }
-  }
+    handleLogout() {
+      this.userLogout()
+        .then((res) => {
+          if (res) {
+            this.onSuccess(this.$t('completion'), this.$t('logout_success'))
+            this.$router.push({ name: 'auth.login' })
+          }
+        })
+        .catch((err) => err)
+    },
+  },
 }
 </script>
 

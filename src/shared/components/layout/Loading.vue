@@ -1,12 +1,14 @@
 <template>
   <div class="loading-mode">
-    <a-spin size="large" :tip="$t('loading')" />
+    <a-spin
+      size="large"
+      :tip="$t('loading')" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LoadingComponent'
+  name: 'LoadingComponent',
 }
 </script>
 

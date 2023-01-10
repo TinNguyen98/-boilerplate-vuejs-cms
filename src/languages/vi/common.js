@@ -33,8 +33,10 @@ export default {
   parameter_wrong: 'YOUR PARAMETER PASSED WRONG!!!',
   editor_placeholder: 'Vui lòng nhập chữ',
   limit_size: 'Vui lòng chỉ tải tệp ảnh dưới {size}MB',
-  upload_image_error: 'エラーが発生しましたため、画像アップロードできませんでした',
-  rules_type_image: '使用できない画像形式が含まれています。{type}のいずれかの画像をご使用ください',
+  upload_image_error:
+    'エラーが発生しましたため、画像アップロードできませんでした',
+  rules_type_image:
+    '使用できない画像形式が含まれています。{type}のいずれかの画像をご使用ください',
   type_tag_script_err_mess: 'Illegal error (script) occurred',
   action_fail: 'Thao tác của bạn không thành công!',
   create_message_successfully: 'Tạo mới thành công!',
@@ -51,5 +53,6 @@ export default {
   please_enter: 'Vui lòng nhập',
   record: 'mục',
   total_number: 'Tổng cộng',
-  strip_parameter_wrong: 'The parameter\'s path is wrong or not found. Expected Array, please check again parameter.'
+  strip_parameter_wrong:
+    "The parameter's path is wrong or not found. Expected Array, please check again parameter.",
 }

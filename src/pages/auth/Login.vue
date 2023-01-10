@@ -1,55 +1,58 @@
 <template>
-  <div v-if="layout === 'auth'"
-       class="login d-flex justify-content-between align-items-center">
+  <div
+    v-if="layout === 'auth'"
+    class="login d-flex justify-content-between align-items-center">
     <ValidationObserver
       ref="observer"
       tag="form"
       class="login-container ml-auto mr-auto"
       @submit.prevent="validateBeforeSubmit()">
+      <h3
+        class="login-title"
+        v-text="$t('login')" />
 
-      <h3 class="login-title" v-text="$t('login')"/>
+      <InputText
+        v-model="form.username"
+        vid="username"
+        :label="$t('login_id')"
+        field="login_id"
+        :placeholder="$t('login_id_placeholder')"
+        rules="required|half_width|max:100|not_emoji"
+        class-container="mb-2"
+        class-input="login-custom__input"
+        hidden-asterisk />
 
-      <InputText v-model="form.username"
-                 vid="username"
-                 :label="$t('login_id')"
-                 field="login_id"
-                 :placeholder="$t('login_id_placeholder')"
-                 rules="required|half_width|max:100|not_emoji"
-                 class-container="mb-2"
-                 class-input="login-custom__input"
-                 hidden-asterisk
-      />
-
-      <InputText v-model="form.password"
-                 vid="password"
-                 type="password"
-                 :label="$t('password')"
-                 field="password"
-                 :placeholder="$t('password_placeholder')"
-                 rules="required|half_width|min:8|max:100|not_emoji"
-                 class-container="mb-3"
-                 class-input="login-custom__input"
-                 show-password
-                 hidden-asterisk
-      />
+      <InputText
+        v-model="form.password"
+        vid="password"
+        type="password"
+        :label="$t('password')"
+        field="password"
+        :placeholder="$t('password_placeholder')"
+        rules="required|half_width|min:8|max:100|not_emoji"
+        class-container="mb-3"
+        class-input="login-custom__input"
+        show-password
+        hidden-asterisk />
 
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <InputCheckbox v-model="remember_password"
-                       :name-label="$t('remember_password')"
-                       field="remember_password"
-        />
+        <InputCheckbox
+          v-model="remember_password"
+          :name-label="$t('remember_password')"
+          field="remember_password" />
 
-        <p class="login-forgot_password"
-           @click.prevent="openAlertForgotPassword"
-           v-text="$t('forgot_password')"/>
+        <p
+          class="login-forgot_password"
+          @click.prevent="openAlertForgotPassword"
+          v-text="$t('forgot_password')" />
       </div>
 
-      <a-button type="primary"
-                html-type="submit"
-                :loading="isSubmit"
-                class="login-submit_btn"
-                block
-      >
+      <a-button
+        type="primary"
+        html-type="submit"
+        :loading="isSubmit"
+        class="login-submit_btn"
+        block>
         {{ $t('login') }}
       </a-button>
     </ValidationObserver>
@@ -71,37 +74,37 @@ export default {
 
   components: {
     InputText,
-    InputCheckbox
+    InputCheckbox,
   },
 
   mixins: [FormMixin],
 
-  data () {
+  data() {
     return {
       form: {
         username: 'admin',
-        password: '12345678'
+        password: '12345678',
       },
       remember_password: false,
-      isSubmit: false
+      isSubmit: false,
     }
   },
 
   computed: {
-    ...mapGetters({ layout: 'layout' })
+    ...mapGetters({ layout: 'layout' }),
   },
 
   methods: {
     ...mapActions('auth', ['userLogin']),
 
-    openAlertForgotPassword () {
+    openAlertForgotPassword() {
       this.$notification.open({
         message: this.$t('forgot_password'),
-        description: this.$t('forgot_password_instruction')
+        description: this.$t('forgot_password_instruction'),
       })
     },
 
-    async validateBeforeSubmit () {
+    async validateBeforeSubmit() {
       const isValid = await this.$refs.observer.validate()
 
       if (isValid) {
@@ -111,11 +114,11 @@ export default {
       }
     },
 
-    handleSubmit () {
+    handleSubmit() {
       this.isSubmit = true
       const formProtected = handleInputProtection(this.form)
 
-      this.userLogin(formProtected).then(res => {
+      this.userLogin(formProtected).then((res) => {
         if (res) {
           this.onSuccess(this.$t('completion'), this.$t('login_success'))
           this.isSubmit = false
@@ -126,8 +129,8 @@ export default {
           this.isSubmit = false
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -1,10 +1,13 @@
 <template>
-  <div class="page-title d-flex flex-wrap justify-content-between align-items-center">
-    <h5 class="page-title_content" v-text="title"/>
+  <div
+    class="page-title d-flex flex-wrap justify-content-between align-items-center">
+    <h5
+      class="page-title_content"
+      v-text="title" />
 
     <!-- Custom button -->
     <div class="page-title_action d-flex align-items-center flex-shrink-0">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
@@ -14,8 +17,8 @@ export default {
   name: 'PageTitleComponent',
 
   props: {
-    title: { type: String, required: true, default: '' }
-  }
+    title: { type: String, required: true, default: '' },
+  },
 }
 </script>
 

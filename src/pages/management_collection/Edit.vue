@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="detail.name"/>
+    <page-title-component :title="detail.name" />
 
     <!-- Block: Main content -->
-    <collection-form-component update-mode/>
+    <collection-form-component update-mode />
   </div>
 </template>
 
@@ -23,26 +23,28 @@ export default {
 
   components: {
     PageTitleComponent,
-    CollectionFormComponent
+    CollectionFormComponent,
   },
 
-  data () {
+  data() {
     return {
-      detail: {}
+      detail: {},
     }
   },
 
-  beforeRouteEnter (to, from, next) {
-    return store.dispatch('collection/getDetail', { id: to.params.id }).then(() => next())
+  beforeRouteEnter(to, from, next) {
+    return store
+      .dispatch('collection/getDetail', { id: to.params.id })
+      .then(() => next())
   },
 
-  beforeRouteLeave (_, __, next) {
+  beforeRouteLeave(_, __, next) {
     liberateStore('collection/detail')
     next()
   },
 
   methods: {
-    ...mapActions('collection', ['getDetail'])
-  }
+    ...mapActions('collection', ['getDetail']),
+  },
 }
 </script>

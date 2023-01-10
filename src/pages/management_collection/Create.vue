@@ -1,10 +1,11 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="$t('management_collection.create_collection')"/>
+    <page-title-component
+      :title="$t('management_collection.create_collection')" />
 
     <!-- Block: Main content -->
-    <collection-form-component/>
+    <collection-form-component />
   </div>
 </template>
 
@@ -18,8 +19,8 @@ export default {
 
   components: {
     PageTitleComponent,
-    CollectionFormComponent
-  }
+    CollectionFormComponent,
+  },
 }
 </script>
 

@@ -6,18 +6,18 @@ import { LOCAL_STORAGE } from '@/enums/locale.enum'
 
 const initialState = {
   bearerToken: null,
-  userProfile: {}
+  userProfile: {},
 }
 
 const state = {
   ...initialState,
-  bearerToken: Cookie.get(COOKIES_KEY.token)
+  bearerToken: Cookie.get(COOKIES_KEY.token),
 }
 
 const getters = {}
 
 const mutations = {
-  SET_TOKEN (state, payload) {
+  SET_TOKEN(state, payload) {
     const { token, expires } = payload
     state.bearerToken = token
     Cookie.set(COOKIES_KEY.token, token, {
@@ -25,32 +25,34 @@ const mutations = {
       // requires a secure protocol (https) when transmitting cookies
       secure: process.env.NODE_ENV === 'production',
       // allowing to control whether the browser is sending a cookie along with cross-site requests
-      sameSite: 'lax'
+      sameSite: 'lax',
     })
   },
-  SET_LOGOUT (state) {
+  SET_LOGOUT(state) {
     state.bearerToken = initialState.bearerToken
     state.userProfile = initialState.userProfile
     Cookie.remove(COOKIES_KEY.token)
-    localStorage.removeItem(LOCAL_STORAGE.LANGUAGE)
+    localStorage.removeItem(LOCAL_STORAGE.language)
   },
-  SET_USER (state, payload) {
+  SET_USER(state, payload) {
     state.userProfile = payload
-  }
+  },
 }
 
 const actions = {
-  userLogin ({ commit }, params = {}) {
+  userLogin({ commit }, params = {}) {
     // LOGIN DUMMY
-    const accountInfo = ACCOUNT.find(user =>
-      user.username === params.username && user.password === params.password)
+    const accountInfo = ACCOUNT.find(
+      (user) =>
+        user.username === params.username && user.password === params.password
+    )
     if (!accountInfo) return false
 
     commit('SET_TOKEN', {
       token: accountInfo.bearer_token,
       expires: accountInfo.expires_at
         ? new Date(accountInfo.expires_at)
-        : COOKIES_KEY.expires
+        : COOKIES_KEY.expires,
     })
     return true
 
@@ -63,7 +65,7 @@ const actions = {
     // })
   },
 
-  userLogout ({ commit }) {
+  userLogout({ commit }) {
     commit('SET_LOGOUT')
     return true
     // return AuthService.logout().then((res) => {
@@ -75,7 +77,7 @@ const actions = {
     // })
   },
 
-  userProfile ({ state, commit }) {
+  userProfile({ state, commit }) {
     if (!state.bearerToken) return false
 
     // PROFILE DUMMY
@@ -83,8 +85,9 @@ const actions = {
       id: '86dc5a6b-9530-4562-a3c5-68a57a604a27',
       role: 'admin',
       name: 'Admin nè',
-      avatar: 'https://img.freepik.com/premium-vector/cute-white-cat-cartoon-vector-illustration_42750-808.jpg?w=2000',
-      created_at: '2022-06-30 19:19:03'
+      avatar:
+        'https://img.freepik.com/premium-vector/cute-white-cat-cartoon-vector-illustration_42750-808.jpg?w=2000',
+      created_at: '2022-06-30 19:19:03',
     })
     return true
     // return AuthService.profile().then((res) => {
@@ -94,7 +97,7 @@ const actions = {
     // }).catch(_ => {
     //   return false
     // })
-  }
+  },
 }
 
 export default {
@@ -102,5 +105,5 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 }

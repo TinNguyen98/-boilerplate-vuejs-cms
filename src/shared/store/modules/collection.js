@@ -4,7 +4,7 @@ import { COLLECTION_DATA } from '@/enums/dummy-data.enum'
 const initialState = {
   list: null,
   detail: null,
-  pagination: null
+  pagination: null,
 }
 
 const state = { ...initialState }
@@ -12,23 +12,23 @@ const state = { ...initialState }
 const getters = {}
 
 const mutations = {
-  SET_DETAIL (state, payload) {
+  SET_DETAIL(state, payload) {
     state.detail = payload
   },
-  SET_LIST (state, payload) {
+  SET_LIST(state, payload) {
     state.list = payload
   },
-  SET_PAGINATION (state, payload) {
+  SET_PAGINATION(state, payload) {
     state.pagination = payload
-  }
+  },
 }
 
 const actions = {
-  getCollectionList ({ commit }, params = {}) {
+  getCollectionList({ commit }, params = {}) {
     commit('SET_LIST', COLLECTION_DATA)
     commit('SET_PAGINATION', {
       total: COLLECTION_DATA.length,
-      current_page: 1
+      current_page: 1,
     })
     return COLLECTION_DATA
     // return CollectionService.getList(params).then(res => {
@@ -40,34 +40,40 @@ const actions = {
     // })
   },
 
-  createCollection ({ commit }, params = {}) {
-    return CollectionService.create(params).then(res => {
-      return res
-    }).catch(err => {
-      return err.response.data
-    })
+  createCollection({ commit }, params = {}) {
+    return CollectionService.create(params)
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err.response.data
+      })
   },
 
-  updateCollection ({ commit }, params = {}) {
-    return CollectionService.edit(params).then(res => {
-      return res
-    }).catch(err => {
-      return err.response.data
-    })
+  updateCollection({ commit }, params = {}) {
+    return CollectionService.edit(params)
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err.response.data
+      })
   },
 
-  removeCollection ({ commit }, id) {
-    return CollectionService.remove(id).then(_ => {
-      return true
-    }).catch(_ => {
-      return false
-    })
+  removeCollection({ commit }, id) {
+    return CollectionService.remove(id)
+      .then((_) => {
+        return true
+      })
+      .catch((_) => {
+        return false
+      })
   },
 
-  getDetail ({ commit }, payload = {}) {
+  getDetail({ commit }, payload = {}) {
     const { id, params } = payload
 
-    const result = COLLECTION_DATA.find(i => i.id === id)
+    const result = COLLECTION_DATA.find((i) => i.id === id)
     commit('SET_DETAIL', result)
     return true
 
@@ -78,7 +84,7 @@ const actions = {
     // }).catch(_ => {
     //   return false
     // })
-  }
+  },
 }
 
 export default {
@@ -86,5 +92,5 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 }

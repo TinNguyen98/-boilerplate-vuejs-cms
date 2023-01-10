@@ -24,5 +24,6 @@ export default {
   open_priority: 'Open priority',
   close_priority: 'Close priority',
   priority_event_content: 'Are you sure you want to Prioritize this event?',
-  priority_event_desc: 'When event priority is selected, the current event will stop, are you sure you want to confirm?'
+  priority_event_desc:
+    'When event priority is selected, the current event will stop, are you sure you want to confirm?',
 }

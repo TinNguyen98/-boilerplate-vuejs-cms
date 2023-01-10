@@ -20,22 +20,25 @@ export default {
     currentPage: { type: Number, default: 1 },
     pageSize: { type: Number, default: 10 },
     showTotal: { type: Boolean, default: false },
-    showSizeChanger: { type: Boolean, default: false }
+    showSizeChanger: { type: Boolean, default: false },
   },
 
   methods: {
-    onChange (val) {
+    onChange(val) {
       this.$emit('handleCurrentChange', val)
     },
 
-    onShowTotal (total) {
-      return this.showTotal && this.$t('total_number') + ' ' + total + ' ' +  this.$t('record')
+    onShowTotal(total) {
+      return (
+        this.showTotal &&
+        this.$t('total_number') + ' ' + total + ' ' + this.$t('record')
+      )
     },
 
-    onShowSizeChange (current, pageSize) {
+    onShowSizeChange(current, pageSize) {
       this.$emit('handleSizeChange', { page: current, per_page: pageSize })
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="detail.name"/>
+    <page-title-component :title="detail.name" />
 
     <!-- Block: Main content -->
-    <frame-form-component update-mode/>
+    <frame-form-component update-mode />
   </div>
 </template>
 
@@ -22,20 +22,22 @@ export default {
 
   components: {
     PageTitleComponent,
-    FrameFormComponent
+    FrameFormComponent,
   },
 
-  beforeRouteEnter (to, from, next) {
-    return store.dispatch('frame/getDetail', { id: to.params.id }).then(() => next())
+  beforeRouteEnter(to, from, next) {
+    return store
+      .dispatch('frame/getDetail', { id: to.params.id })
+      .then(() => next())
   },
 
-  beforeRouteLeave (_, __, next) {
+  beforeRouteLeave(_, __, next) {
     liberateStore('frame/detail')
     next()
   },
 
   computed: {
-    ...mapState('frame', ['detail'])
-  }
+    ...mapState('frame', ['detail']),
+  },
 }
 </script>

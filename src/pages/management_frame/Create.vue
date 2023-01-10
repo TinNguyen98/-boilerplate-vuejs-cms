@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Block: page title -->
-    <page-title-component :title="$t('management_frame.create_frame')"/>
+    <page-title-component :title="$t('management_frame.create_frame')" />
 
     <!-- Block: Main content -->
-    <frame-form-component/>
+    <frame-form-component />
   </div>
 </template>
 
@@ -18,8 +18,8 @@ export default {
 
   components: {
     PageTitleComponent,
-    FrameFormComponent
-  }
+    FrameFormComponent,
+  },
 }
 </script>
 

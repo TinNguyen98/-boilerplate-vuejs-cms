@@ -4,7 +4,7 @@ import {
   formatDate,
   formatNumberDecimal,
   capitalizeFirstLetter,
-  stripHtmlExceptTags
+  stripHtmlExceptTags,
 } from '@/shared/helpers'
 
 Vue.filter('filterFormatDate', function (value, format = '') {
@@ -16,7 +16,9 @@ Vue.filter('filterFormatDate', function (value, format = '') {
 Vue.filter('filterEmptyField', function (value, character = '/') {
   if (!value) return ''
   const arrField = value.split(character)
-  return arrField.filter(v => !['null', 'undefined'].includes(v.toString().trim())).join(character)
+  return arrField
+    .filter((v) => !['null', 'undefined'].includes(v.toString().trim()))
+    .join(character)
 })
 
 Vue.filter('filterFormatNumberDecimal', function (value, format) {

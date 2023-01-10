@@ -10,5 +10,5 @@ export default {
   login_success: 'Đăng nhập thành công',
   login_fail: 'Đăng nhập thất bại',
   logout_success: 'Đăng xuất thành công',
-  log_out: 'Đăng xuất'
+  log_out: 'Đăng xuất',
 }

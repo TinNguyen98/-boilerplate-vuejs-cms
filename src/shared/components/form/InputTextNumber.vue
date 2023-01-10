@@ -1,23 +1,24 @@
 <template>
-  <ValidationProvider tag="div"
-                      :name="field"
-                      :vid="vid"
-                      :rules="rules"
-                      :class="classContainer"
-                      v-slot="{ errors }">
+  <ValidationProvider
+    tag="div"
+    :name="field"
+    :vid="vid"
+    :rules="rules"
+    :class="classContainer"
+    v-slot="{ errors }">
     <!-- Label -->
-    <label v-if="label"
-           class="label"
-           :class="{ 'font-weight-normal': hiddenAsterisk }"
-    >
+    <label
+      v-if="label"
+      class="label"
+      :class="{ 'font-weight-normal': hiddenAsterisk }">
       {{ label }}
-      <span v-if="rules.includes('required') && !hiddenAsterisk"
-            class="required"
-            v-text="'*'"
-      />
+      <span
+        v-if="rules.includes('required') && !hiddenAsterisk"
+        class="required"
+        v-text="'*'" />
     </label>
 
-    <div :class="{ 'has_error': errors[0] }">
+    <div :class="{ has_error: errors[0] }">
       <!-- Field -->
       <a-input-number
         :disabled="disabled"
@@ -29,11 +30,13 @@
         :max="+max"
         @change="handleType($event)"
         @focus="handleFocus"
-        @blur="handleBlur"
-      />
+        @blur="handleBlur" />
 
       <!-- Message Error -->
-      <span v-if="errors[0]" class="errors" v-html="errors[0]"/>
+      <span
+        v-if="errors[0]"
+        class="errors"
+        v-html="errors[0]" />
     </div>
   </ValidationProvider>
 </template>
@@ -44,7 +47,7 @@ export default {
 
   model: {
     prop: 'value',
-    event: 'change'
+    event: 'change',
   },
 
   props: {
@@ -62,26 +65,26 @@ export default {
     disabled: { type: Boolean, default: false },
     showPassword: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
-    autofill: { type: Boolean, default: true }
+    autofill: { type: Boolean, default: true },
   },
 
   methods: {
-    handleType ($event) {
+    handleType($event) {
       if (this.$props.disabled) return
       this.$emit('change', $event)
     },
 
-    handleFocus ($event) {
+    handleFocus($event) {
       if (!this.autofill) {
         $event.target.removeAttribute('readonly')
       }
     },
 
-    handleBlur (event) {
+    handleBlur(event) {
       if (this.$props.disabled) return
       this.$emit('blur', event.target.value)
-    }
-  }
+    },
+  },
 }
 </script>
 

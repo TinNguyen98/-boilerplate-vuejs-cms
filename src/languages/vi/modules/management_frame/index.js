@@ -14,5 +14,5 @@ export default {
   frame_file: 'Tải frame',
   frame_type: 'Loại Frame',
   updated_at: 'Thời gian cập nhật',
-  manipulation: 'Thao tác'
+  manipulation: 'Thao tác',
 }

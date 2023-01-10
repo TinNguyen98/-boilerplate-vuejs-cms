@@ -1,7 +1,8 @@
 <template>
-  <span class="status"
-        :style="{ 'backgroundColor': statusColor }"
-        v-text="name"/>
+  <span
+    class="status"
+    :style="{ backgroundColor: statusColor }"
+    v-text="name" />
 </template>
 
 <script>
@@ -10,34 +11,36 @@ export default {
 
   props: {
     name: { type: String, required: true, default: '' },
-    type: { type: String, required: true, default: '' }
+    type: { type: String, required: true, default: '' },
   },
 
-  data () {
+  data() {
     return {
       colorControl: [
         {
           acceptable: ['happening', 'applying'],
-          color: '#4CAF50'
+          color: '#4CAF50',
         },
         {
           acceptable: ['happened', 'not-apply'],
-          color: '#717A89'
+          color: '#717A89',
         },
         {
           acceptable: ['upcoming'],
-          color: '#8F0101'
-        }
-      ]
+          color: '#8F0101',
+        },
+      ],
     }
   },
 
   computed: {
     statusColor() {
-      const result = this.colorControl.find(i => i.acceptable.includes(this.$props.type))
+      const result = this.colorControl.find((i) =>
+        i.acceptable.includes(this.$props.type)
+      )
       return result ? result.color : '#000000'
-    }
-  }
+    },
+  },
 }
 </script>
 
