@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: 'InputTextNumberComponent',
+  name: 'InputTextNumber',
 
   model: {
     prop: 'value',
@@ -80,9 +80,9 @@ export default {
       }
     },
 
-    handleBlur(event) {
+    handleBlur($event) {
       if (this.$props.disabled) return
-      this.$emit('blur', event.target.value)
+      this.$emit('blur', $event)
     },
   },
 }

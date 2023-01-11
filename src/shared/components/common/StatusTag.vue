@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'StatusTagComponent',
+  name: 'StatusTag',
 
   props: {
     name: { type: String, required: true, default: '' },

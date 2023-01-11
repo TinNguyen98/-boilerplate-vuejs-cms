@@ -1,15 +1,16 @@
 <template>
   <a-layout>
-    <header-component />
+    <header-layout />
 
-    <a-layout id="components-layout-demo-custom-trigger"
-              :class="{ 'layout-fold': collapsed }">
-      <sidebar-component :collapsed.sync="collapsed" />
+    <a-layout
+      id="components-layout-demo-custom-trigger"
+      :class="{ 'layout-fold': collapsed }">
+      <sidebar-layout :collapsed.sync="collapsed" />
       <a-layout id="main-layout">
-        <breadcrumb-component />
+        <breadcrumb />
 
         <a-config-provider :locale="locale">
-          <main-component />
+          <main-layout />
         </a-config-provider>
       </a-layout>
     </a-layout>
@@ -20,10 +21,10 @@
 // Store
 import { mapState } from 'vuex'
 // Components
-import SidebarComponent from '@/shared/components/layout/Sidebar'
-import HeaderComponent from '@/shared/components/layout/Header'
-import MainComponent from '@/shared/components/Main'
-import BreadcrumbComponent from '@/shared/components/common/Breadcrumb.vue'
+import SidebarLayout from '@/shared/components/layout/Sidebar'
+import HeaderLayout from '@/shared/components/layout/Header'
+import MainLayout from '@/shared/components/Main'
+import Breadcrumb from '@/shared/components/common/Breadcrumb.vue'
 // Others
 import vi_VN from 'ant-design-vue/es/locale/vi_VN'
 
@@ -31,16 +32,16 @@ export default {
   name: 'DefaultLayout',
 
   components: {
-    SidebarComponent,
-    HeaderComponent,
-    MainComponent,
-    BreadcrumbComponent
+    SidebarLayout,
+    HeaderLayout,
+    MainLayout,
+    Breadcrumb,
   },
 
-  data () {
+  data() {
     return {
       collapsed: false,
-      locale: vi_VN
+      locale: vi_VN,
     }
   },
 

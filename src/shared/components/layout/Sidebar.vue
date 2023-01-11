@@ -95,7 +95,7 @@ import { mapState, mapGetters } from 'vuex'
 import { SIDEBAR } from '@/enums/sidebar.enum'
 
 export default {
-  name: 'SidebarComponent',
+  name: 'SidebarLayout',
 
   props: {
     collapsed: { type: Boolean, required: true, default: false },

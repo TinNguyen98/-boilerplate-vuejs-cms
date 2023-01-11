@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: 'InputTextareaComponent',
+  name: 'InputTextarea',
 
   model: {
     prop: 'value',

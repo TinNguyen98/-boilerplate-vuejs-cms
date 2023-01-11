@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- Block: page title -->
-    <page-title-component :title="detail.name" />
+    <!-- Block: Page title -->
+    <page-title :title="detail.name" />
 
     <!-- Block: Main content -->
-    <event-form-component update-mode />
+    <event-form update-mode />
   </div>
 </template>
 
@@ -13,16 +13,17 @@
 import store from '@/shared/store'
 import { mapState } from 'vuex'
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import EventFormComponent from '@/shared/components/management_event/EventForm'
+import PageTitle from '@/shared/components/common/PageTitle'
+import EventForm from '@/shared/components/management_event/EventForm'
+// Others
 import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'EditEventPage',
 
   components: {
-    PageTitleComponent,
-    EventFormComponent,
+    PageTitle,
+    EventForm,
   },
 
   beforeRouteEnter(to, from, next) {

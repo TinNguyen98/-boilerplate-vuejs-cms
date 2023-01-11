@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- Block: page title -->
-    <page-title-component :title="$t('management_event.create_event')" />
+    <!-- Block: Page title -->
+    <page-title :title="$t('management_event.create_event')" />
 
     <!-- Block: Main content -->
-    <event-form-component />
+    <event-form />
   </div>
 </template>
 
@@ -12,16 +12,17 @@
 // Store
 import store from '@/shared/store'
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import EventFormComponent from '@/shared/components/management_event/EventForm'
+import PageTitle from '@/shared/components/common/PageTitle'
+import EventForm from '@/shared/components/management_event/EventForm'
+// Others
 import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'CreateEventPage',
 
   components: {
-    PageTitleComponent,
-    EventFormComponent,
+    PageTitle,
+    EventForm,
   },
 
   beforeRouteEnter(to, from, next) {

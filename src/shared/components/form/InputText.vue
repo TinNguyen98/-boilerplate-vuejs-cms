@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  name: 'InputTextComponent',
+  name: 'InputText',
 
   model: {
     prop: 'value',

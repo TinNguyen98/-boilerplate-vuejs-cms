@@ -4,7 +4,7 @@
       :is="layout"
       v-if="layout" />
 
-    <loading-component v-if="loading" />
+    <loading v-if="loading" />
   </div>
 </template>
 
@@ -12,13 +12,13 @@
 // Store
 import { mapState, mapGetters, mapActions } from 'vuex'
 // Components
-import LoadingComponent from '@/shared/components/layout/Loading'
+import Loading from '@/shared/components/layout/Loading'
 
 export default {
-  name: 'ApplicationLayout',
+  name: 'Application',
 
   components: {
-    LoadingComponent,
+    Loading,
     auth: () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
     default: () =>
       import(/* webpackChunkName: "default" */ '@/layouts/Default.vue'),

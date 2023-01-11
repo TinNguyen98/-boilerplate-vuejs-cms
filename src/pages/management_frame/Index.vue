@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
-    <!-- Block: page title -->
-    <page-title-component :title="$t('management_frame.page_list')">
+    <!-- Block: Page title -->
+    <page-title :title="$t('management_frame.page_list')">
       <router-link
         tag="button"
         :to="{ name: 'create_frame', query: { type: FRAME_TYPE[0].value } }"
@@ -17,12 +17,12 @@
         <a-icon type="plus" />
         {{ $t('management_frame.create_background') }}
       </router-link>
-    </page-title-component>
+    </page-title>
 
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <frame-search-component @filter-changed="onFilterChange($event)" />
+      <frame-search @filter-changed="onFilterChange($event)" />
 
       <!-- Section: List table -->
       <a-table
@@ -61,7 +61,7 @@
         <template
           slot="status"
           slot-scope="status">
-          <status-tag-component
+          <status-tag
             :type="status"
             :name="$t(`management_frame.${status}`)" />
         </template>
@@ -94,7 +94,7 @@
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component
+      <pagination
         v-if="pagination && pagination.total > 0"
         :total="pagination.total"
         :current-page="pagination.current_page"
@@ -112,10 +112,10 @@
 import store from '@/shared/store'
 import { mapState, mapGetters, mapActions } from 'vuex'
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import FrameSearchComponent from '@/shared/components/management_frame/FrameSearch'
-import StatusTagComponent from '@/shared/components/common/StatusTag'
-import PaginationComponent from '@/shared/components/common/Pagination'
+import PageTitle from '@/shared/components/common/PageTitle'
+import FrameSearch from '@/shared/components/management_frame/FrameSearch'
+import StatusTag from '@/shared/components/common/StatusTag'
+import Pagination from '@/shared/components/common/Pagination'
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
 import moment from 'moment'
@@ -129,10 +129,10 @@ export default {
   name: 'ManagementFramePage',
 
   components: {
-    PageTitleComponent,
-    FrameSearchComponent,
-    StatusTagComponent,
-    PaginationComponent,
+    PageTitle,
+    FrameSearch,
+    StatusTag,
+    Pagination,
     ImageZoom,
   },
 

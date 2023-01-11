@@ -80,7 +80,7 @@ import {
 import { FRAME_TYPE } from '@/enums/pages/frame.enum'
 
 export default {
-  name: 'FrameFormComponent',
+  name: 'FrameForm',
 
   components: {
     InputText,

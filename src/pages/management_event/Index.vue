@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
-    <!-- Block: page title -->
-    <page-title-component :title="$t('management_event.page_list')">
+    <!-- Block: Page title -->
+    <page-title :title="$t('management_event.page_list')">
       <router-link
         tag="button"
         :to="{ name: 'create_event' }"
@@ -9,12 +9,12 @@
         <a-icon type="plus" />
         {{ $t('management_event.create_event') }}
       </router-link>
-    </page-title-component>
+    </page-title>
 
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <event-search-component @filter-changed="onFilterChange($event)" />
+      <event-search @filter-changed="onFilterChange($event)" />
 
       <!-- Section: List table -->
       <a-table
@@ -43,7 +43,7 @@
         <template
           slot="status"
           slot-scope="status">
-          <status-tag-component
+          <status-tag
             :type="status"
             :name="$t(`management_event.${status}`)" />
         </template>
@@ -76,7 +76,7 @@
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component
+      <pagination
         v-if="pagination && pagination.total > 0"
         :total="pagination.total"
         :current-page="pagination.current_page"
@@ -94,10 +94,10 @@
 import store from '@/shared/store'
 import { mapState, mapGetters, mapActions } from 'vuex'
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import EventSearchComponent from '@/shared/components/management_event/EventSearch'
-import StatusTagComponent from '@/shared/components/common/StatusTag'
-import PaginationComponent from '@/shared/components/common/Pagination'
+import PageTitle from '@/shared/components/common/PageTitle'
+import EventSearch from '@/shared/components/management_event/EventSearch'
+import StatusTag from '@/shared/components/common/StatusTag'
+import Pagination from '@/shared/components/common/Pagination'
 // Others
 import moment from 'moment'
 import { COMMON_FORMAT_DATE } from '@/enums/common.enum'
@@ -110,10 +110,10 @@ export default {
   name: 'ManagementEventPage',
 
   components: {
-    PageTitleComponent,
-    EventSearchComponent,
-    StatusTagComponent,
-    PaginationComponent,
+    PageTitle,
+    EventSearch,
+    StatusTag,
+    Pagination,
   },
 
   data() {

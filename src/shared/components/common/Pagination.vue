@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'PaginationComponent',
+  name: 'Pagination',
 
   props: {
     total: { type: Number, default: 0 },

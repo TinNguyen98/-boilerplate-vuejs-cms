@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'ImageZoomComponent',
+  name: 'ImageZoom',
 
   props: {
     src: { type: String, required: true, default: '' },

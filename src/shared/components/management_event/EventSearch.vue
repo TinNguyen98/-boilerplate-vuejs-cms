@@ -69,7 +69,7 @@ import SearchMixin from '@/shared/mixins/search.mixin'
 import { STATUS, FORMAT_DATE } from '@/enums/pages/event.enum'
 
 export default {
-  name: 'EventSearchComponent',
+  name: 'EventSearch',
 
   mixins: [SearchMixin],
 

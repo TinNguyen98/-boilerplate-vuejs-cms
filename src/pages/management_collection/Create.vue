@@ -1,27 +1,24 @@
 <template>
   <div>
-    <!-- Block: page title -->
-    <page-title-component
-      :title="$t('management_collection.create_collection')" />
+    <!-- Block: Page title -->
+    <page-title :title="$t('management_collection.create_collection')" />
 
     <!-- Block: Main content -->
-    <collection-form-component />
+    <collection-form />
   </div>
 </template>
 
 <script>
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import CollectionFormComponent from '@/shared/components/management_collection/CollectionForm'
+import PageTitle from '@/shared/components/common/PageTitle'
+import CollectionForm from '@/shared/components/management_collection/CollectionForm'
 
 export default {
   name: 'CreateCollectionPage',
 
   components: {
-    PageTitleComponent,
-    CollectionFormComponent,
+    PageTitle,
+    CollectionForm,
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

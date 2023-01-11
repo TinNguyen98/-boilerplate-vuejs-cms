@@ -107,7 +107,7 @@ import {
 } from '@/shared/helpers'
 
 export default {
-  name: 'InputUploadComponent',
+  name: 'InputUpload',
 
   components: {
     ImageZoom,

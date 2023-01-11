@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- Block: page title -->
-    <page-title-component :title="detail.name" />
+    <!-- Block: Page title -->
+    <page-title :title="detail.name" />
 
     <!-- Block: Main content -->
-    <frame-form-component update-mode />
+    <frame-form update-mode />
   </div>
 </template>
 
@@ -13,16 +13,17 @@
 import store from '@/shared/store'
 import { mapState } from 'vuex'
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import FrameFormComponent from '@/shared/components/management_frame/FrameForm'
+import PageTitle from '@/shared/components/common/PageTitle'
+import FrameForm from '@/shared/components/management_frame/FrameForm'
+// Others
 import { liberateStore } from '@/shared/helpers/performance'
 
 export default {
   name: 'EditFramePage',
 
   components: {
-    PageTitleComponent,
-    FrameFormComponent,
+    PageTitle,
+    FrameForm,
   },
 
   beforeRouteEnter(to, from, next) {

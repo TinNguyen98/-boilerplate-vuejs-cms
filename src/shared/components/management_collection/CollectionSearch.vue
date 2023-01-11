@@ -52,7 +52,7 @@ import SearchMixin from '@/shared/mixins/search.mixin'
 import { STATUS, FORMAT_DATE } from '@/enums/pages/collection.enum'
 
 export default {
-  name: 'CollectionSearchComponent',
+  name: 'CollectionSearch',
 
   mixins: [SearchMixin],
 
@@ -68,5 +68,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

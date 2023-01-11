@@ -146,7 +146,7 @@ import {
 import { FORMAT_DATE } from '@/enums/pages/event.enum'
 
 export default {
-  name: 'EventFormComponent',
+  name: 'EventForm',
 
   components: {
     InputText,

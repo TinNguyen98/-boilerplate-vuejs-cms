@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  name: 'InputRadioComponent',
+  name: 'InputRadio',
 
   model: {
     prop: 'value',

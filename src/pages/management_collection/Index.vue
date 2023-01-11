@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
-    <!-- Block: page title -->
-    <page-title-component :title="$t('management_collection.page_list')">
+    <!-- Block: Page title -->
+    <page-title :title="$t('management_collection.page_list')">
       <router-link
         tag="button"
         :to="{ name: 'create_collection' }"
@@ -9,12 +9,12 @@
         <a-icon type="plus" />
         {{ $t('management_collection.create_collection') }}
       </router-link>
-    </page-title-component>
+    </page-title>
 
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <collection-search-component @filter-changed="onFilterChange($event)" />
+      <collection-search @filter-changed="onFilterChange($event)" />
 
       <!-- Section: List table -->
       <a-table
@@ -46,7 +46,7 @@
         <template
           slot="status"
           slot-scope="status">
-          <status-tag-component
+          <status-tag
             :type="status"
             :name="$t(`management_collection.${status}`)" />
         </template>
@@ -79,7 +79,7 @@
       </a-table>
 
       <!-- Section: Pagination -->
-      <pagination-component
+      <pagination
         v-if="pagination && pagination.total > 0"
         :total="pagination.total"
         :current-page="pagination.current_page"
@@ -97,10 +97,10 @@
 import store from '@/shared/store'
 import { mapState, mapActions } from 'vuex'
 // Components
-import PageTitleComponent from '@/shared/components/common/PageTitle'
-import CollectionSearchComponent from '@/shared/components/management_collection/CollectionSearch'
-import StatusTagComponent from '@/shared/components/common/StatusTag'
-import PaginationComponent from '@/shared/components/common/Pagination'
+import PageTitle from '@/shared/components/common/PageTitle'
+import CollectionSearch from '@/shared/components/management_collection/CollectionSearch'
+import StatusTag from '@/shared/components/common/StatusTag'
+import Pagination from '@/shared/components/common/Pagination'
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
 import { COMMON_FORMAT_DATE } from '@/enums/common.enum'
@@ -112,10 +112,10 @@ export default {
   name: 'ManagementCollectionPage',
 
   components: {
-    PageTitleComponent,
-    CollectionSearchComponent,
-    StatusTagComponent,
-    PaginationComponent,
+    PageTitle,
+    CollectionSearch,
+    StatusTag,
+    Pagination,
     ImageZoom,
   },
 

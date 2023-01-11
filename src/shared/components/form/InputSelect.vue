@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  name: 'InputSelectComponent',
+  name: 'InputSelect',
 
   model: {
     prop: 'value',

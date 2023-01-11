@@ -52,7 +52,7 @@ import SearchMixin from '@/shared/mixins/search.mixin'
 import { STATUS, FORMAT_DATE } from '@/enums/pages/frame.enum'
 
 export default {
-  name: 'FrameSearchComponent',
+  name: 'FrameSearch',
 
   mixins: [SearchMixin],
 

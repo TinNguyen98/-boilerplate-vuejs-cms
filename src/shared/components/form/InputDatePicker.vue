@@ -49,7 +49,7 @@ import vietnamese from 'ant-design-vue/lib/date-picker/locale/vi_VN'
 import { verifyArgument } from '@/shared/helpers'
 
 export default {
-  name: 'InputDatePickerComponent',
+  name: 'InputDatePicker',
 
   model: {
     prop: 'value',

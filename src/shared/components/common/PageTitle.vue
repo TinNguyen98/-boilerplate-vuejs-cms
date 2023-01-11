@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'PageTitleComponent',
+  name: 'PageTitle',
 
   props: {
     title: { type: String, required: true, default: '' },

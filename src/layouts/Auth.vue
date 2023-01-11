@@ -1,18 +1,18 @@
 <template>
-  <main-component />
+  <main-layout />
 </template>
 
 <script>
 // Store
 import { mapState } from 'vuex'
 // Components
-import MainComponent from '@/shared/components/Main'
+import MainLayout from '@/shared/components/Main'
 
 export default {
   name: 'AuthLayout',
 
   components: {
-    MainComponent,
+    MainLayout,
   },
 
   computed: {

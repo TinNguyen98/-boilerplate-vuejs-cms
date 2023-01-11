@@ -63,7 +63,7 @@ import { LOCALE } from '@/enums/locale.enum'
 import { capitalizeFirstLetter } from '@/shared/helpers'
 
 export default {
-  name: 'HeaderComponent',
+  name: 'HeaderLayout',
 
   mixins: [FormMixin],
 

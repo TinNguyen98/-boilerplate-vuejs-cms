@@ -6,7 +6,7 @@
       ref="observer"
       tag="form"
       class="login-container ml-auto mr-auto"
-      @submit.prevent="validateBeforeSubmit()">
+      @submit.prevent="validateBeforeSubmit">
       <h3
         class="login-title"
         v-text="$t('login')" />
