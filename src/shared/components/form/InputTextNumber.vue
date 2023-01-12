@@ -69,9 +69,9 @@ export default {
   },
 
   methods: {
-    handleType($event) {
+    handleType(number) {
       if (this.$props.disabled) return
-      this.$emit('change', $event)
+      this.$emit('change', number)
     },
 
     handleFocus($event) {
@@ -82,7 +82,7 @@ export default {
 
     handleBlur($event) {
       if (this.$props.disabled) return
-      this.$emit('blur', $event)
+      this.$emit('blur', $event.target.value)
     },
   },
 }

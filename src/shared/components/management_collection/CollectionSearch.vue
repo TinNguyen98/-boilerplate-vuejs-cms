@@ -60,7 +60,7 @@ export default {
     return {
       filter: {
         keyword: null,
-        status: null,
+        status: undefined,
       },
       STATUS,
       FORMAT_DATE,
