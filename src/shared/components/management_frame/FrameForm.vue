@@ -37,6 +37,7 @@
           field="management_frame.frame_file"
           :label="$t('management_frame.frame_file')"
           :placeholder="$t('management_frame.frame_file')"
+          acceptable-file-types=".png"
           class-container="main-form_field"
           rules="required_file"
           hidden-asterisk
@@ -157,17 +158,12 @@ export default {
       }
 
       const promise =
-        type === 'create'
-          ? this.createFrame(formProtected)
-          : this.updateFrame(formProtected)
+        type === 'create' ? this.createFrame(formProtected) : this.updateFrame(formProtected)
 
       promise.then((res) => {
         if (res) {
           this.isSubmit = false
-          this.onSuccess(
-            this.$t('completion'),
-            this.$t(`${type}_message_successfully`)
-          )
+          this.onSuccess(this.$t('completion'), this.$t(`${type}_message_successfully`))
           this.$router.push({ name: 'management_frame' })
         } else {
           this.isSubmit = false

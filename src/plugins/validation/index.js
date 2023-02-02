@@ -1,12 +1,7 @@
 import Vue from 'vue'
 import * as rules from 'vee-validate/dist/rules'
 import i18n from '@/plugins/i18n'
-import {
-  ValidationProvider,
-  ValidationObserver,
-  extend,
-  configure,
-} from 'vee-validate'
+import { ValidationProvider, ValidationObserver, extend, configure } from 'vee-validate'
 
 // with typescript
 for (let [rule, validation] of Object.entries(rules)) {
@@ -42,15 +37,59 @@ extend('required_editor', {
   },
 })
 
+extend('numeric_decimal', {
+  validate(value) {
+    return /^[0-9,]+$/.test(value)
+  },
+})
+
+extend('vietnamese_char', {
+  validate(value) {
+    return /[^a-z0-9A-Z_àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ!-'*-.^-`~ :?@=_]*$/.test(
+      value
+    )
+  },
+})
+
+extend('vietnamese_char_space', {
+  validate(value) {
+    return /^\w+[a-zA-Z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ!-'*-.^-`~ :?@=_]*$/.test(
+      value
+    )
+  },
+})
+
 extend('half_width', {
   validate(value) {
-    return /^[a-zA-Z0-9!-'*-.^-`~:?@=]+$/.test(value)
+    return /^[a-zA-Z0-9!-'*-.^-`~:?@=_]+$/.test(value)
+  },
+})
+
+extend('half_width_space', {
+  validate(value) {
+    return /^\w+[a-zA-Z0-9!-'*-.^-`~ :?@=_]*$/.test(value)
   },
 })
 
 extend('full_width', {
   validate(value) {
     return /^[ａ-ｚＡ-Ｚ一-龠々-〇ぁ-んァ-ヶ０-９ー・]+$/.test(value)
+  },
+})
+
+extend('min', {
+  ...rules.min,
+  validate(value, params) {
+    const originalNumber = value.toString().trim().replaceAll(',', '')
+    return !(originalNumber.length < params.length)
+  },
+})
+
+extend('max', {
+  ...rules.max,
+  validate(value, params) {
+    const originalNumber = value.toString().trim().replaceAll(',', '')
+    return !(originalNumber.length > params.length)
   },
 })
 

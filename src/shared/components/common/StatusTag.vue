@@ -22,7 +22,7 @@ export default {
           color: '#4CAF50',
         },
         {
-          acceptable: ['happened', 'not-apply'],
+          acceptable: ['happened', 'not_apply'],
           color: '#717A89',
         },
         {
@@ -35,9 +35,7 @@ export default {
 
   computed: {
     statusColor() {
-      const result = this.colorControl.find((i) =>
-        i.acceptable.includes(this.$props.type)
-      )
+      const result = this.colorControl.find((i) => i.acceptable.includes(this.$props.type))
       return result ? result.color : '#000000'
     },
   },

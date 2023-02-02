@@ -21,10 +21,7 @@
 
     <div
       class="position-relative d-flex"
-      :class="[
-        errors[0] ? 'has_error' : null,
-        previewAlign === 'bottom' ? 'flex-column' : null,
-      ]">
+      :class="[errors[0] ? 'has_error' : null, previewAlign === 'bottom' ? 'flex-column' : null]">
       <div
         class="flex-shrink-0 w-100"
         :class="[previewAlign === 'bottom' ? 'mb-2' : 'mr-2']">
@@ -100,11 +97,8 @@ import { mapActions } from 'vuex'
 // Components
 import ImageZoom from '@/shared/components/common/ImageZoom'
 // Others
-import {
-  toBase64,
-  checkImageSizeByMb,
-  handleRequestErrorMessage,
-} from '@/shared/helpers'
+import { toBase64, checkImageSizeByMb, handleRequestErrorMessage } from '@/shared/helpers'
+import { MINE_TYPES } from '@/enums/mine-types.enum'
 
 export default {
   name: 'InputUpload',
@@ -129,7 +123,7 @@ export default {
     classContainer: { type: String, default: '' },
     acceptableFileTypes: {
       type: String,
-      default: 'image/png,image/jpeg,image/jpg',
+      default: '.png, .jpeg, .jpg',
     },
     sizeLimit: { type: [String, Number], default: 300 }, // unit MB
     isAudio: { type: Boolean, default: false },
@@ -187,8 +181,15 @@ export default {
       const files = event.target.files || event.dataTransfer.files
       // If the file isn't an image nothing happens
       // Check size image before send server
-      if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit))
+      if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit)) return
+
+      const objectType = MINE_TYPES.find((i) => i.file_type === files[0].type)
+      if (!objectType.extension.includes(this.$props.acceptableFileTypes)) {
+        this.$refs.upload.setErrors([
+          this.$t('please_select_format_type', { type: this.$props.acceptableFileTypes }),
+        ])
         return
+      }
 
       this.isUploading = true
 
