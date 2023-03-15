@@ -23,7 +23,7 @@ const mutations = {
     Cookie.set(COOKIES_KEY.token, token, {
       expires,
       // requires a secure protocol (https) when transmitting cookies
-      secure: process.env.NODE_ENV === 'production',
+      secure: ['production', 'staging'].includes(process.env.NODE_ENV),
       // allowing to control whether the browser is sending a cookie along with cross-site requests
       sameSite: 'lax',
     })

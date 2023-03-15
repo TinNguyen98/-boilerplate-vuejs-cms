@@ -47,8 +47,10 @@ export default {
 
     onLoaded($event) {
       const { path } = $event
-      const loaded = path[0].complete && path[0].naturalHeight !== 0
-      this.$emit('update:allLoaded', loaded)
+      if (path) {
+        const loaded = path[0].complete && path[0].naturalHeight !== 0
+        this.$emit('update:allLoaded', loaded)
+      }
     },
   },
 }

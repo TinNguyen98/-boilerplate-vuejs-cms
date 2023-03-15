@@ -1,8 +1,25 @@
 {
   "name": "boilerplate-vuejs-cms",
   "version": "1.0.0",
-  "author": "Chain Nguyen <ntrungtn@gmail.com>",
   "private": false,
+  "author": {
+    "name": "Chain Nguyễn",
+    "email": "ntrungtn@gmail.com",
+    "url": "https://chainnguyen.github.io/chain-curriculum-vitae/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chainnguyen/boilerplate-vuejs-cms.git"
+  },
+  "keywords": [
+    "vue",
+    "vuex",
+    "vue-router",
+    "vee-validate",
+    "vue-i18n",
+    "ant-design",
+    "cms"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build:development": "NODE_ENV=production vue-cli-service build --mode development",

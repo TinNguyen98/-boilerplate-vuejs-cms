@@ -5,12 +5,20 @@ import i18n from '@/plugins/i18n'
 import Cookie from 'js-cookie'
 import { COOKIES_KEY } from '@/enums/cookie.enum'
 
+const RequestType = {
+  json: 'application/json;charset=UTF-8',
+  formData: 'multipart/form-data',
+}
+
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    ContentType: RequestType['json'],
   },
+  // See more: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
+  withCredentials: false,
+  responseType: 'json',
   timeout: 30000, // request timeout
 })
 
@@ -20,8 +28,11 @@ instance.interceptors.request.use(
   (config) => {
     const token = Cookie.get(COOKIES_KEY.token)
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers['Content-Type'] =
+        RequestType[config.data instanceof FormData ? 'formData' : 'json']
     }
+
     store.dispatch('loader/pending')
     return config
   },

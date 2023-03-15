@@ -53,5 +53,8 @@ yarn lint | npm run lint
 
 See more [CHANGELOG.md](CHANGELOG.md).
 
+### Show your support
+Give a ⭐ if you like this website!
+
 ## License
 Copyright by [Chain Nguyễn](https://chainnguyen.github.io/chain-curriculum-vitae/).
